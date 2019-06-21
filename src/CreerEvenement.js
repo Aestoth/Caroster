@@ -10,19 +10,38 @@ class CreerEvenement extends Component {
       data: { titre: "", email: "" }
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({ data: event.target.state });
+  handleInputChange(e) {
+
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.setState({
+        [name]: value
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    fetch("http://localhost:3000/api/post/new", {
+      method: "POST",
+      body: JSON.stringify(this.state),
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      response.json().then(data => {
+        console.log("Success" + data);
+      });
+    });
   }
 
   render() {
+    const {titre, email} = this.state;
     return (
       <div>
         <Navbar />
@@ -45,28 +64,29 @@ class CreerEvenement extends Component {
                 type="text"
                 label="Titre"
                 outline
-                value={this.state.titre}
-                onChange={this.handleChange}
+                name="titre"
+                value={titre}
+                onChange={this.handleInputChange}
               />
             </div>
             <div className="form-group col-md-5 mx-auto">
               <MDBInput
-                type="text"
+                type="email"
                 label="Email"
                 outline
-                value={this.state.email}
-                onChange={this.handleChange}
+                name="email"
+                value={email}
+                onChange={this.handleInputChange}
               />
             </div>
             <div className="d-flex justify-content-center mt-4">
               <Link to="/Voiture">
                 <MDBBtn color="primary">Annuler</MDBBtn>
               </Link>
-              <Link to="/Evenement">
-                <MDBBtn type="submit" value="Submit" active color="primary">
-                  Creer
-                </MDBBtn>
-              </Link>
+
+              <MDBBtn type="submit" value="Submit" active color="primary">
+                Creer
+              </MDBBtn>
             </div>
           </form>
 

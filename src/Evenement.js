@@ -75,9 +75,9 @@ class Evenement extends Component {
                 <form className="form-inline mt-1 d-flex justify-content-center">
                   <div>
                     <MDBInput label="Telephone" outline icon="phone" />
-                    <MDBInput label="Date" outline icon="calendar-alt" />
+                      <MDBInput type="date"  outline icon="calendar-alt" />
                     <MDBInput label="Adresse" outline icon="map-marker-alt" />
-                    <MDBInput label="Info" outline icon="comment-alt" />
+                    <MDBInput label="Info complémentaire" outline icon="comment-alt" />
                   </div>
                 </form>
 
