@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 import {
   MDBNavbar,
@@ -18,7 +19,7 @@ import {
   MDBDropdownToggle,
   MDBBtn
 } from "mdbreact";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+
 import { MDBFooter } from "mdbreact";
 
 class Acceuil extends React.Component {

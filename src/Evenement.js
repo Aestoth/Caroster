@@ -8,17 +8,37 @@ class Evenement extends Component {
   constructor() {
     super();
     this.state = {
-      data: {
-        id: 1,
-        nom: "",
-        email: ""
-      },
-      listeVoiture: []
+      nom: "",
+      telephone: "",
+      date: "",
+      adresse: "",
+      infoComplementaire: ""
     };
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  updateInput(key, value) {
-    this.setState({ [key]: value });
+  handleInputChange(e) {
+    const target = e.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({ [name]: value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    fetch("http://localhost:3000/api/post/new", {
+      method: "POST",
+      body: JSON.stringify(this.state),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      response.json().then(data => {
+        console.log("Success" + data);
+      });
+    });
   }
 
   render() {
@@ -72,12 +92,43 @@ class Evenement extends Component {
                   Non de la voiture
                 </div>
 
-                <form className="form-inline mt-1 d-flex justify-content-center">
+                <form
+                  onSubmit={this.handleSubmit}
+                  className="form-inline mt-1 d-flex justify-content-center"
+                >
                   <div>
-                    <MDBInput label="Telephone" outline icon="phone" />
-                      <MDBInput type="date"  outline icon="calendar-alt" />
-                    <MDBInput label="Adresse" outline icon="map-marker-alt" />
-                    <MDBInput label="Info complémentaire" outline icon="comment-alt" />
+                    <MDBInput
+                      name="telephone"
+                      value={this.state.telephone}
+                      onChange={this.handleInputChange}
+                      label="Telephone"
+                      outline
+                      icon="phone"
+                    />
+                    <MDBInput
+                      name="date"
+                      value={this.state.date}
+                      onChange={this.handleInputChange}
+                      type="date"
+                      outline
+                      icon="calendar-alt"
+                    />
+                    <MDBInput
+                      name="adresse"
+                      value={this.state.adresse}
+                      onChange={this.handleInputChange}
+                      label="Adresse"
+                      outline
+                      icon="map-marker-alt"
+                    />
+                    <MDBInput
+                      name="infoComplementaire"
+                      value={this.state.infoComplementaire}
+                      onChange={this.handleInputChange}
+                      label="Info complémentaire"
+                      outline
+                      icon="comment-alt"
+                    />
                   </div>
                 </form>
 
@@ -115,7 +166,7 @@ class Evenement extends Component {
           <div className="footer-copyright text-center py-3">
             <MDBContainer fluid>
               &copy; {new Date().getFullYear()} Copyright:{" "}
-              <a href="https://www.MDBootstrap.com"> MDBootstrap.com </a>
+              <a href="https://www.MDBootstrap.com"> Caroster </a>
             </MDBContainer>
           </div>
         </MDBFooter>

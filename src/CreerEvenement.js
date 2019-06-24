@@ -7,7 +7,8 @@ class CreerEvenement extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: { titre: "", email: "" }
+      titre: "",
+      email: ""
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -15,22 +16,21 @@ class CreerEvenement extends Component {
   }
 
   handleInputChange(e) {
-
     const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     this.setState({
-        [name]: value
+      [name]: value
     });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleSubmit(e) {
+    e.preventDefault();
     fetch("http://localhost:3000/api/post/new", {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json"
       }
     }).then(response => {
@@ -41,7 +41,6 @@ class CreerEvenement extends Component {
   }
 
   render() {
-    const {titre, email} = this.state;
     return (
       <div>
         <Navbar />
@@ -58,14 +57,18 @@ class CreerEvenement extends Component {
             </div>
           </div>
 
-          <form onSubmit={this.handleSubmit} className="">
+          <form
+            onSubmit={this.handleSubmit}
+            action="/api/post/new"
+            className=""
+          >
             <div className="form-group mt-4 col-md-5 mx-auto">
               <MDBInput
                 type="text"
                 label="Titre"
                 outline
                 name="titre"
-                value={titre}
+                value={this.state.titre}
                 onChange={this.handleInputChange}
               />
             </div>
@@ -75,7 +78,7 @@ class CreerEvenement extends Component {
                 label="Email"
                 outline
                 name="email"
-                value={email}
+                value={this.state.email}
                 onChange={this.handleInputChange}
               />
             </div>
