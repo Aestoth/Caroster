@@ -83,7 +83,7 @@ class CreerEvenement extends Component {
               />
             </div>
             <div className="d-flex justify-content-center mt-4">
-              <Link to="/Voiture">
+              <Link to="/Evenement">
                 <MDBBtn color="primary">Annuler</MDBBtn>
               </Link>
 
