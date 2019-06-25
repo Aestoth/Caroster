@@ -13,6 +13,7 @@ class AddVoiture extends Component {
         nomVoiture: '',
         sieges: '',
         infocomp: '',
+        telephone: '',
         adresse: '',
         date: new Date(),
     };
@@ -65,24 +66,27 @@ class AddVoiture extends Component {
           <div className="row col-12 align-items-center justify-content-center flex-fill mx-auto ">
             <form  onSubmit={this.handleSubmit} className="mx-auto">
               <div className="form-group col-12">
-                <MDBInput type="text" label="Nom de la voiture"icon="car" className="mb-0"name="nomVoiture" value={this.state.nomVoiture}  onChange={this.handleChange}
+                <MDBInput type="text" label="Nom de la voiture"icon="car" className="mb-0" name="nomVoiture" value={this.state.nomVoiture}  onChange={this.handleChange}
                 />
               </div>
               <div className="form-group col-12">
-                <MDBInput type="number" label="Sieges" icon="chair" className="mb-0"name="sieges" value={this.state.sieges} onChange={this.handleChange} />
+                <MDBInput type="number" label="Sieges" icon="chair" className="mb-0" name="sieges" value={this.state.sieges} onChange={this.handleChange} />
+              </div>
+              <div className="form-group col-12 flex">
+                <MDBInput type="text" label="Infos complémentaires" icon="pen" className="mb-0"name="infocomp" value={this.state.infocomp} onChange={this.handleChange} />
               </div>
               <div className="form-group col-12">
-                <MDBInput type="text" label="Informations complémentaires" icon="pen" className="mb-0"name="infocomp" value={this.state.infocomp} onChange={this.handleChange} />
+                <MDBInput type="text" label="Téléphone" icon="phone" className="mb-0" name="telephone" value={this.state.telephone} onChange={this.handleChange} />
               </div>         
                 <h6 className="text-center text-uppercase mt-5">Lieu de rendez-vous</h6>
               <div className="form-group col-12">
-                <MDBInput type="text" label="Adresse" icon="map-marker-alt" className="mb-0"name="adresse" value={this.state.adresse} onChange={this.handleChange} />
+                <MDBInput type="text" label="Adresse" icon="map-marker-alt" className="mb-0" name="adresse" value={this.state.adresse} onChange={this.handleChange} />
               </div>
               <div className="md-form form-group col-12">
-              <MDBInput type="date" icon="calendar" className="mb-2 textbox-n"name="date" value={this.state.date} onChange={this.handleChange} />
+              <MDBInput type="date" icon="calendar" className="mb-2 textbox-n" name="date" value={this.state.date} onChange={this.handleChange} />
               </div>
               <div className="md-form form-group col-12">
-              <MDBInput type="time" icon="clock" className="mb-2"name="heure" onChange={this.handleChange} />
+              <MDBInput type="time" icon="clock" className="mb-2" name="heure" onChange={this.handleChange} />
               </div>
               
               <div className="text-center mt-2">
