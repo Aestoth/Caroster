@@ -1,46 +1,18 @@
 import React, { Component } from "react";
 import "./Evenement.css";
 import Navbar from "./Navbar";
-import { MDBBtn, MDBInput, MDBIcon } from "mdbreact";
-import { MDBFooter, MDBContainer } from "mdbreact";
+import {
+  MDBFooter,
+  MDBContainer,
+  MDBBtn,
+  MDBIcon,
+  MDBListGroup,
+  MDBListGroupItem,
+  MDBPopover,
+  MDBPopoverHeader
+} from "mdbreact";
 
 class Evenement extends Component {
-  constructor() {
-    super();
-    this.state = {
-      nom: "",
-      telephone: "",
-      date: "",
-      adresse: "",
-      infoComplementaire: ""
-    };
-    this.handleInputChange = this.handleInputChange.bind(this);
-  }
-
-  handleInputChange(e) {
-    const target = e.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({ [name]: value });
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    fetch("http://localhost:3000/api/post/new", {
-      method: "POST",
-      body: JSON.stringify(this.state),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    }).then(response => {
-      response.json().then(data => {
-        console.log("Success" + data);
-      });
-    });
-  }
-
   render() {
     return (
       <div>
@@ -98,55 +70,44 @@ class Evenement extends Component {
                   </div>
                 </div>
 
-                <form
-                  onSubmit={this.handleSubmit}
-                  className="form-inline mt-1 d-flex justify-content-center row"
-                >
-                  <div className="col-9">
-                    <MDBInput
-                      name="telephone"
-                      value={this.state.telephone}
-                      onChange={this.handleInputChange}
-                      label="Telephone"
-                      outline
-                      icon="phone"
-                    />
-
-                    <MDBInput
-                      name="date"
-                      value={this.state.date}
-                      onChange={this.handleInputChange}
-                      type="date"
-                      outline
-                      icon="calendar-alt"
-                    />
-                    <MDBInput
-                      name="adresse"
-                      value={this.state.adresse}
-                      onChange={this.handleInputChange}
-                      label="Adresse"
-                      outline
-                      icon="map-marker-alt"
-                    />
-                    <MDBInput
-                      name="infoComplementaire"
-                      value={this.state.infoComplementaire}
-                      onChange={this.handleInputChange}
-                      label="Info complémentaire"
-                      outline
-                      icon="comment-alt"
-                    />
-                    <div className="d-flex justify-content-center">
-                      <MDBBtn
-                        size="sm"
-                        color="danger"
-                        className="d-flex justify-content-center"
+                <MDBContainer className="mt-4 d-flex justify-content-center">
+                  <MDBListGroup style={{ width: "20rem" }}>
+                    <MDBListGroupItem color="secondary">
+                      {" "}
+                      <MDBIcon icon="phone" size="2x" className="mr-5" />
+                      <MDBPopover
+                        placement="right"
+                        popover
+                        clickable
+                        id="popper2"
                       >
-                        Modifier
-                      </MDBBtn>
-                    </div>
-                  </div>
-                </form>
+                        <MDBBtn size="sm"> Contact</MDBBtn>
+
+                        <MDBPopoverHeader>0790000000</MDBPopoverHeader>
+                      </MDBPopover>
+                    </MDBListGroupItem>
+                    <MDBListGroupItem color="secondary">
+                      <MDBIcon
+                        icon="calendar-alt"
+                        size="2x"
+                        className="mr-5 "
+                      />
+                      mar. 28 mai à
+                    </MDBListGroupItem>
+                    <MDBListGroupItem color="secondary">
+                      <MDBIcon
+                        icon="map-marker-alt"
+                        size="2x"
+                        className="mr-5 "
+                      />
+                      <a href="#">Rue Lamartine</a>
+                    </MDBListGroupItem>
+                    <MDBListGroupItem color="secondary">
+                      <MDBIcon icon="comment-alt" size="2x" className="mr-5" />
+                      Pas de chien
+                    </MDBListGroupItem>
+                  </MDBListGroup>
+                </MDBContainer>
 
                 <ul className="list-group list-group-flush mt-4">
                   <li className="list-group-item active border border-white">
