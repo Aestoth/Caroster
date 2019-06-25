@@ -15,7 +15,8 @@ class AddVoiture extends Component {
         infocomp: '',
         telephone: '',
         adresse: '',
-        date: new Date(),
+        date: '',
+        heure: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -86,7 +87,7 @@ class AddVoiture extends Component {
               <MDBInput type="date" icon="calendar" className="mb-2 textbox-n" name="date" value={this.state.date} onChange={this.handleChange} />
               </div>
               <div className="md-form form-group col-12">
-              <MDBInput type="time" icon="clock" className="mb-2" name="heure" onChange={this.handleChange} />
+              <MDBInput type="time" icon="clock" className="mb-2" name="heure" value={this.state.heure} onChange={this.handleChange} />
               </div>
               
               <div className="text-center mt-2">
