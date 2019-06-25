@@ -85,18 +85,24 @@ class Evenement extends Component {
                 </ul>
               </div>
             </div>
-            <div className="col-md-5 marginTable col-sm-8 col-lg-5 col-xl-5">
+            <div className="col-md-9 marginTable col-sm-9 col-lg-8 col-xl-5">
               <div className="card shadow">
-                <div className="card-header bg-info text-white text-center">
-                  <i className="fas fa-car mr-2" />
-                  Non de la voiture
+                <div className="card-header bg-info text-white d-flex justify-content-between">
+                  <div />
+                  <div>
+                    <i className="fas fa-car mr-2" />
+                    Non de la voiture
+                  </div>
+                  <div>
+                    <i className="fas fa-pencil-alt " />
+                  </div>
                 </div>
 
                 <form
                   onSubmit={this.handleSubmit}
-                  className="form-inline mt-1 d-flex justify-content-center"
+                  className="form-inline mt-1 d-flex justify-content-center row"
                 >
-                  <div>
+                  <div className="col-9">
                     <MDBInput
                       name="telephone"
                       value={this.state.telephone}
@@ -105,6 +111,7 @@ class Evenement extends Component {
                       outline
                       icon="phone"
                     />
+
                     <MDBInput
                       name="date"
                       value={this.state.date}
@@ -129,10 +136,19 @@ class Evenement extends Component {
                       outline
                       icon="comment-alt"
                     />
+                    <div className="d-flex justify-content-center">
+                      <MDBBtn
+                        size="sm"
+                        color="danger"
+                        className="d-flex justify-content-center"
+                      >
+                        Modifier
+                      </MDBBtn>
+                    </div>
                   </div>
                 </form>
 
-                <ul className="list-group list-group-flush mt-2">
+                <ul className="list-group list-group-flush mt-4">
                   <li className="list-group-item active border border-white">
                     <i className="fas fa-user-plus ml-3 mr-3" />
                     Ajouter passagers
