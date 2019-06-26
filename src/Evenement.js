@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Evenement.css";
 import Navbar from "./Navbar";
+import Passagers from "./Passagers";
 import {
   MDBFooter,
   MDBContainer,
@@ -13,6 +14,18 @@ import {
 } from "mdbreact";
 
 class Evenement extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false
+    };
+  }
+
+  changeDiv = () => {
+    const { show } = this.state;
+    this.setState({ show: !show });
+  };
+
   render() {
     return (
       <div>
@@ -83,15 +96,11 @@ class Evenement extends Component {
                       >
                         <MDBBtn size="sm"> Contact</MDBBtn>
 
-                        <MDBPopoverHeader>0790000000</MDBPopoverHeader>
+                        <MDBPopoverHeader>0791234567</MDBPopoverHeader>
                       </MDBPopover>
                     </MDBListGroupItem>
                     <MDBListGroupItem color="secondary">
-                      <MDBIcon
-                        icon="calendar-alt"
-                        size="2x"
-                        className="mr-5 "
-                      />
+                      <MDBIcon icon="calendar-alt" size="2x" className="mr-5" />
                       mar. 28 mai à
                     </MDBListGroupItem>
                     <MDBListGroupItem color="secondary">
@@ -110,20 +119,23 @@ class Evenement extends Component {
                 </MDBContainer>
 
                 <ul className="list-group list-group-flush mt-4">
-                  <li className="list-group-item active border border-white">
+                  {this.state.show ? (
+                    <Passagers />
+                  ) : (
+                    <MDBBtn
+                      color="primary"
+                      className="list-group-item bg-primary border border-white mb-0"
+                      onClick={this.changeDiv}
+                    >
+                      <i className="fas fa-user-plus ml-3 mr-3" />
+                      Ajouter passagres
+                    </MDBBtn>
+                  )}
+
+                  <MDBBtn color="primary">
                     <i className="fas fa-user-plus ml-3 mr-3" />
-                    Ajouter passagers
-                  </li>
-                  <li className="list-group-item active border border-white">
-                    {" "}
-                    <i className="fas fa-user-plus ml-3 mr-3" />
-                    Ajouter passagers
-                  </li>
-                  <li className="list-group-item active border border-white">
-                    {" "}
-                    <i className="fas fa-user-plus ml-3 mr-3" />
-                    Ajouter passagers
-                  </li>
+                    Ajouter passagres
+                  </MDBBtn>
                 </ul>
               </div>
             </div>
