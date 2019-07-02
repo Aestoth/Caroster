@@ -3,11 +3,10 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
-
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const dbConn = mongoose.connect(
+ mongoose.connect(
   "mongodb://localhost/carosterTest",
   { useNewUrlParser: true }
 );
@@ -17,7 +16,7 @@ mongoose.connection.on("connected", err => {
   console.log("Connecté a la Base de donnees");
 });
 
-const PostShema = mongoose.Schema({
+const PostSchema = mongoose.Schema({
   titre: String,
   email: String,
   timestamp: String
@@ -45,16 +44,6 @@ const PostModelPassagers = mongoose.model(
   "passagers",
   PostShemaPassagers,
   "passagers"
-);
-
-const PostShemaListeDAttente = mongoose.Schema({
-  nom: String,
-  timestamp: String
-});
-const PostModelListeDAttente = mongoose.model(
-  "listDAttente",
-  PostShemaListeDAttente,
-  "listDAttente"
 );
 
 mongoose.set("useFindAndModify", false); //verifier!!!!!!!!!!!!!!!!!!!!
@@ -86,26 +75,6 @@ app.post("/api/post/new", (req, res) => {
   });
 });
 
-//Function new Voiture/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-app.post("/api/post/voiture", (req, res) => {
-  let payload = {
-    nom: req.body.nom,
-    siege: req.body.siege,
-    contact: req.body.contact,
-    infoComp: req.body.infoComp,
-    adresse: req.body.adresse,
-    date: req.body.date,
-    horaire: req.body.horaire,
-    timestamp: new Date().getTime() * 1000
-  };
-
-  const newPost = PostModelVoiture(payload);
-  newPost.save((err, result) => {
-    if (err) res.send({ success: false, msg: err });
-    res.send({ success: true, result: result });
-  });
-});
 
 //Function new Passagers////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -162,5 +131,64 @@ app.post("/api/post/passagers/modifier", (req, res) => {
     res.send({ success: true, result: result });
   });
 });
+
+//Function new Voiture/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.post("/api/post/voiture", (req, res) => {
+  let payload = {
+    nom: req.body.nom,
+    siege: req.body.siege,
+    contact: req.body.contact,
+    infoComp: req.body.infoComp,
+    adresse: req.body.adresse,
+    date: req.body.date,
+    horaire: req.body.horaire,
+  };
+
+  const newPost = PostModelVoiture(payload);
+  newPost.save((err, result) => {
+    if (err) res.send({ success: false, msg: err });
+    res.send({ success: true, result: result });
+  });
+});
+
+
+//Récupérer Voiture///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.get('/api/voiture/all', (req, res) => {
+  PostModel.find((err, result) => {
+      if(err) res.send({success: false, msg: err});
+      res.send({success: true, result:result});
+  });
+});
+
+//Récupérer Voiture par ID ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.get('/api/voiture/:id', (req, res) => {
+  PostModel.findById(req.params.id, (err, result) => {
+      if(err) res.send({success: false, msg: err});
+      res.send({success: true, result:result});
+  });
+});
+
+//Mise à jour Voiture par ID ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.put('/api/voiture/update/:id', (req, res) => {
+  const postData = req.body;
+  PostModel.findByIdAndUpdate(req.params.id, postData, (err, result) => {
+      if(err) res.send({success: false, msg: err});
+      res.send({success: true, result:result});
+  });
+});
+
+//Delete Voiture///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.delete('/api/voiture/delete/:id', (req, res) => {
+  PostModel.findByIdAndDelete(req.params.id, (err, result) => {
+      if(err) res.send({success: false, msg: err});
+      res.send({success: true, result:result});
+  });
+});
+
 
 app.listen(PORT, () => console.log(`Serveur lancé sur le port ${PORT}`));
