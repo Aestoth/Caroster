@@ -1,12 +1,10 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {MDBContainer, MDBRow, MDBCol, MDBBtn,MDBInput, MDBFooter } from "mdbreact";
-import Navbar from "./Navbar";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
 import "bootstrap/dist/css/bootstrap.css";
+import { Link } from "react-router-dom";
 
+class form_add_voiture extends Component {
 
-class AddVoiture extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,25 +43,9 @@ class AddVoiture extends Component {
     });
   }
 
-
-  render() {
-    const Button = styled.button`
-      background-color: transparent;
-      border: none;
-    `;
-
-    return (
-      <div>
-        <Navbar />
-        <nav className="navbar navbar-dark primary-color d-flex justify-content-between">
-          <Link to="/Evenement">
-            <Button className="text-white">
-              <i className="far fa-arrow-alt-circle-left fa-2x" />
-            </Button>
-          </Link>
-       
-        </nav>
-        <div className="container-fluid cover-container d-flex">
+    render() {
+        return (
+            <div className="container-fluid cover-container d-flex">
           <div className="row col-12 align-items-center justify-content-center flex-fill mx-auto ">
             <form  onSubmit={this.handleSubmit} className="mx-auto">
               <div className="form-group col-12">
@@ -103,32 +85,8 @@ class AddVoiture extends Component {
             </form>
           </div>
         </div>
-        <MDBFooter color="blue" className="font-small pt-4 mt-5">
-          <MDBContainer fluid className="text-md-left">
-            <MDBRow className="justify-content-center">
-              <MDBCol sm="6">
-                <h2 className="title text-center">A propos</h2>
-                <p className="text-center">
-                  caroster.io est une façon simple et gratuite d'organiser du
-                  covoiturage avec un groupe de personne pour se rendre à un
-                  événement, un week-end, une fête, un tournoi ou juste quelque
-                  part. Seulement, 3 cliques et 1 e-mail suffisent. caroster.io
-                  est fait avec dans le but de vous simplifier vos covoiturages
-                  de groupe.
-                </p>
-              </MDBCol>
-            </MDBRow>
-          </MDBContainer>
-          <div className="footer-copyright py-3">
-            <MDBContainer fluid>
-              &copy; {new Date().getFullYear()} Copyright:{" "}
-              <a href="https://www.MDBootstrap.com"> Caroster </a>
-            </MDBContainer>
-          </div>
-        </MDBFooter>
-      </div>
-    );
-  }
+        );
+    }
 }
 
-export default AddVoiture;
+export default form_add_voiture;
