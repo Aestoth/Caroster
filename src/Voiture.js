@@ -3,29 +3,26 @@ import {
   MDBContainer,
   MDBRow,
   MDBCol,
-  MDBInput,
+  MDBIcon,
   MDBBtn,
-  MDBFooter,
-  Button
+  MDBPopover,
+  MDBPopoverHeader
 } from "mdbreact";
-import Navbar from "./Navbar";
-import { Link } from "react-router-dom";
+import Passagers from "./Passagers";
 
 class Voiture extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nom: "",
-      siege: "",
-      contact: "",
-      infoComp: "",
-      adresse: "",
-      date: "",
-      horaire: ""
+      show: false,
+      nom: []
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  changeDiv = () => {
+    const { show } = this.state;
+    this.setState({ show: !show });
+  };
 
   handleInputChange(e) {
     const target = e.target;
@@ -54,161 +51,94 @@ class Voiture extends Component {
 
   render() {
     return (
-      <div>
-        <Navbar />
-        <nav className="navbar navbar-dark primary-color d-flex justify-content-between">
-          <Link to="/Evenement">
-            <Button className="text-white">
-              <i className="far fa-arrow-alt-circle-left fa-2x" />
-            </Button>
-          </Link>
-        </nav>
-        <div className="container-fluid cover-container d-flex">
-          <div className="row col-12 align-items-center justify-content-center flex-fill mx-auto ">
-            <form onSubmit={this.handleSubmit} className="mx-auto">
-              <div className="form-group col-12">
-                <MDBInput
-                  type="text"
-                  label="Nom de la voiture"
-                  icon="car"
-                  group
-                  validate
-                  error="wrong"
-                  success="right"
-                  className="mb-0"
-                  name="nom"
-                  value={this.state.nom}
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <div className="form-group col-12">
-                <MDBInput
-                  type="number"
-                  label="Sièges"
-                  icon="chair"
-                  group
-                  validate
-                  error="wrong"
-                  success="right"
-                  className="mb-0"
-                  name="siege"
-                  value={this.state.siege}
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <div className="form-group col-12">
-                <MDBInput
-                  type="text"
-                  label="Contact"
-                  icon="phone"
-                  group
-                  validate
-                  error="wrong"
-                  success="right"
-                  className="mb-0"
-                  name="contact"
-                  value={this.state.contact}
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <div className="form-group col-12">
-                <MDBInput
-                  type="text"
-                  label="Notes"
-                  icon="pen"
-                  group
-                  validate
-                  error="wrong"
-                  success="right"
-                  className="mb-0"
-                  name="contact"
-                  value={this.state.infoComp}
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <h6 className="text-center text-uppercase mt-5">
-                Lieu de rendez-vous
-              </h6>
-              <div className="form-group col-12">
-                <MDBInput
-                  type="text"
-                  label="Adresse"
-                  icon="map-marker-alt"
-                  group
-                  validate
-                  error="wrong"
-                  success="right"
-                  className="mb-0"
-                  name="adresse"
-                  value={this.state.adresse}
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <div className="md-form form-group col-12">
-                <MDBInput
-                  type="date"
-                  icon="calendar"
-                  group
-                  validate
-                  error="wrong"
-                  success="right"
-                  className="mb-2"
-                  name="date"
-                  value={this.state.date}
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <div className="md-form form-group col-12">
-                <MDBInput
-                  type="time"
-                  icon="clock"
-                  format="hh:mm"
-                  group
-                  validate
-                  error="wrong"
-                  success="right"
-                  className="mb-2"
-                  name="horaire"
-                  value={this.state.horaire}
-                  onChange={this.handleInputChange}
-                />
-              </div>
-
-              <div className="text-center mt-2">
-                <MDBBtn className="text-uppercase text-white" type="cancel">
-                  Annuler
-                </MDBBtn>
-
-                <MDBBtn className="text-uppercase text-white" type="submit">
-                  Creer
-                </MDBBtn>
-              </div>
-            </form>
+      <div className="container">
+        <div className="card shadow">
+          <div className="card-header bg-info text-white d-flex justify-content-between">
+            <div />
+            <div>
+              <i className="fas fa-car mr-2" />
+              Non de la voiture
+            </div>
+            <div>
+              <i className="fas fa-pencil-alt " />
+            </div>
           </div>
-        </div>
-        <MDBFooter color="blue" className="font-small pt-4 mt-5">
-          <MDBContainer fluid className="text-md-left">
-            <MDBRow className="justify-content-center">
-              <MDBCol sm="6">
-                <h2 className="title text-center">A propos</h2>
-                <p className="text-center">
-                  caroster.io est une façon simple et gratuite d'organiser du
-                  covoiturage avec un groupe de personne pour se rendre à un
-                  événement, un week-end, une fête, un tournoi ou juste quelque
-                  part. Seulement, 3 cliques et 1 e-mail suffisent. caroster.io
-                  est fait avec dans le but de vous simplifier vos covoiturages
-                  de groupe.
-                </p>
+
+          <MDBContainer
+            className="border rounded mt-4"
+            style={{ width: "21rem" }}
+          >
+            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+              <MDBCol size="2">
+                <MDBIcon icon="phone" size="2x" />
+              </MDBCol>
+              <MDBCol
+                className="d-flex align-items-center d-flex justify-content-center"
+                size="8"
+              >
+                <MDBPopover placement="right" popover clickable id="popper2">
+                  <MDBBtn size="sm"> Contact</MDBBtn>
+
+                  <MDBPopoverHeader>0791234567</MDBPopoverHeader>
+                </MDBPopover>
+              </MDBCol>
+            </MDBRow>
+            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+              <MDBCol size="2">
+                <MDBIcon icon="calendar-alt" size="2x" className="" />
+              </MDBCol>
+              <MDBCol
+                className="d-flex align-items-center d-flex justify-content-center"
+                size="8"
+              >
+                mar. 28 mai à
+              </MDBCol>
+            </MDBRow>
+            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+              <MDBCol size="2">
+                <MDBIcon icon="map-marker-alt" size="2x" className=" " />
+              </MDBCol>
+              <MDBCol
+                className="d-flex align-items-center d-flex justify-content-center text-center"
+                size="8"
+              >
+                <a href="#">Rue Lamartine ...</a>
+              </MDBCol>
+            </MDBRow>
+            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+              <MDBCol size="2">
+                <MDBIcon icon="comment-alt" size="2x" />
+              </MDBCol>
+              <MDBCol
+                className="d-flex align-items-center d-flex justify-content-center text-center"
+                size="8"
+              >
+                Pas de chien , sssssssss, ssssssss, ssssssss, ssssssssssssss
+                sssss ssss
               </MDBCol>
             </MDBRow>
           </MDBContainer>
-          <div className="footer-copyright py-3">
-            <MDBContainer fluid>
-              &copy; {new Date().getFullYear()} Copyright:{" "}
-              <a href="https://www.MDBootstrap.com"> Caroster </a>
-            </MDBContainer>
-          </div>
-        </MDBFooter>
+
+          <ul className="list-group list-group-flush mt-4">
+            {this.state.show ? (
+              <Passagers changeDiv={() => this.changeDiv()} />
+            ) : (
+              <MDBBtn
+                color="primary"
+                className="list-group-item bg-primary border border-white mb-0"
+                onClick={this.changeDiv}
+              >
+                <i className="fas fa-user-plus  mr-3" />
+                Ajouter passager
+              </MDBBtn>
+            )}
+
+            <MDBBtn color="primary">
+              <i className="fas fa-user-plus  mr-3" />
+              Ajouter passager
+            </MDBBtn>
+          </ul>
+        </div>
       </div>
     );
   }

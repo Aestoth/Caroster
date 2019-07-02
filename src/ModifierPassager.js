@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { MDBInput } from "mdbreact";
-
 import styled from "styled-components";
 
 const InconButton = styled.button`
@@ -9,12 +8,12 @@ const InconButton = styled.button`
   border: none;
 `;
 
-class Passagers extends Component {
+class ModifierPassager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nom: "",
-      show: true
+      nom: [],
+      showModifierPassager: false
     };
   }
 
@@ -29,7 +28,7 @@ class Passagers extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch("http://localhost:3000/api/post/passagers", {
+    fetch("http://localhost:3000/api/post/passagers/modifier", {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -63,7 +62,7 @@ class Passagers extends Component {
             </InconButton>
           </div>
           <div className="col-1 mt-3">
-            <InconButton type="button" onClick={this.props.changeDiv}>
+            <InconButton type="button" onClick={this.props.ModifierPassager}>
               <i className="fas fa-times mt-4 ml-3" />
             </InconButton>
           </div>
@@ -73,4 +72,4 @@ class Passagers extends Component {
   }
 }
 
-export default Passagers;
+export default ModifierPassager;

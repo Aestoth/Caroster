@@ -1,24 +1,27 @@
 import React, { Component } from "react";
 import "./Evenement.css";
 import Navbar from "./Navbar";
-import Passagers from "./Passagers";
-import {
-  MDBFooter,
-  MDBContainer,
-  MDBBtn,
-  MDBIcon,
-  MDBListGroup,
-  MDBListGroupItem,
-  MDBPopover,
-  MDBPopoverHeader
-} from "mdbreact";
+
+import ListeDAttente from "./ListeDAttente";
+import Voiture from "./Voiture";
+
+import { MDBFooter, MDBContainer, MDBBtn, MDBIcon } from "mdbreact";
 
 class Evenement extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false
+      show: false,
+      showListeDAttente: false,
+      showModifierPassager: false,
+      nom: []
     };
+  }
+
+  componentDidMount() {
+    fetch(`http://localhost:3000/api/get/passagers`)
+      .then(response => response.json())
+      .then(data => this.setState({ nom: data.result }));
   }
 
   changeDiv = () => {
@@ -46,101 +49,15 @@ class Evenement extends Component {
         </nav>
         <div className="container">
           <div className="row d-flex justify-content-center mt-4">
-            <div className="col-md-5 col-sm-8 col-lg-5">
-              <div className="card shadow">
-                <div className="card-header bg-info text-center text-white">
-                  <i className="fas fa-list mr-2" />
-                  Liste d'attente
-                </div>
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item">
-                    <i className="fas fa-user-plus ml-3 mr-3" />
-                    Ajouter passagers
-                  </li>
-                  <li className="list-group-item">
-                    {" "}
-                    <i className="fas fa-user-plus ml-3 mr-3" />
-                    Ajouter passagers
-                  </li>
-                  <li className="list-group-item">
-                    {" "}
-                    <i className="fas fa-user-plus ml-3 mr-3" />
-                    Ajouter passagers
-                  </li>
-                </ul>
-              </div>
+            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6">
+              <ListeDAttente />
             </div>
-            <div className="col-md-9 marginTable col-sm-9 col-lg-8 col-xl-5">
-              <div className="card shadow">
-                <div className="card-header bg-info text-white d-flex justify-content-between">
-                  <div />
-                  <div>
-                    <i className="fas fa-car mr-2" />
-                    Non de la voiture
-                  </div>
-                  <div>
-                    <i className="fas fa-pencil-alt " />
-                  </div>
-                </div>
-
-                <MDBContainer className="mt-4 d-flex justify-content-center">
-                  <MDBListGroup style={{ width: "20rem" }}>
-                    <MDBListGroupItem color="secondary">
-                      {" "}
-                      <MDBIcon icon="phone" size="2x" className="mr-5" />
-                      <MDBPopover
-                        placement="right"
-                        popover
-                        clickable
-                        id="popper2"
-                      >
-                        <MDBBtn size="sm"> Contact</MDBBtn>
-
-                        <MDBPopoverHeader>0791234567</MDBPopoverHeader>
-                      </MDBPopover>
-                    </MDBListGroupItem>
-                    <MDBListGroupItem color="secondary">
-                      <MDBIcon icon="calendar-alt" size="2x" className="mr-5" />
-                      mar. 28 mai à
-                    </MDBListGroupItem>
-                    <MDBListGroupItem color="secondary">
-                      <MDBIcon
-                        icon="map-marker-alt"
-                        size="2x"
-                        className="mr-5 "
-                      />
-                      <a href="#">Rue Lamartine</a>
-                    </MDBListGroupItem>
-                    <MDBListGroupItem color="secondary">
-                      <MDBIcon icon="comment-alt" size="2x" className="mr-5" />
-                      Pas de chien
-                    </MDBListGroupItem>
-                  </MDBListGroup>
-                </MDBContainer>
-
-                <ul className="list-group list-group-flush mt-4">
-                  {this.state.show ? (
-                    <Passagers />
-                  ) : (
-                    <MDBBtn
-                      color="primary"
-                      className="list-group-item bg-primary border border-white mb-0"
-                      onClick={this.changeDiv}
-                    >
-                      <i className="fas fa-user-plus ml-3 mr-3" />
-                      Ajouter passagres
-                    </MDBBtn>
-                  )}
-
-                  <MDBBtn color="primary">
-                    <i className="fas fa-user-plus ml-3 mr-3" />
-                    Ajouter passagres
-                  </MDBBtn>
-                </ul>
-              </div>
+            <div className="col-md-6 marginTable col-sm-6 col-lg-6 col-xl-6">
+              <Voiture changeDiv={() => this.changeDiv()} />
             </div>
           </div>
         </div>
+
         <MDBFooter color="blue" className="font-small pt-4 mt-4">
           <MDBContainer fluid className="text-center text-md-center">
             <h5 className="title">A Propos</h5>
