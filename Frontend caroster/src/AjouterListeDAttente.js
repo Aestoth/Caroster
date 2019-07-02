@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import { MDBInput } from "mdbreact";
 
 import styled from "styled-components";
@@ -9,12 +10,12 @@ const InconButton = styled.button`
   border: none;
 `;
 
-class Passagers extends Component {
+class AjouterListeDAttente extends Component {
   constructor(props) {
     super(props);
     this.state = {
       nom: "",
-      show: true,
+
       showListeDAttente: true
     };
   }
@@ -64,7 +65,7 @@ class Passagers extends Component {
             </InconButton>
           </div>
           <div className="col-1 mt-3">
-            <InconButton type="button" onClick={this.props.changeDiv}>
+            <InconButton type="button" onClick={this.props.changeListeDAttente}>
               <i className="fas fa-times mt-4 ml-3" />
             </InconButton>
           </div>
@@ -74,4 +75,4 @@ class Passagers extends Component {
   }
 }
 
-export default Passagers;
+export default AjouterListeDAttente;

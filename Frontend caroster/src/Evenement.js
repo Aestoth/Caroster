@@ -8,27 +8,6 @@ import Voiture from "./Voiture";
 import { MDBFooter, MDBContainer, MDBBtn, MDBIcon } from "mdbreact";
 
 class Evenement extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: false,
-      showListeDAttente: false,
-      showModifierPassager: false,
-      nom: []
-    };
-  }
-
-  componentDidMount() {
-    fetch(`http://localhost:3000/api/get/passagers`)
-      .then(response => response.json())
-      .then(data => this.setState({ nom: data.result }));
-  }
-
-  changeDiv = () => {
-    const { show } = this.state;
-    this.setState({ show: !show });
-  };
-
   render() {
     return (
       <div>
