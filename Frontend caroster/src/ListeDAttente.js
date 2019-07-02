@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ModifierPassager from "./ModifierPassager";
 import { MDBBtn, MDBIcon, MDBCol, MDBRow, MDBContainer } from "mdbreact";
-import Passagers from "./Passagers";
+import AjouterListeDAttente from "./AjouterListeDAttente";
 
 class ListeDAttente extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class ListeDAttente extends Component {
     this.setState({ showListeDAttente: !showListeDAttente });
   };
 
-  ModifierPassager = () => {
+  ModifierPassager = id => {
     const { showModifierPassager } = this.state;
     this.setState({ showModifierPassager: !showModifierPassager });
   };
@@ -71,7 +71,9 @@ class ListeDAttente extends Component {
 
           <div className="list-group list-group-flush">
             {this.state.showListeDAttente ? (
-              <Passagers />
+              <AjouterListeDAttente
+                changeListeDAttente={() => this.changeListeDAttente()}
+              />
             ) : (
               <MDBBtn
                 color="grey darken-1"

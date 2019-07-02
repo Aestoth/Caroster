@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-//import { Link } from "react-router-dom";
+
 import "./App.css";
-//import "bootstrap/dist/css/bootstrap.min.css";
+
 import Evenement from "./Evenement";
 import CreerEvenement from "./CreerEvenement";
 import Acceuil from "./Acceuil";

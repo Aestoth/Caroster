@@ -6,7 +6,7 @@ const app = express();
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
- mongoose.connect(
+mongoose.connect(
   "mongodb://localhost/carosterTest",
   { useNewUrlParser: true }
 );
@@ -16,13 +16,16 @@ mongoose.connection.on("connected", err => {
   console.log("Connecté a la Base de donnees");
 });
 
-const PostSchema = mongoose.Schema({
+const PostSchemaEvenement = mongoose.Schema({
   titre: String,
-  email: String,
-  timestamp: String
+  email: String
 });
 
-const PostModel = mongoose.model("post", PostShema, "evenement");
+const PostModelEvenement = mongoose.model(
+  "evenement",
+  PostSchemaEvenement,
+  "evenement"
+);
 
 const PostShemaVoiture = mongoose.Schema({
   nom: String,
@@ -37,8 +40,7 @@ const PostShemaVoiture = mongoose.Schema({
 const PostModelVoiture = mongoose.model("voiture", PostShemaVoiture, "voiture");
 
 const PostShemaPassagers = mongoose.Schema({
-  nom: String,
-  timestamp: String
+  nom: String
 });
 const PostModelPassagers = mongoose.model(
   "passagers",
@@ -64,24 +66,21 @@ app.get("/", (req, res) => {
 app.post("/api/post/new", (req, res) => {
   let payload = {
     titre: req.body.titre,
-    email: req.body.email,
-    timestamp: new Date().getTime() * 1000
+    email: req.body.email
   };
 
-  const newPost = PostModel(payload);
+  const newPost = PostModelEvenement(payload);
   newPost.save((err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
 });
 
-
 //Function new Passagers////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.post("/api/post/passagers", (req, res) => {
   let payload = {
-    nom: req.body.nom,
-    timestamp: new Date().getTime() * 1000
+    nom: req.body.nom
   };
 
   const newPost = PostModelPassagers(payload);
@@ -142,7 +141,7 @@ app.post("/api/post/voiture", (req, res) => {
     infoComp: req.body.infoComp,
     adresse: req.body.adresse,
     date: req.body.date,
-    horaire: req.body.horaire,
+    horaire: req.body.horaire
   };
 
   const newPost = PostModelVoiture(payload);
@@ -152,43 +151,41 @@ app.post("/api/post/voiture", (req, res) => {
   });
 });
 
-
 //Récupérer Voiture///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get('/api/voiture/all', (req, res) => {
+app.get("/api/voiture/all", (req, res) => {
   PostModel.find((err, result) => {
-      if(err) res.send({success: false, msg: err});
-      res.send({success: true, result:result});
+    if (err) res.send({ success: false, msg: err });
+    res.send({ success: true, result: result });
   });
 });
 
 //Récupérer Voiture par ID ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get('/api/voiture/:id', (req, res) => {
+app.get("/api/voiture/:id", (req, res) => {
   PostModel.findById(req.params.id, (err, result) => {
-      if(err) res.send({success: false, msg: err});
-      res.send({success: true, result:result});
+    if (err) res.send({ success: false, msg: err });
+    res.send({ success: true, result: result });
   });
 });
 
 //Mise à jour Voiture par ID ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.put('/api/voiture/update/:id', (req, res) => {
+app.put("/api/voiture/update/:id", (req, res) => {
   const postData = req.body;
   PostModel.findByIdAndUpdate(req.params.id, postData, (err, result) => {
-      if(err) res.send({success: false, msg: err});
-      res.send({success: true, result:result});
+    if (err) res.send({ success: false, msg: err });
+    res.send({ success: true, result: result });
   });
 });
 
 //Delete Voiture///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.delete('/api/voiture/delete/:id', (req, res) => {
+app.delete("/api/voiture/delete/:id", (req, res) => {
   PostModel.findByIdAndDelete(req.params.id, (err, result) => {
-      if(err) res.send({success: false, msg: err});
-      res.send({success: true, result:result});
+    if (err) res.send({ success: false, msg: err });
+    res.send({ success: true, result: result });
   });
 });
-
 
 app.listen(PORT, () => console.log(`Serveur lancé sur le port ${PORT}`));
