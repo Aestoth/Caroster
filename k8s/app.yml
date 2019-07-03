@@ -11,6 +11,7 @@ spec:
   # On indique quel(s) pod(s) on veut cibler en sélectionnant par label(s)
   selector:
     app: caroster
+    tier: app
   type: ClusterIP
 ---
 apiVersion: extensions/v1beta1
@@ -37,17 +38,20 @@ metadata:
   name: caroster
   labels:
     app: caroster
+    tier: app
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: caroster
+      tier: app
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: caroster
+        tier: app
     spec:
       containers:
         - name: caroster
@@ -59,4 +63,4 @@ spec:
       ## Si l'image était dans un registry autre que Docker Hub,
       ## on indiquerait le secret où se trouve les identifiants
       imagePullSecrets:
-        - name: regcred
+        - name: reg-gitlab-registry
