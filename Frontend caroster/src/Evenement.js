@@ -8,7 +8,21 @@ import Voiture from "./Voiture";
 import { MDBFooter, MDBContainer, MDBBtn, MDBIcon } from "mdbreact";
 
 class Evenement extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      evenement: []
+    };
+  }
+
+  componentDidMount() {
+    fetch(`http://localhost:3000/api/event/${this.state.evenement._id}`)
+      .then(response => response.json())
+      .then(data => this.setState({ evenement: data.result }));
+  }
+
   render() {
+    console.log(this.state.evenement);
     return (
       <div>
         <Navbar />
@@ -16,9 +30,11 @@ class Evenement extends Component {
           <div className="text-white">
             <i className="far fa-arrow-alt-circle-left fa-2x" />
           </div>
-          <div className="ml-5 text-white">
-            <h5>Nom événement</h5>
-          </div>
+          {this.state.evenement.map(({ _id, titre }) => (
+            <div key={_id} className="ml-5 text-white">
+              <h5>{titre}</h5>
+            </div>
+          ))}
           <div>
             <MDBBtn color="indigo btn-sm">
               <MDBIcon icon="plus" size="2x" className="mr-2 " />

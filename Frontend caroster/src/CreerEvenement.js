@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import { MDBBtn, MDBInput } from "mdbreact";
+//import Evenement from "./Evenement";
 
 class CreerEvenement extends Component {
   constructor(props) {
     super(props);
     this.state = {
       titre: "",
-      email: ""
+      email: "",
+      evenementId: ""
     };
   }
 

@@ -18,6 +18,29 @@ class ModifierPassager extends Component {
     };
   }
 
+  deletePassager = e => {
+    e.preventDefault();
+    console.log(this.state.passagerModif._id);
+    fetch(
+      `http://localhost:3000/api/passagers/delete/${
+        this.state.passagerModif._id
+      }`,
+      {
+        method: "POST",
+        body: JSON.stringify(this.state),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      }
+    ).then(response => {
+      response.json().then(data => {
+        console.log(data.result);
+        this.props.changeModifierPassager(data.result);
+      });
+    });
+  };
+
   handleInputChange = e => {
     const target = e.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -70,8 +93,8 @@ class ModifierPassager extends Component {
             </InconButton>
           </div>
           <div className="col-1 mt-3">
-            <InconButton type="button" onClick={this.props.ModifierPassager}>
-              <i className="fas fa-times mt-4 ml-3" />
+            <InconButton type="button" onClick={this.deletePassager}>
+              <i className="fas fa-trash-alt mt-4 ml-3" />
             </InconButton>
           </div>
         </div>

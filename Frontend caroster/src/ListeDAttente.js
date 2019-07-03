@@ -15,7 +15,7 @@ class ListeDAttente extends Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/api/get/passagers`)
+    fetch(`http://localhost:3000/api/passagers`)
       .then(response => response.json())
       .then(data => this.setState({ nom: data.result }));
   }
@@ -32,8 +32,6 @@ class ListeDAttente extends Component {
       showModifierPassager: !showModifierPassager,
       passagerModif: _id
     });
-    console.log("_id", _id);
-    console.log("id", id);
   };
 
   changeModifierPassager = result => {

@@ -76,13 +76,35 @@ app.post("/api/event/new", (req, res) => {
   });
 });
 
-app.post("/api/event/update/:id", (req, res) => {
+app.post("/api/passagers/update/:id", (req, res) => {
   let id = req.params.id;
   let payload = req.body;
-  PostModelEvenement.findOneAndUpdate(id, payload, (err, result) => {
+  PostModelPassagers.findOneAndUpdate(
+    { _id: id },
+    { $set: payload },
+    (err, result) => {
+      if (err) res.send({ success: false, msg: err });
+
+      res.send({ success: true, result: result });
+    }
+  );
+});
+
+app.get("/api/event", (req, res) => {
+  PostModelEvenement.find((err, result) => {
     if (err) res.send({ success: false, msg: err });
 
     res.send({ success: true, result: result });
+  });
+});
+
+app.get("/api/event/:id", (req, res) => {
+  let id = req.params.id;
+  PostModelEvenement.findById(id).then(doc => {
+    if (!doc) {
+      return res.status(404).end();
+    }
+    return res.status(200).json(doc);
   });
 });
 
@@ -109,7 +131,7 @@ app.post("/api/post/passagers", (req, res) => {
   });
 });
 
-app.get("/api/get/passagers", (req, res) => {
+app.get("/api/passagers", (req, res) => {
   PostModelPassagers.find((err, result) => {
     if (err) res.send({ success: false, msg: err });
 

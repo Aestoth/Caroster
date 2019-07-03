@@ -23,7 +23,7 @@ class App extends Component {
             <Route exact path="/" component={Acceuil} />
             <Route path="/CreerEvenement" component={CreerEvenement} />
             <Route path="/Inscription" component={Inscription} />
-            <Route path="/Evenement" component={Evenement} />
+            <Route path="/Evenement/:id" component={Evenement} />
             <Route path="/Voiture" component={Voiture} />
           </Switch>
         </div>
