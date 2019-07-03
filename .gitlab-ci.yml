@@ -4,16 +4,14 @@ stages:
   - build
   - deploy
 
-before_script:
-  - git checkout -B "$CI_BUILD_REF_NAME" "$CI_BUILD_REF"
-
 Build:
   only:
     - master
   stage: build
   script:
+    - git checkout -B "$CI_BUILD_REF_NAME" "$CI_BUILD_REF"
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p$CI_REGISTRY_PASSWORD
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA $DIRECTORY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
 
 Déploiement:
