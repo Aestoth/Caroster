@@ -1,0 +1,62 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: caroster # Nom du service
+spec:
+  ports:
+    - port: 80 # Port en écoute du service
+      protocol: TCP
+      targetPort: 3000 # Port du pod sur lequel le service va cibler
+  # On indique quel(s) pod(s) on veut cibler en sélectionnant par label(s)
+  selector:
+    app: caroster
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: caroster # Nom de l'ingress
+spec:
+  rules:
+    - host: caroster.test.octr.ee # Nom de domaine qui sera mappé au service
+      http:
+        paths:
+          # Le service et son port à cibler
+          - backend:
+              serviceName: caroster
+              servicePort: 80
+            path: /
+  # On indique où trouver le certificat TLS à utiliser, si nécessaire
+  tls:
+    - secretName: tls-cert
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caroster
+  labels:
+    app: caroster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: caroster
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: caroster
+    spec:
+      containers:
+        - name: caroster
+          image: git.octree.ch:4567/o/caroster:<TAG>
+          imagePullPolicy: Always
+          env:
+            - name: MONGO_URL
+              value: caroster-db
+      ## Si l'image était dans un registry autre que Docker Hub,
+      ## on indiquerait le secret où se trouve les identifiants
+      imagePullSecrets:
+        - name: regcred
