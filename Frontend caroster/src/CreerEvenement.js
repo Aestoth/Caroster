@@ -10,23 +10,20 @@ class CreerEvenement extends Component {
       titre: "",
       email: ""
     };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleInputChange(e) {
+  handleInputChange = e => {
     const target = e.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     this.setState({
       [name]: value
     });
-  }
+  };
 
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault();
-    fetch("http://localhost:3000/api/post/new", {
+    fetch("http://localhost:3000/api/event/new", {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -38,7 +35,7 @@ class CreerEvenement extends Component {
         console.log("Success" + data);
       });
     });
-  }
+  };
 
   render() {
     return (

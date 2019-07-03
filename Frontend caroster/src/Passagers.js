@@ -30,7 +30,7 @@ class Passagers extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch("http://localhost:3000/api/post/passagers", {
+    fetch("http://localhost:3000/api/passagers/new", {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {

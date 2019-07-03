@@ -114,7 +114,6 @@ class Voiture extends Component {
                 size="8"
               >
                 Pas de chien , sssssssss, ssssssss, ssssssss, ssssssssssssss
-                sssss ssss
               </MDBCol>
             </MDBRow>
           </MDBContainer>

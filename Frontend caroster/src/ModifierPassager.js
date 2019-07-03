@@ -12,8 +12,9 @@ class ModifierPassager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nom: [],
-      showModifierPassager: false
+      nom: this.props.passagerModif.nom,
+      showModifierPassager: false,
+      passagerModif: this.props.passagerModif
     };
   }
 
@@ -28,16 +29,23 @@ class ModifierPassager extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch("http://localhost:3000/api/post/passagers/modifier", {
-      method: "POST",
-      body: JSON.stringify(this.state),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+    console.log(this.state.passagerModif._id);
+    fetch(
+      `http://localhost:3000/api/passagers/update/${
+        this.state.passagerModif._id
+      }`,
+      {
+        method: "POST",
+        body: JSON.stringify(this.state),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
       }
-    }).then(response => {
+    ).then(response => {
       response.json().then(data => {
-        console.log("Success" + data);
+        console.log(data.result);
+        this.props.changeModifierPassager(data.result);
       });
     });
   };

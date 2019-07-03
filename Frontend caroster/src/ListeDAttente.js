@@ -9,7 +9,8 @@ class ListeDAttente extends Component {
     this.state = {
       showListeDAttente: false,
       showModifierPassager: false,
-      nom: []
+      nom: [],
+      passagerModif: []
     };
   }
 
@@ -25,7 +26,19 @@ class ListeDAttente extends Component {
   };
 
   ModifierPassager = id => {
+    const _id = this.state.nom.find(item => item._id === id);
     const { showModifierPassager } = this.state;
+    this.setState({
+      showModifierPassager: !showModifierPassager,
+      passagerModif: _id
+    });
+    console.log("_id", _id);
+    console.log("id", id);
+  };
+
+  changeModifierPassager = result => {
+    const { showModifierPassager } = this.state;
+
     this.setState({ showModifierPassager: !showModifierPassager });
   };
 
@@ -88,11 +101,12 @@ class ListeDAttente extends Component {
           <MDBContainer className="mt-3">
             {this.state.showModifierPassager ? (
               <ModifierPassager
-                ModifierPassager={() => this.ModifierPassager()}
+                passagerModif={this.state.passagerModif}
+                changeModifierPassager={() => this.changeModifierPassager()}
               />
             ) : (
-              this.state.nom.map(({ id, nom }) => (
-                <MDBRow key={id}>
+              this.state.nom.map(({ _id, nom }) => (
+                <MDBRow key={_id}>
                   <MDBCol size="5" className="mr-0 mt-2">
                     {" "}
                     <i className="fas fa-user pr-0 mr-1" />
@@ -111,7 +125,7 @@ class ListeDAttente extends Component {
                   <MDBCol size="1" className="mt-2">
                     <MDBIcon
                       icon="pencil-alt"
-                      onClick={() => this.ModifierPassager(id)}
+                      onClick={() => this.ModifierPassager(_id)}
                     />
                   </MDBCol>
                 </MDBRow>

@@ -61,9 +61,9 @@ app.get("/", (req, res) => {
   res.send("Salut a tous");
 });
 
-//Function new evenement//////////////////////////////////////////////////////////////////////////////////////////////////////
+//Function Evenement//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.post("/api/post/new", (req, res) => {
+app.post("/api/event/new", (req, res) => {
   let payload = {
     titre: req.body.titre,
     email: req.body.email
@@ -72,6 +72,25 @@ app.post("/api/post/new", (req, res) => {
   const newPost = PostModelEvenement(payload);
   newPost.save((err, result) => {
     if (err) res.send({ success: false, msg: err });
+    res.send({ success: true, result: result });
+  });
+});
+
+app.post("/api/event/update/:id", (req, res) => {
+  let id = req.params.id;
+  let payload = req.body;
+  PostModelEvenement.findOneAndUpdate(id, payload, (err, result) => {
+    if (err) res.send({ success: false, msg: err });
+
+    res.send({ success: true, result: result });
+  });
+});
+
+app.post("/api/event/delete/:id", (req, res) => {
+  let id = req.params.id;
+  PostModelEvenement.findById(id).deleteOne((err, result) => {
+    if (err) res.send({ success: false, msg: err });
+
     res.send({ success: true, result: result });
   });
 });
@@ -98,33 +117,19 @@ app.get("/api/get/passagers", (req, res) => {
   });
 });
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-app.post("/api/post/update", (req, res) => {
-  let id = req.body._id;
-  let payload = req.body;
-  PostModel.findOneAndUpdate(id, payload, (err, result) => {
-    if (err) res.send({ success: false, msg: err });
-
-    res.send({ success: true, result: result });
-  });
-});
-
-app.post("/api/post/remove", (req, res) => {
-  let id = req.body._id;
-  PostModel.findById(id).deleteOne((err, result) => {
-    if (err) res.send({ success: false, msg: err });
-
-    res.send({ success: true, result: result });
-  });
-});
-
-//Modifier Passagers///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-app.post("/api/post/passagers/modifier", (req, res) => {
-  let id = req.body._id;
+app.post("/api/passagers/update/:id", (req, res) => {
+  let id = req.params.id;
   let payload = req.body;
   PostModelPassagers.findOneAndUpdate(id, payload, (err, result) => {
+    if (err) res.send({ success: false, msg: err });
+
+    res.send({ success: true, result: result });
+  });
+});
+
+app.post("/api/passagers/delete/:id", (req, res) => {
+  let id = req.params.id;
+  PostModelPassagers.findById(id).deleteOne((err, result) => {
     if (err) res.send({ success: false, msg: err });
 
     res.send({ success: true, result: result });
