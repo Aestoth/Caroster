@@ -43,18 +43,14 @@ class Evenement extends Component {
 
   deleteEvenement = e => {
     e.preventDefault();
-
-    fetch(
-      `http://localhost:3000/api/event/delete/${this.props.match.params.id}`,
-      {
-        method: "POST",
-        body: JSON.stringify(this.state),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
+    fetch(`${backendURL()}/api/event/delete/${this.props.match.params.id}`, {
+      method: "POST",
+      body: JSON.stringify(this.state),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
       }
-    ).then(response => {
+    }).then(response => {
       response.json().then(data => {
         console.log(data.result);
         this.props.history.push("/");
@@ -101,7 +97,7 @@ class Evenement extends Component {
             <MDBModalHeader toggle={this.toggle}>
               {this.state.evenement.titre}
             </MDBModalHeader>
-            <MDBModalBody>Attention ! L'événement será supprimé </MDBModalBody>
+            <MDBModalBody>Attention! L'événement será supprimé </MDBModalBody>
             <MDBModalFooter>
               <MDBBtn color="secondary" onClick={this.toggle}>
                 Annuler

@@ -7,9 +7,12 @@ const app = express();
 const mongoose = require("mongoose");
 
 const MONGO_URL = process.env.MONGO_URL || "localhost";
-mongoose.connect(`mongodb://${MONGO_URL}/caroster`, {
-  useNewUrlParser: true
-});
+mongoose.connect(
+  `mongodb://${MONGO_URL}/caroster`,
+  {
+    useNewUrlParser: true
+  }
+);
 
 mongoose.connection.on("connected", err => {
   if (err) throw err;
@@ -72,20 +75,6 @@ app.post("/api/event/new", (req, res) => {
   });
 });
 
-app.post("/api/passagers/update/:id", (req, res) => {
-  let id = req.params.id;
-  let payload = req.body;
-  PostModelPassagers.findOneAndUpdate(
-    { _id: id },
-    { $set: payload },
-    (err, result) => {
-      if (err) res.send({ success: false, msg: err });
-
-      res.send({ success: true, result: result });
-    }
-  );
-});
-
 app.get("/api/event", (req, res) => {
   PostModelEvenement.find((err, result) => {
     if (err) res.send({ success: false, msg: err });
@@ -115,7 +104,7 @@ app.post("/api/event/delete/:id", (req, res) => {
 
 //Function new Passagers////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.post("/api/post/passagers", (req, res) => {
+app.post("/api/passagers/new", (req, res) => {
   let payload = {
     nom: req.body.nom
   };
@@ -138,11 +127,15 @@ app.get("/api/passagers", (req, res) => {
 app.post("/api/passagers/update/:id", (req, res) => {
   let id = req.params.id;
   let payload = req.body;
-  PostModelPassagers.findOneAndUpdate(id, payload, (err, result) => {
-    if (err) res.send({ success: false, msg: err });
+  PostModelPassagers.findOneAndUpdate(
+    { _id: id },
+    { $set: payload },
+    (err, result) => {
+      if (err) res.send({ success: false, msg: err });
 
-    res.send({ success: true, result: result });
-  });
+      res.send({ success: true, result: result });
+    }
+  );
 });
 
 app.post("/api/passagers/delete/:id", (req, res) => {
