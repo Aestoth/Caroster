@@ -67,7 +67,7 @@ class Voiture extends Component {
 
           <MDBContainer
             className="border rounded mt-4"
-            style={{ width: "20rem" }}
+            style={{ width: "22rem" }}
           >
             <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
               <MDBCol size="2">

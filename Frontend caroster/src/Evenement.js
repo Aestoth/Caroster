@@ -72,7 +72,7 @@ class Evenement extends Component {
             <i className="far fa-arrow-alt-circle-left fa-2x" />
           </div>
 
-          <div key={this.state.evenement._id} className="ml-5 text-white">
+          <div className="ml-5 text-white">
             <h5>{this.state.evenement.titre}</h5>
           </div>
 
@@ -93,7 +93,7 @@ class Evenement extends Component {
             </div>
           </div>
         </div>
-        <div className="mt-3 d-flex justify-content-center">
+        <div className="mt-4 d-flex justify-content-center">
           <MDBBtn color="danger" onClick={this.toggle}>
             Supprimer Evenement
           </MDBBtn>
@@ -101,13 +101,13 @@ class Evenement extends Component {
             <MDBModalHeader toggle={this.toggle}>
               {this.state.evenement.titre}
             </MDBModalHeader>
-            <MDBModalBody>Attention l'evenement será supprimer</MDBModalBody>
+            <MDBModalBody>Attention, l'evenement será supprimé !</MDBModalBody>
             <MDBModalFooter>
               <MDBBtn color="secondary" onClick={this.toggle}>
-                Close
+                Annuler
               </MDBBtn>
               <MDBBtn onClick={this.deleteEvenement} color="primary">
-                Save changes
+                Continuer
               </MDBBtn>
             </MDBModalFooter>
           </MDBModal>
