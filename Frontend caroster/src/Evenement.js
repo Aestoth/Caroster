@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 
 import ListeDAttente from "./ListeDAttente";
 import Voiture from "./Voiture";
+import backendURL from "./helpers/getBackendURL";
 
 import {
   MDBFooter,
@@ -26,7 +27,7 @@ class Evenement extends Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/api/event/${this.props.match.params.id}`)
+    fetch(`${backendURL()}/api/event/${this.props.match.params.id}`)
       .then(response => response.json())
       .then(data => {
         console.log("event in fetch", data);

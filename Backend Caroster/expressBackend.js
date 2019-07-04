@@ -1,15 +1,15 @@
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const path = require("path");
 const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
-mongoose.connect(
-  "mongodb://localhost/carosterTest",
-  { useNewUrlParser: true }
-);
+const MONGO_URL = process.env.MONGO_URL || "localhost";
+mongoose.connect(`mongodb://${MONGO_URL}/caroster`, {
+  useNewUrlParser: true
+});
 
 mongoose.connection.on("connected", err => {
   if (err) throw err;
@@ -52,14 +52,10 @@ mongoose.set("useFindAndModify", false); //verifier!!!!!!!!!!!!!!!!!!!!
 
 const PORT = 3000;
 
-app.use(morgan("combined "));
+app.use(morgan("combined"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-
-app.get("/", (req, res) => {
-  res.send("Salut a tous");
-});
 
 //Function Evenement//////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -214,5 +210,11 @@ app.delete("/api/voiture/delete/:id", (req, res) => {
     res.send({ success: true, result: result });
   });
 });
+
+// Sert les fichiers du frontend
+app.use(express.static("../Frontend caroster/build"));
+app.use((req, res) =>
+  res.sendFile(path.join(__dirname, "../Frontend caroster/build/index.html"))
+);
 
 app.listen(PORT, () => console.log(`Serveur lancé sur le port ${PORT}`));

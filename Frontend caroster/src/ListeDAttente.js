@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ModifierPassager from "./ModifierPassager";
 import { MDBBtn, MDBIcon, MDBCol, MDBRow, MDBContainer } from "mdbreact";
 import AjouterListeDAttente from "./AjouterListeDAttente";
+import backendURL from "./helpers/getBackendURL";
 
 class ListeDAttente extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class ListeDAttente extends Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/api/passagers`)
+    fetch(`${backendURL()}/api/passagers`)
       .then(response => response.json())
       .then(data => this.setState({ nom: data.result }));
   }
@@ -51,7 +52,7 @@ class ListeDAttente extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch("http://localhost:3000/api/post/passagers", {
+    fetch(`${backendURL()}/api/post/passagers`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {

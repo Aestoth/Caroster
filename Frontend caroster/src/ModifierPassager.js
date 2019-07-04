@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MDBInput } from "mdbreact";
 import styled from "styled-components";
+import backendURL from "./helpers/getBackendURL";
 
 const InconButton = styled.button`
   background: none;
@@ -22,9 +23,7 @@ class ModifierPassager extends Component {
     e.preventDefault();
     console.log(this.state.passagerModif._id);
     fetch(
-      `http://localhost:3000/api/passagers/delete/${
-        this.state.passagerModif._id
-      }`,
+      `${backendURL()}/api/passagers/delete/${this.state.passagerModif._id}`,
       {
         method: "POST",
         body: JSON.stringify(this.state),
@@ -54,9 +53,7 @@ class ModifierPassager extends Component {
     e.preventDefault();
     console.log(this.state.passagerModif._id);
     fetch(
-      `http://localhost:3000/api/passagers/update/${
-        this.state.passagerModif._id
-      }`,
+      `${backendURL()}/api/passagers/update/${this.state.passagerModif._id}`,
       {
         method: "POST",
         body: JSON.stringify(this.state),

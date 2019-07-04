@@ -9,6 +9,7 @@ import {
   MDBPopoverHeader
 } from "mdbreact";
 import Passagers from "./Passagers";
+import backendURL from "./helpers/getBackendURL";
 
 class Voiture extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class Voiture extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    fetch("http://localhost:3000/api/post/voiture", {
+    fetch(`${backendURL()}/api/post/voiture`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
