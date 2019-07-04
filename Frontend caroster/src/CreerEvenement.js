@@ -34,7 +34,8 @@ class CreerEvenement extends Component {
       }
     }).then(response => {
       response.json().then(data => {
-        console.log("Success" + data);
+        console.log("Success", data);
+        this.props.history.push("/Evenement/" + data.result._id);
       });
     });
   };
@@ -82,7 +83,7 @@ class CreerEvenement extends Component {
               />
             </div>
             <div className="d-flex justify-content-center mt-4">
-              <Link to="/Evenement">
+              <Link to="/">
                 <MDBBtn color="primary">Annuler</MDBBtn>
               </Link>
 

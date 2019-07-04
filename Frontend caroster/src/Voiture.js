@@ -113,7 +113,7 @@ class Voiture extends Component {
                 className="d-flex align-items-center d-flex justify-content-center text-center"
                 size="8"
               >
-                Pas de chien , sssssssss, ssssssss, ssssssss, ssssssssssssss
+                Pas de chien
               </MDBCol>
             </MDBRow>
           </MDBContainer>

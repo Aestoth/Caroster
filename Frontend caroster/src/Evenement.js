@@ -5,24 +5,64 @@ import Navbar from "./Navbar";
 import ListeDAttente from "./ListeDAttente";
 import Voiture from "./Voiture";
 
-import { MDBFooter, MDBContainer, MDBBtn, MDBIcon } from "mdbreact";
+import {
+  MDBFooter,
+  MDBContainer,
+  MDBBtn,
+  MDBIcon,
+  MDBModalHeader,
+  MDBModal,
+  MDBModalBody,
+  MDBModalFooter
+} from "mdbreact";
 
 class Evenement extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      evenement: []
+      evenement: false,
+      mondal: false
     };
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/api/event/${this.state.evenement._id}`)
+    fetch(`http://localhost:3000/api/event/${this.props.match.params.id}`)
       .then(response => response.json())
-      .then(data => this.setState({ evenement: data.result }));
+      .then(data => {
+        console.log("event in fetch", data);
+        this.setState({ evenement: data });
+      });
   }
 
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
+
+  deleteEvenement = e => {
+    e.preventDefault();
+
+    fetch(
+      `http://localhost:3000/api/event/delete/${this.props.match.params.id}`,
+      {
+        method: "POST",
+        body: JSON.stringify(this.state),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      }
+    ).then(response => {
+      response.json().then(data => {
+        console.log(data.result);
+        this.props.history.push("/");
+      });
+    });
+  };
+
   render() {
-    console.log(this.state.evenement);
+    if (!this.state.evenement) return "loading";
     return (
       <div>
         <Navbar />
@@ -30,11 +70,11 @@ class Evenement extends Component {
           <div className="text-white">
             <i className="far fa-arrow-alt-circle-left fa-2x" />
           </div>
-          {this.state.evenement.map(({ _id, titre }) => (
-            <div key={_id} className="ml-5 text-white">
-              <h5>{titre}</h5>
-            </div>
-          ))}
+
+          <div key={this.state.evenement._id} className="ml-5 text-white">
+            <h5>{this.state.evenement.titre}</h5>
+          </div>
+
           <div>
             <MDBBtn color="indigo btn-sm">
               <MDBIcon icon="plus" size="2x" className="mr-2 " />
@@ -52,7 +92,25 @@ class Evenement extends Component {
             </div>
           </div>
         </div>
-
+        <div className="mt-3 d-flex justify-content-center">
+          <MDBBtn color="danger" onClick={this.toggle}>
+            Supprimer Evenement
+          </MDBBtn>
+          <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
+            <MDBModalHeader toggle={this.toggle}>
+              {this.state.evenement.titre}
+            </MDBModalHeader>
+            <MDBModalBody>Attention l'evenement será supprimer</MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn color="secondary" onClick={this.toggle}>
+                Close
+              </MDBBtn>
+              <MDBBtn onClick={this.deleteEvenement} color="primary">
+                Save changes
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModal>
+        </div>
         <MDBFooter color="blue" className="font-small pt-4 mt-4">
           <MDBContainer fluid className="text-center text-md-center">
             <h5 className="title">A Propos</h5>
