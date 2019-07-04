@@ -34,9 +34,9 @@ class Voiture extends Component {
     });
   }
 
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault();
-    fetch(`${backendURL()}/api/post/voiture`, {
+    fetch(`${backendURL()}/api/passagers/new`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -48,7 +48,7 @@ class Voiture extends Component {
         console.log("Success" + data);
       });
     });
-  }
+  };
 
   render() {
     return (
@@ -118,7 +118,6 @@ class Voiture extends Component {
               </MDBCol>
             </MDBRow>
           </MDBContainer>
-
           <ul className="list-group list-group-flush mt-4">
             {this.state.show ? (
               <Passagers changeDiv={() => this.changeDiv()} />

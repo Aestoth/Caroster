@@ -16,7 +16,6 @@ class AjouterListeDAttente extends Component {
     super(props);
     this.state = {
       nom: "",
-
       showListeDAttente: true
     };
   }

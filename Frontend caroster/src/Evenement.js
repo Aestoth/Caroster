@@ -95,13 +95,13 @@ class Evenement extends Component {
         </div>
         <div className="mt-4 d-flex justify-content-center">
           <MDBBtn color="danger" onClick={this.toggle}>
-            Supprimer Evenement
+            Supprimer événement
           </MDBBtn>
           <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
             <MDBModalHeader toggle={this.toggle}>
               {this.state.evenement.titre}
             </MDBModalHeader>
-            <MDBModalBody>Attention, l'evenement será supprimé !</MDBModalBody>
+            <MDBModalBody>Attention ! L'événement será supprimé </MDBModalBody>
             <MDBModalFooter>
               <MDBBtn color="secondary" onClick={this.toggle}>
                 Annuler

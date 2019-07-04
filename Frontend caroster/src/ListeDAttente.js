@@ -52,7 +52,7 @@ class ListeDAttente extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch(`${backendURL()}/api/post/passagers`, {
+    fetch(`${backendURL()}/api/passagers/new`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
