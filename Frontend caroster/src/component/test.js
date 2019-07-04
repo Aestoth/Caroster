@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import Passagers from "./Passagers";
 import ListeDAttente from "./ListeDAttente";
 import ModifierPassager from "./ModifierPassager";
+import backendURL from "../helpers/getBackendURL";
 
 import {
   MDBFooter,
@@ -28,7 +29,7 @@ class Evenement extends Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/api/get/passagers`)
+    fetch(`${backendURL()}/api/get/passagers`)
       .then(response => response.json())
       .then(data => this.setState({ nom: data.result }));
   }

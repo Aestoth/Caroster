@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import { MDBBtn, MDBInput } from "mdbreact";
 //import Evenement from "./Evenement";
+import backendURL from "./helpers/getBackendURL";
 
 class CreerEvenement extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class CreerEvenement extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch("http://localhost:3000/api/event/new", {
+    fetch(`${backendURL()}/api/event/new`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { MDBInput } from "mdbreact";
 
 import styled from "styled-components";
+import backendURL from "./helpers/getBackendURL";
 
 const InconButton = styled.button`
   background: none;
@@ -30,7 +31,7 @@ class Passagers extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch("http://localhost:3000/api/passagers/new", {
+    fetch(`${backendURL()}api/passagers/new`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {

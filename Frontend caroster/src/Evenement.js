@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 
 import ListeDAttente from "./ListeDAttente";
 import Voiture from "./Voiture";
+import backendURL from "./helpers/getBackendURL";
 
 import { MDBFooter, MDBContainer, MDBBtn, MDBIcon } from "mdbreact";
 
@@ -16,7 +17,7 @@ class Evenement extends Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/api/event/${this.state.evenement._id}`)
+    fetch(`${backendURL()}/api/event/${this.state.evenement._id}`)
       .then(response => response.json())
       .then(data => this.setState({ evenement: data.result }));
   }
