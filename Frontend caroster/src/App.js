@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-// import "react-devtools";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
 import "./App.css";
-
 import Evenement from "./Evenement";
 import CreerEvenement from "./CreerEvenement";
 import Acceuil from "./Acceuil";
 import Inscription from "./Inscription";
-import Voiture from "./Voiture";
-
+import AjouterVoiture from "./AjouterVoiture";
+import ModifierVoiture from "./ModifierVoiture";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
@@ -24,7 +21,8 @@ class App extends Component {
             <Route path="/CreerEvenement" component={CreerEvenement} />
             <Route path="/Inscription" component={Inscription} />
             <Route path="/Evenement/:id" component={Evenement} />
-            <Route path="/Voiture" component={Voiture} />
+            <Route path="/Ajouter-voiture" component={AjouterVoiture} />
+            <Route path="/ModifierVoiture/:id" component={ModifierVoiture} />
           </Switch>
         </div>
       </Router>
