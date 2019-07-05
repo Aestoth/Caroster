@@ -15,8 +15,7 @@ class Passagers extends Component {
     super(props);
     this.state = {
       nom: "",
-      show: false,
-      showListeDAttente: true
+      show: false
     };
   }
 

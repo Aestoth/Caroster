@@ -35,6 +35,7 @@ class ModifierPassager extends Component {
     ).then(response => {
       response.json().then(data => {
         console.log(data.result);
+        this.props.fetchPassagers();
         this.props.changeModifierPassager(data.result);
       });
     });

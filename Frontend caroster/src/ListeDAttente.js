@@ -10,16 +10,19 @@ class ListeDAttente extends Component {
     this.state = {
       showListeDAttente: false,
       showModifierPassager: false,
-      nom: [],
+      passagers: [],
       passagerModif: []
     };
   }
-
   componentDidMount() {
+    this.fetchPassagers();
+  }
+
+  fetchPassagers = () => {
     fetch(`${backendURL()}/api/passagers`)
       .then(response => response.json())
-      .then(data => this.setState({ nom: data.result }));
-  }
+      .then(data => this.setState({ passagers: data.result }));
+  };
 
   changeListeDAttente = () => {
     const { showListeDAttente } = this.state;
@@ -27,7 +30,7 @@ class ListeDAttente extends Component {
   };
 
   ModifierPassager = id => {
-    const _id = this.state.nom.find(item => item._id === id);
+    const _id = this.state.passagers.find(item => item._id === id);
     const { showModifierPassager } = this.state;
     this.setState({
       showModifierPassager: !showModifierPassager,
@@ -67,6 +70,7 @@ class ListeDAttente extends Component {
   };
 
   render() {
+    if (!this.state.passagers) return "loading...";
     return (
       <div className="container">
         <div className="card shadow">
@@ -85,6 +89,7 @@ class ListeDAttente extends Component {
             {this.state.showListeDAttente ? (
               <AjouterListeDAttente
                 changeListeDAttente={() => this.changeListeDAttente()}
+                fetchPassagers={() => this.fetchPassagers()}
               />
             ) : (
               <MDBBtn
@@ -102,9 +107,10 @@ class ListeDAttente extends Component {
               <ModifierPassager
                 passagerModif={this.state.passagerModif}
                 changeModifierPassager={() => this.changeModifierPassager()}
+                fetchPassagers={() => this.fetchPassagers()}
               />
             ) : (
-              this.state.nom.map(({ _id, nom }) => (
+              this.state.passagers.map(({ _id, nom }) => (
                 <MDBRow key={_id}>
                   <MDBCol size="5" className="mr-0 mt-2">
                     {" "}

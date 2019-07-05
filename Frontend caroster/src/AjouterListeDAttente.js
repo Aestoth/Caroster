@@ -20,8 +20,6 @@ class AjouterListeDAttente extends Component {
     };
   }
 
-  componentDidMount() {}
-
   handleInputChange = e => {
     const target = e.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -43,10 +41,15 @@ class AjouterListeDAttente extends Component {
     }).then(response => {
       response.json().then(data => {
         console.log("Success" + data);
+        this.props.fetchPassagers();
         this.props.changeListeDAttente(data.result);
       });
     });
   };
+
+  // componentDidMount() {
+  //   this.handleSubmit();
+  // }
 
   render() {
     return (
