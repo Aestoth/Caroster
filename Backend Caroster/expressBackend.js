@@ -48,8 +48,7 @@ const PostModelPassagers = mongoose.model(
   "passagers"
 );
 
-mongoose.set("useFindAndModify", false); //verifier!!!!!!!!!!!!!!!!!!!!
-
+mongoose.set("useFindAndModify", false);
 const PORT = 3000;
 
 app.use(morgan("combined"));

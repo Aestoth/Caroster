@@ -10,8 +10,7 @@ class CreerEvenement extends Component {
     super(props);
     this.state = {
       titre: "",
-      email: "",
-      evenementId: ""
+      email: ""
     };
   }
 
