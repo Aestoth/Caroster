@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Evenement.css";
 import Navbar from "./Navbar";
-
+import { Link } from "react-router-dom";
 import ListeDAttente from "./ListeDAttente";
 import Voiture from "./Voiture";
 import backendURL from "./helpers/getBackendURL";
@@ -73,10 +73,12 @@ class Evenement extends Component {
           </div>
 
           <div>
+            <Link to { "/Ajouter-voiture" }>
             <MDBBtn color="indigo btn-sm">
               <MDBIcon icon="plus" size="2x" className="mr-2 " />
               <MDBIcon icon="car" size="2x" />
             </MDBBtn>
+            </Link>
           </div>
         </nav>
         <div className="container">
