@@ -34,6 +34,12 @@ class Voiture extends Component {
     });
   }
 
+  changeShowPassager = result => {
+    const { show } = this.state;
+
+    this.setState({ show: !show });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     fetch(`${backendURL()}/api/passagers/new`, {
