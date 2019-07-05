@@ -49,14 +49,11 @@ class FormUpdate extends Component {
   handleDelete = e => {
     console.log("test", this.state);
     e.preventDefault();
-    fetch(
-      `http://localhost:3000/api/voiture/delete/${this.props.match.params.id}`,
-      {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(this.state)
-      }
-    )
+    fetch(`${backendURL()}/api/voiture/delete/${this.props.match.params.id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(this.state)
+    })
       .then(res => res.json())
       .then(res => console.log(res));
 

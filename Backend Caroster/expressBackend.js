@@ -7,12 +7,9 @@ const app = express();
 const mongoose = require("mongoose");
 
 const MONGO_URL = process.env.MONGO_URL || "localhost";
-mongoose.connect(
-  `mongodb://${MONGO_URL}/caroster`,
-  {
-    useNewUrlParser: true
-  }
-);
+mongoose.connect(`mongodb://${MONGO_URL}/caroster`, {
+  useNewUrlParser: true
+});
 
 mongoose.connection.on("connected", err => {
   if (err) throw err;
@@ -151,8 +148,8 @@ app.post("/api/passagers/delete/:id", (req, res) => {
 
 app.post("/api/ajouter-voiture", (req, res) => {
   let payload = {
-    nom: req.body.nom,
-    siege: req.body.siege,
+    nomVoiture: req.body.nomVoiture,
+    sieges: req.body.sieges,
     contact: req.body.contact,
     infoComp: req.body.infoComp,
     adresse: req.body.adresse,
@@ -170,7 +167,7 @@ app.post("/api/ajouter-voiture", (req, res) => {
 //Récupérer Voiture///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/api/voiture/all", (req, res) => {
-  PostModel.find((err, result) => {
+  PostModelVoiture.find((err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
@@ -179,7 +176,7 @@ app.get("/api/voiture/all", (req, res) => {
 //Récupérer Voiture par ID ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/api/voiture/:id", (req, res) => {
-  PostModel.findById(req.params.id, (err, result) => {
+  PostModelVoiture.findById(req.params.id, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
@@ -189,7 +186,7 @@ app.get("/api/voiture/:id", (req, res) => {
 
 app.put("/api/voiture/update/:id", (req, res) => {
   const postData = req.body;
-  PostModel.findByIdAndUpdate(req.params.id, postData, (err, result) => {
+  PostModelVoiture.findByIdAndUpdate(req.params.id, postData, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
@@ -198,7 +195,7 @@ app.put("/api/voiture/update/:id", (req, res) => {
 //Delete Voiture///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.delete("/api/voiture/delete/:id", (req, res) => {
-  PostModel.findByIdAndDelete(req.params.id, (err, result) => {
+  PostModelVoiture.findByIdAndDelete(req.params.id, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });

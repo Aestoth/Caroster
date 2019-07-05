@@ -74,10 +74,10 @@ class Evenement extends Component {
 
           <div>
             <Link to={"/Ajouter-voiture"}>
-            <MDBBtn color="indigo btn-sm">
-              <MDBIcon icon="plus" size="2x" className="mr-2 " />
-              <MDBIcon icon="car" size="2x" />
-            </MDBBtn>
+              <MDBBtn color="indigo btn-sm">
+                <MDBIcon icon="plus" size="2x" className="mr-2 " />
+                <MDBIcon icon="car" size="2x" />
+              </MDBBtn>
             </Link>
           </div>
         </nav>
@@ -87,7 +87,7 @@ class Evenement extends Component {
               <ListeDAttente />
             </div>
             <div className="col-md-6 marginTable col-sm-6 col-lg-6 col-xl-6">
-              <Voiture changeDiv={() => this.changeDiv()} />
+              <Voiture />
             </div>
           </div>
         </div>

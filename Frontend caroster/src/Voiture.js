@@ -10,14 +10,22 @@ import {
 } from "mdbreact";
 import Passagers from "./Passagers";
 import backendURL from "./helpers/getBackendURL";
+import { Link } from "react-router-dom";
 
 class Voiture extends Component {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
-      nom: []
+      nom: [],
+      voitures: []
     };
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:3000/api/voiture/all")
+      .then(res => res.json())
+      .then(data => this.setState({ voitures: data.result }));
   }
 
   changeDiv = () => {
@@ -59,91 +67,112 @@ class Voiture extends Component {
   render() {
     return (
       <div className="container">
-        <div className="card shadow">
-          <div className="card-header bg-info text-white d-flex justify-content-between">
-            <div />
-            <div>
-              <i className="fas fa-car mr-2" />
-              Non de la voiture
+        {this.state.voitures.map(
+          ({
+            _id,
+            nomVoiture,
+            sieges,
+            infoComp,
+            contact,
+            adresse,
+            date,
+            horaire
+          }) => (
+            <div key={_id} className="card shadow">
+              <div className="card-header bg-info text-white d-flex justify-content-between">
+                <div />
+                <div>
+                  <i className="fas fa-car mr-2" />
+                  {nomVoiture}
+                </div>
+                <div>
+                  <Link to={"/ModifierVoiture/" + _id}>
+                    <i className="fas fa-pencil-alt " />
+                  </Link>
+                </div>
+              </div>
+
+              <MDBContainer
+                className="border rounded mt-4"
+                style={{ width: "22rem" }}
+              >
+                <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+                  <MDBCol size="2">
+                    <MDBIcon icon="phone" size="2x" />
+                  </MDBCol>
+                  <MDBCol
+                    className="d-flex align-items-center d-flex justify-content-center"
+                    size="8"
+                  >
+                    <MDBPopover
+                      placement="right"
+                      popover
+                      clickable
+                      id="popper2"
+                    >
+                      <MDBBtn size="sm"> Contact</MDBBtn>
+
+                      <MDBPopoverHeader>{contact}</MDBPopoverHeader>
+                    </MDBPopover>
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+                  <MDBCol size="2">
+                    <MDBIcon icon="calendar-alt" size="2x" className="" />
+                  </MDBCol>
+                  <MDBCol
+                    className="d-flex align-items-center d-flex justify-content-center"
+                    size="8"
+                  >
+                    {date} à {horaire}
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+                  <MDBCol size="2">
+                    <MDBIcon icon="map-marker-alt" size="2x" className=" " />
+                  </MDBCol>
+                  <MDBCol
+                    className="d-flex align-items-center d-flex justify-content-center text-center"
+                    size="8"
+                  >
+                    <a href="#">{adresse}</a>
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+                  <MDBCol size="2">
+                    <MDBIcon icon="comment-alt" size="2x" />
+                  </MDBCol>
+                  <MDBCol
+                    className="d-flex align-items-center d-flex justify-content-center text-center"
+                    size="8"
+                  >
+                    {infoComp}
+                  </MDBCol>
+                </MDBRow>
+              </MDBContainer>
+
+              <ul className="list-group list-group-flush mt-4">
+                {this.state.show ? (
+                  <Passagers changeDiv={() => this.changeDiv()} />
+                ) : (
+                  <MDBBtn
+                    color="primary"
+                    className="list-group-item bg-primary border border-white mb-0"
+                    onClick={this.changeDiv}
+                  >
+                    <i className="fas fa-user-plus  mr-3" />
+                    Ajouter passager
+                  </MDBBtn>
+                )}
+
+                <MDBBtn color="primary">
+                  <i className="fas fa-user-plus  mr-3" />
+                  Ajouter passager
+                </MDBBtn>
+              </ul>
             </div>
-            <div>
-              <i className="fas fa-pencil-alt " />
-            </div>
-          </div>
-
-          <MDBContainer
-            className="border rounded mt-4"
-            style={{ width: "22rem" }}
-          >
-            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
-              <MDBCol size="2">
-                <MDBIcon icon="phone" size="2x" />
-              </MDBCol>
-              <MDBCol
-                className="d-flex align-items-center d-flex justify-content-center"
-                size="8"
-              >
-                <MDBPopover placement="right" popover clickable id="popper2">
-                  <MDBBtn size="sm"> Contact</MDBBtn>
-
-                  <MDBPopoverHeader>0791234567</MDBPopoverHeader>
-                </MDBPopover>
-              </MDBCol>
-            </MDBRow>
-            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
-              <MDBCol size="2">
-                <MDBIcon icon="calendar-alt" size="2x" className="" />
-              </MDBCol>
-              <MDBCol
-                className="d-flex align-items-center d-flex justify-content-center"
-                size="8"
-              >
-                mar. 28 mai à
-              </MDBCol>
-            </MDBRow>
-            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
-              <MDBCol size="2">
-                <MDBIcon icon="map-marker-alt" size="2x" className=" " />
-              </MDBCol>
-              <MDBCol
-                className="d-flex align-items-center d-flex justify-content-center text-center"
-                size="8"
-              >
-                <a href="#">Rue Lamartine ...</a>
-              </MDBCol>
-            </MDBRow>
-            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
-              <MDBCol size="2">
-                <MDBIcon icon="comment-alt" size="2x" />
-              </MDBCol>
-              <MDBCol
-                className="d-flex align-items-center d-flex justify-content-center text-center"
-                size="8"
-              >
-                Pas de chien
-              </MDBCol>
-            </MDBRow>
-          </MDBContainer>
-          <ul className="list-group list-group-flush mt-4">
-            {this.state.show ? (
-              <Passagers changeDiv={() => this.changeDiv()} />
-            ) : (
-              <MDBBtn
-                color="primary"
-                className="list-group-item bg-primary border border-white mb-0"
-                onClick={this.changeDiv}
-              >
-                <i className="fas fa-user-plus  mr-3" />
-                Ajouter passager
-              </MDBBtn>
-            )}
-
-            <MDBBtn color="primary">
-              <i className="fas fa-user-plus  mr-3" />
-              Ajouter passager
-            </MDBBtn>
-          </ul>
-        </div>
+          )
+        )}
       </div>
     );
   }

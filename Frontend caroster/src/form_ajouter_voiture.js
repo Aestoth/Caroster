@@ -3,6 +3,7 @@ import { MDBBtn, MDBInput } from "mdbreact";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link } from "react-router-dom";
 import backendURL from "./helpers/getBackendURL";
+import { withRouter } from "react-router-dom";
 
 class form_add_voiture extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class form_add_voiture extends Component {
     this.state = {
       nomVoiture: "",
       sieges: "",
-      infocomp: "",
+      infoComp: "",
       contact: "",
       adresse: "",
       date: "",
@@ -39,6 +40,8 @@ class form_add_voiture extends Component {
     }).then(response => {
       response.json().then(data => {
         console.log("Success", data);
+        console.log("id", data.result._id);
+        this.props.history.push(data.result._id);
       });
     });
   }
@@ -77,7 +80,7 @@ class form_add_voiture extends Component {
                 label="Infos complémentaires"
                 icon="pen"
                 className="mb-0"
-                name="infocomp"
+                name="infoComp"
                 value={this.state.infocomp}
                 onChange={this.handleChange}
               />
@@ -134,11 +137,10 @@ class form_add_voiture extends Component {
                   Annuler
                 </MDBBtn>
               </Link>
-              <Link to={"/Evenement"}>
-                <MDBBtn className="text-uppercase text-white" type="submit">
-                  Creer
-                </MDBBtn>
-              </Link>
+
+              <MDBBtn className="text-uppercase text-white" type="submit">
+                Creer
+              </MDBBtn>
             </div>
           </form>
         </div>
@@ -147,4 +149,4 @@ class form_add_voiture extends Component {
   }
 }
 
-export default form_add_voiture;
+export default withRouter(form_add_voiture);

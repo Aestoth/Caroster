@@ -4,6 +4,7 @@ import FormUpdate from "./form_modifier";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import backendURL from "./helpers/getBackendURL";
 
 class ModifierVoiture extends Component {
   state = {
@@ -12,7 +13,7 @@ class ModifierVoiture extends Component {
 
   componentDidMount() {
     console.log("route param", this.props);
-    fetch("http://localhost:3001/api/voiture/" + this.props.match.params.id)
+    fetch(`${backendURL()}/api/voiture/${this.props.match.params.id}`)
       .then(res => res.json())
       .then(data => this.setState({ voiture: data.result }));
   }
