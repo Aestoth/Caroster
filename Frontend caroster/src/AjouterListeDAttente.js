@@ -16,9 +16,11 @@ class AjouterListeDAttente extends Component {
     super(props);
     this.state = {
       nom: "",
-      showListeDAttente: true
+      showListeDAttente: false
     };
   }
+
+  componentDidMount() {}
 
   handleInputChange = e => {
     const target = e.target;
@@ -41,6 +43,7 @@ class AjouterListeDAttente extends Component {
     }).then(response => {
       response.json().then(data => {
         console.log("Success" + data);
+        this.props.changeListeDAttente(data.result);
       });
     });
   };

@@ -15,7 +15,7 @@ class Passagers extends Component {
     super(props);
     this.state = {
       nom: "",
-      show: true,
+      show: false,
       showListeDAttente: true
     };
   }
@@ -31,7 +31,7 @@ class Passagers extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch(`${backendURL()}api/passagers/new`, {
+    fetch(`${backendURL()}/api/passagers/new`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -40,7 +40,8 @@ class Passagers extends Component {
       }
     }).then(response => {
       response.json().then(data => {
-        console.log("Success" + data);
+        console.log("Success", data);
+        this.props.changeDiv(data.result);
       });
     });
   };
