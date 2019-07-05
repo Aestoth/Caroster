@@ -1,92 +1,71 @@
 import React, { Component } from "react";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBBtn,
-  MDBInput,
-  MDBFooter
-} from "mdbreact";
+import { MDBBtn, MDBInput } from "mdbreact";
 import "bootstrap/dist/css/bootstrap.css";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import backendURL from "./helpers/getBackendURL";
 
-class form_update extends Component {
+class FormUpdate extends Component {
   constructor(props) {
     super(props);
+    console.log("props modifier", props);
     this.state = {
-      voitures: {
-        id: 0,
-        nomVoiture: "",
-        sieges: "",
-        infocomp: "",
-        telephone: ""
-      }
+      nomVoiture: this.props.nomVoiture,
+      sieges: this.props.sieges,
+      infocomp: this.props.infocomp,
+      telephone: this.props.telephone,
+      adresse: this.props.adresse,
+      date: this.props.date,
+      horaire: this.props.horaire
     };
   }
 
-  componentDidMount() {
-    fetch(`${backendURL()}/api/voiture/update/5d1231a20d6e1949e8aa9130`)
-      .then(res => res.json())
-      .then(voiture => this.setState({ voiture: voiture.result.id }));
-  }
-
-  handleChange = e => {
-    const name = e.target.name;
-    this.setState({ [name]: e.target.value });
+  handleInputChange = e => {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({ [name]: value });
   };
 
-  handleUpdateVoiture = () => {
-    const voiture = {
-      id: this.state.id,
-      nomVoiture: this.state.nomVoiture,
-      sieges: this.state.sieges,
-      infocomp: this.state.infocomp,
-      telephone: this.state.telephone
-    };
+  handleSubmit = e => {
+    console.log(this.props.match.params.id);
+    console.log("test", this.state);
+    e.preventDefault();
+    fetch(`${backendURL()}/api/voiture/update/${this.props.match.params.id}`, {
+      method: "PUT",
+      body: JSON.stringify(this.state),
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(res => {
+        res.json().then(data => {
+          console.log("da5", data);
+        });
+        return res;
+      })
+      .catch(err => err);
 
-    const voitureupdated = this.state.voitures.map(car => {
-      if (car.id === this.state.id) {
-        return voiture;
-      } else return car;
-    });
-
-    this.setState(() => ({
-      voitures: voitureupdated,
-      nomVoiture: "",
-      sieges: "",
-      infocomp: "",
-      telephone: "",
-      create: true
-    }));
+    this.props.history.push("/Evenement");
   };
 
   handleDelete = e => {
-    this.setState({
-      voitures: this.state.voitures.filter(function(car) {
-        if (car.id !== e.target.id) return car;
-      })
-    });
+    console.log("test", this.state);
+    e.preventDefault();
+    fetch(
+      `http://localhost:3000/api/voiture/delete/${this.props.match.params.id}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(this.state)
+      }
+    )
+      .then(res => res.json())
+      .then(res => console.log(res));
+
+    this.props.history.push("/Evenement");
   };
 
-  // handleEdit = e => {
-  //   const voiture = this.state.voitures.find(function(car) {
-  //     if (car.id === e.target.id) {
-  //       return car;
-  //     }
-  //   });
-  //   this.setState({
-  //     id: car.id,
-  //     nomVoiture: car.nomVoiture,
-  //     sieges: car.sieges,
-  //     infocomp: car.infocomp,
-  //     telephone: car.telephone,
-  //   });
-  // };
-
   render() {
-    const { voitures } = this.state;
-
+    if (typeof this.props.id === undefined) return "loading";
+    console.log("state form", this.state);
     return (
       <div className="container-fluid cover-container d-flex">
         <div className="row col-12 align-items-center justify-content-center flex-fill mx-auto ">
@@ -98,8 +77,8 @@ class form_update extends Component {
                 icon="car"
                 className="mb-0"
                 name="nomVoiture"
-                value={voitures.nomVoiture}
-                onChange={this.handleChange}
+                value={this.state.nomVoiture}
+                onChange={this.handleInputChange}
               />
             </div>
             <div className="form-group col-12">
@@ -109,8 +88,8 @@ class form_update extends Component {
                 icon="chair"
                 className="mb-0"
                 name="sieges"
-                value={voitures.sieges}
-                onChange={this.handleChange}
+                value={this.state.sieges}
+                onChange={this.handleInputChange}
               />
             </div>
             <div className="form-group col-12 flex">
@@ -120,8 +99,8 @@ class form_update extends Component {
                 icon="pen"
                 className="mb-0"
                 name="infocomp"
-                value={voitures.infocomp}
-                onChange={this.handleChange}
+                value={this.state.infocomp}
+                onChange={this.handleInputChange}
               />
             </div>
             <div className="form-group col-12">
@@ -131,18 +110,9 @@ class form_update extends Component {
                 icon="phone"
                 className="mb-0"
                 name="telephone"
-                value={voitures.telephone}
-                onChange={this.handleChange}
+                value={this.state.telephone}
+                onChange={this.handleInputChange}
               />
-            </div>
-            <div className="text-center">
-              <MDBBtn
-                className="btn btn-block text-uppercase mt-5"
-                color="primary"
-                onClick={voitures.handleUpdateVoiture}
-              >
-                Mise à jour
-              </MDBBtn>
             </div>
             <h6 className="text-center text-uppercase mt-5">
               Lieu de rendez-vous
@@ -154,8 +124,8 @@ class form_update extends Component {
                 icon="map-marker-alt"
                 className="mb-0"
                 name="adresse"
-                value={voitures.adresse}
-                onChange={this.handleChange}
+                value={this.state.adresse}
+                onChange={this.handleInputChange}
               />
             </div>
             <div className="md-form form-group col-12">
@@ -164,8 +134,8 @@ class form_update extends Component {
                 icon="calendar"
                 className="mb-2 textbox-n"
                 name="date"
-                value={voitures.date}
-                onChange={this.handleChange}
+                value={this.state.date}
+                onChange={this.handleInputChange}
               />
             </div>
             <div className="md-form form-group col-12">
@@ -173,37 +143,26 @@ class form_update extends Component {
                 type="time"
                 icon="clock"
                 className="mb-2"
-                name="heure"
-                value={voitures.heure}
-                onChange={this.handleChange}
+                name="horaire"
+                value={this.state.horaire}
+                onChange={this.handleInputChange}
               />
             </div>
-
-            <div className="text-center mt-2">
+            <div className="text-center">
               <MDBBtn
-                className="text-uppercase text-white"
-                type="cancel"
-                color="mdb-color"
+                className="btn btn-block text-uppercase mt-5"
+                color="primary"
+                type="submit"
               >
-                Annuler
+                Enregistrer les modifications
               </MDBBtn>
-              <Link to="/Evenement">
-                <MDBBtn
-                  className="text-uppercase text-white"
-                  type="submit"
-                  color="primary"
-                >
-                  Creer
-                </MDBBtn>
-              </Link>
             </div>
             <MDBBtn
               className="btn btn-block text-uppercase mt-5"
               color="danger"
               onClick={this.handleDelete}
-              id={voitures.id}
             >
-              Supprimer
+              Supprimer la voiture
             </MDBBtn>
           </form>
         </div>
@@ -212,4 +171,4 @@ class form_update extends Component {
   }
 }
 
-export default form_update;
+export default withRouter(FormUpdate);

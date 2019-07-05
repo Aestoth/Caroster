@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBBtn,
-  MDBInput,
-  MDBFooter
-} from "mdbreact";
+import { MDBBtn, MDBInput } from "mdbreact";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link } from "react-router-dom";
 import backendURL from "./helpers/getBackendURL";
@@ -18,10 +11,10 @@ class form_add_voiture extends Component {
       nomVoiture: "",
       sieges: "",
       infocomp: "",
-      telephone: "",
+      contact: "",
       adresse: "",
       date: "",
-      heure: ""
+      horaire: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,7 +29,7 @@ class form_add_voiture extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    fetch(`${backendURL()}/api/ajouter-voiture/new`, {
+    fetch(`${backendURL()}/api/ajouter-voiture/`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -45,12 +38,13 @@ class form_add_voiture extends Component {
       }
     }).then(response => {
       response.json().then(data => {
-        console.log("Success" + data);
+        console.log("Success", data);
       });
     });
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="container-fluid cover-container d-flex">
         <div className="row col-12 align-items-center justify-content-center flex-fill mx-auto ">
@@ -94,8 +88,8 @@ class form_add_voiture extends Component {
                 label="Téléphone"
                 icon="phone"
                 className="mb-0"
-                name="telephone"
-                value={this.state.telephone}
+                name="contact"
+                value={this.state.contact}
                 onChange={this.handleChange}
               />
             </div>
@@ -128,17 +122,19 @@ class form_add_voiture extends Component {
                 type="time"
                 icon="clock"
                 className="mb-2"
-                name="heure"
-                value={this.state.heure}
+                name="horaire"
+                value={this.state.horaire}
                 onChange={this.handleChange}
               />
             </div>
 
             <div className="text-center mt-2">
-              <MDBBtn className="text-uppercase text-white" type="cancel">
-                Annuler
-              </MDBBtn>
-              <Link to="/Evenement">
+              <Link to={"/Evenement"}>
+                <MDBBtn className="text-uppercase text-white" type="cancel">
+                  Annuler
+                </MDBBtn>
+              </Link>
+              <Link to={"/Evenement"}>
                 <MDBBtn className="text-uppercase text-white" type="submit">
                   Creer
                 </MDBBtn>

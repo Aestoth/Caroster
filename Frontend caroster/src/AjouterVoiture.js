@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../Menu/Navbar";
+import Navbar from "./Navbar";
 import styled from "styled-components";
-import Footer from '../Footer/Footer';
-import Form_add_voiture from '../Pages/form_add_voiture';
+import Footer from './Footer';
+import Form_add_voiture from './form_ajouter_voiture';
 
 
-class AddVoiture extends Component {
+class AjouterVoiture extends Component {
 
 
   render() {
@@ -33,4 +33,4 @@ class AddVoiture extends Component {
   }
 }
 
-export default AddVoiture;
+export default AjouterVoiture;
