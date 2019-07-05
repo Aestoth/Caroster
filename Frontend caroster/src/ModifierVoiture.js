@@ -1,21 +1,32 @@
 import React, { Component } from "react";
-import Navbar from "../Menu/Navbar";
-import Form_update from '../Pages/form_update';
-import Footer from '../Footer/Footer';
+import Navbar from "./Navbar";
+import FormUpdate from "./form_modifier";
+import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+class ModifierVoiture extends Component {
+  state = {
+    voiture: false
+  };
 
+  componentDidMount() {
+    console.log("route param", this.props);
+    fetch("http://localhost:3001/api/voiture/" + this.props.match.params.id)
+      .then(res => res.json())
+      .then(data => this.setState({ voiture: data.result }));
+  }
 
-
-class UpdateVoiture extends Component {
-  
-  
   render() {
+    console.log("voiture", this.state.voiture);
     const Button = styled.button`
       background-color: transparent;
       border: none;
     `;
+    if (!this.state.voiture) {
+      return "loading";
+    }
+
     return (
       <div>
         <Navbar />
@@ -26,11 +37,11 @@ class UpdateVoiture extends Component {
             </Button>
           </Link>
         </nav>
-        <Form_update />
+        <FormUpdate {...this.state.voiture} />
         <Footer />
       </div>
     );
   }
 }
 
-export default UpdateVoiture;
+export default ModifierVoiture;
