@@ -31,8 +31,8 @@ const PostModelEvenement = mongoose.model(
 );
 
 const PostShemaVoiture = mongoose.Schema({
-  nom: String,
-  siege: Number,
+  nomVoiture: String,
+  sieges: Number,
   contact: String,
   infoComp: String,
   adresse: String,
@@ -149,7 +149,7 @@ app.post("/api/passagers/delete/:id", (req, res) => {
 
 //Function new Voiture/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.post("/api/post/voiture", (req, res) => {
+app.post("/api/ajouter-voiture/voiture", (req, res) => {
   let payload = {
     nom: req.body.nom,
     siege: req.body.siege,
