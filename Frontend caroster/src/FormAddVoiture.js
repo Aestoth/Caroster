@@ -15,7 +15,8 @@ class FormAddVoiture extends Component {
       contact: "",
       adresse: "",
       date: "",
-      horaire: ""
+      horaire: "",
+      id: this.props.location.state.params.id
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,7 +42,7 @@ class FormAddVoiture extends Component {
       response.json().then(data => {
         console.log("Success", data);
         console.log("id", data.result._id);
-        this.props.history.push(data.result._id);
+        this.props.history.push(`/Evenement/${this.state.id}`);
       });
     });
   }

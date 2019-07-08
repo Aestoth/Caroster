@@ -73,7 +73,12 @@ class Evenement extends Component {
           </div>
 
           <div>
-            <Link to={"/Ajouter-voiture"}>
+            <Link
+              to={{
+                pathname: "/Ajouter-Voiture",
+                state: { params: { id: this.props.match.params.id } }
+              }}
+            >
               <MDBBtn color="indigo btn-sm">
                 <MDBIcon icon="plus" size="2x" className="mr-2 " />
                 <MDBIcon icon="car" size="2x" />
