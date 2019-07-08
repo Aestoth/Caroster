@@ -43,7 +43,9 @@ class FormUpdate extends Component {
       })
       .catch(err => err);
 
-    this.props.history.push("/Evenement");
+    this.props.history.push(
+      `/Evenement/${this.props.location.state.params.id}`
+    );
   };
 
   handleDelete = e => {
@@ -57,7 +59,9 @@ class FormUpdate extends Component {
       .then(res => res.json())
       .then(res => console.log(res));
 
-    this.props.history.push("/Evenement");
+    this.props.history.push(
+      `/Evenement/${this.props.location.state.params.id}`
+    );
   };
 
   render() {
@@ -150,6 +154,7 @@ class FormUpdate extends Component {
                 className="btn btn-block text-uppercase mt-5"
                 color="primary"
                 type="submit"
+                onClick={this.handleSubmit}
               >
                 Enregistrer les modifications
               </MDBBtn>

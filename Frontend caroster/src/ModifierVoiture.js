@@ -19,7 +19,6 @@ class ModifierVoiture extends Component {
   }
 
   render() {
-    console.log("voiture", this.state.voiture);
     const Button = styled.button`
       background-color: transparent;
       border: none;
@@ -32,11 +31,12 @@ class ModifierVoiture extends Component {
       <div>
         <Navbar />
         <nav className="navbar navbar-dark primary-color d-flex justify-content-between">
-          <Link to="/Evenement">
-            <Button className="text-white">
-              <i className="far fa-arrow-alt-circle-left fa-2x" />
-            </Button>
-          </Link>
+          <Button
+            className="text-white"
+            onClick={() => this.props.history.goBack()}
+          >
+            <i className="far fa-arrow-alt-circle-left fa-2x" />
+          </Button>
         </nav>
         <FormUpdate {...this.state.voiture} />
         <Footer />

@@ -92,7 +92,7 @@ class Evenement extends Component {
               <ListeDAttente />
             </div>
             <div className="col-md-6 marginTable col-sm-6 col-lg-6 col-xl-6">
-              <Voiture />
+              <Voiture id={this.props.match.params.id} />
             </div>
           </div>
         </div>

@@ -18,12 +18,13 @@ class Voiture extends Component {
     this.state = {
       show: false,
       nom: [],
-      voitures: []
+      voitures: [],
+      EventId: this.props.id
     };
   }
 
   componentDidMount() {
-    fetch("http://localhost:3000/api/voiture/all")
+    fetch(`${backendURL()}/api/voiture/all`)
       .then(res => res.json())
       .then(data => this.setState({ voitures: data.result }));
   }
@@ -65,19 +66,11 @@ class Voiture extends Component {
   };
 
   render() {
+    console.log("test", this.state);
     return (
       <div className="container">
         {this.state.voitures.map(
-          ({
-            _id,
-            nomVoiture,
-            sieges,
-            infoComp,
-            contact,
-            adresse,
-            date,
-            horaire
-          }) => (
+          ({ _id, nomVoiture, infoComp, contact, adresse, date, horaire }) => (
             <div key={_id} className="card shadow">
               <div className="card-header bg-info text-white d-flex justify-content-between">
                 <div />
@@ -86,7 +79,12 @@ class Voiture extends Component {
                   {nomVoiture}
                 </div>
                 <div>
-                  <Link to={"/ModifierVoiture/" + _id}>
+                  <Link
+                    to={{
+                      pathname: `/ModifierVoiture/${_id}`,
+                      state: { params: { id: this.state.EventId } }
+                    }}
+                  >
                     <i className="fas fa-pencil-alt " />
                   </Link>
                 </div>
