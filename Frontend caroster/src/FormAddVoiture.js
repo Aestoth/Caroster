@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import backendURL from "./helpers/getBackendURL";
 import { withRouter } from "react-router-dom";
 
-class form_add_voiture extends Component {
+class FormAddVoiture extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -149,4 +149,4 @@ class form_add_voiture extends Component {
   }
 }
 
-export default withRouter(form_add_voiture);
+export default withRouter(FormAddVoiture);
