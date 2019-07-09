@@ -52,49 +52,58 @@ class FormAddVoiture extends Component {
     return (
       <div className="container-fluid cover-container d-flex">
         <div className="row col-12 align-items-center justify-content-center flex-fill mx-auto ">
-          <form onSubmit={this.handleSubmit} className="mx-auto">
+          <form className="mx-auto" onSubmit={this.handleSubmit}>
             <div className="form-group col-12">
               <MDBInput
                 type="text"
                 label="Nom de la voiture"
                 icon="car"
-                className="mb-0"
+                className="mb-0 form-control"
                 name="nomVoiture"
                 value={this.state.nomVoiture}
                 onChange={this.handleChange}
+                required
               />
             </div>
             <div className="form-group col-12">
               <MDBInput
                 type="number"
+                id="defaultFormRegisterNameEx"
                 label="Sieges"
                 icon="chair"
-                className="mb-0"
+                className="mb-0 form-control"
                 name="sieges"
                 value={this.state.sieges}
                 onChange={this.handleChange}
+                validate={this.state.validate}
+                required
               />
             </div>
             <div className="form-group col-12 flex">
               <MDBInput
                 type="text"
+                id="defaultFormRegisterNameEx"
                 label="Infos complémentaires"
                 icon="pen"
-                className="mb-0"
+                className="mb-0 form-control"
                 name="infoComp"
                 value={this.state.infocomp}
                 onChange={this.handleChange}
+                required
               />
             </div>
             <div className="form-group col-12">
               <MDBInput
                 type="text"
+                id="defaultFormRegisterNameEx"
                 label="Téléphone"
                 icon="phone"
-                className="mb-0"
+                className="mb-0 form-control"
                 name="contact"
                 value={this.state.contact}
                 onChange={this.handleChange}
+                validate={this.state.validate}
+                required
               />
             </div>
             <h6 className="text-center text-uppercase mt-5">
@@ -103,37 +112,46 @@ class FormAddVoiture extends Component {
             <div className="form-group col-12">
               <MDBInput
                 type="text"
+                id="defaultFormRegisterNameEx"
                 label="Adresse"
                 icon="map-marker-alt"
-                className="mb-0"
+                className="mb-0 form-control"
                 name="adresse"
                 value={this.state.adresse}
                 onChange={this.handleChange}
+                validate={this.state.validate}
+                required
               />
             </div>
             <div className="md-form form-group col-12">
               <MDBInput
                 type="date"
+                id="defaultFormRegisterNameEx"
                 icon="calendar"
-                className="mb-2 textbox-n"
+                className="mb-2 textbox-n form-control"
                 name="date"
                 value={this.state.date}
                 onChange={this.handleChange}
+                validate={this.state.validate}
+                required
               />
             </div>
             <div className="md-form form-group col-12">
               <MDBInput
                 type="time"
+                id="defaultFormRegisterNameEx"
                 icon="clock"
-                className="mb-2"
+                className="mb-2 form-control"
                 name="horaire"
                 value={this.state.horaire}
                 onChange={this.handleChange}
+                validate={this.state.validate}
+                required
               />
             </div>
 
             <div className="text-center mt-2">
-              <Link to={"/Evenement"}>
+              <Link to={`/Evenement/${this.props.location.state.params.id}`}>
                 <MDBBtn className="text-uppercase text-white" type="cancel">
                   Annuler
                 </MDBBtn>
