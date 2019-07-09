@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
-import FormUpdate from "./form_modifier";
+import FormUpdate from "./FormModifier";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import backendURL from "./helpers/getBackendURL";
 
 class ModifierVoiture extends Component {
   state = {
@@ -12,13 +13,12 @@ class ModifierVoiture extends Component {
 
   componentDidMount() {
     console.log("route param", this.props);
-    fetch("http://localhost:3001/api/voiture/" + this.props.match.params.id)
+    fetch(`${backendURL()}/api/voiture/${this.props.match.params.id}`)
       .then(res => res.json())
       .then(data => this.setState({ voiture: data.result }));
   }
 
   render() {
-    console.log("voiture", this.state.voiture);
     const Button = styled.button`
       background-color: transparent;
       border: none;
@@ -31,11 +31,12 @@ class ModifierVoiture extends Component {
       <div>
         <Navbar />
         <nav className="navbar navbar-dark primary-color d-flex justify-content-between">
-          <Link to="/Evenement">
-            <Button className="text-white">
-              <i className="far fa-arrow-alt-circle-left fa-2x" />
-            </Button>
-          </Link>
+          <Button
+            className="text-white"
+            onClick={() => this.props.history.goBack()}
+          >
+            <i className="far fa-arrow-alt-circle-left fa-2x" />
+          </Button>
         </nav>
         <FormUpdate {...this.state.voiture} />
         <Footer />
