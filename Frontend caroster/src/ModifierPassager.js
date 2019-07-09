@@ -14,16 +14,15 @@ class ModifierPassager extends Component {
     super(props);
     this.state = {
       nom: this.props.passagerModif.nom,
-      showModifierPassager: false,
-      passagerModif: this.props.passagerModif
+      showModifierPassager: false
     };
   }
 
   deletePassager = e => {
     e.preventDefault();
-    console.log(this.state.passagerModif._id);
+    console.log(this.props.passagerModif._id);
     fetch(
-      `${backendURL()}/api/passagers/delete/${this.state.passagerModif._id}`,
+      `${backendURL()}/api/passagers/delete/${this.props.passagerModif._id}`,
       {
         method: "POST",
         body: JSON.stringify(this.state),
@@ -52,9 +51,9 @@ class ModifierPassager extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state.passagerModif._id);
+    console.log(this.props.passagerModif._id);
     fetch(
-      `${backendURL()}/api/passagers/update/${this.state.passagerModif._id}`,
+      `${backendURL()}/api/passagers/update/${this.props.passagerModif._id}`,
       {
         method: "POST",
         body: JSON.stringify(this.state),
