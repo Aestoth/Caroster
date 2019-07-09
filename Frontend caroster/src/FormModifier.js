@@ -12,7 +12,7 @@ class FormUpdate extends Component {
       nomVoiture: this.props.nomVoiture,
       sieges: this.props.sieges,
       infoComp: this.props.infocomp,
-      contact: this.props.telephone,
+      contact: this.props.contact,
       adresse: this.props.adresse,
       date: this.props.date,
       horaire: this.props.horaire
