@@ -11,7 +11,8 @@ class ListeDAttente extends Component {
       showListeDAttente: false,
       showModifierPassager: false,
       passagers: [],
-      passagerModif: []
+      passagerModif: [],
+      showPassagers: []
     };
   }
   componentDidMount() {
@@ -30,18 +31,23 @@ class ListeDAttente extends Component {
   };
 
   ModifierPassager = id => {
-    const _id = this.state.passagers.find(item => item._id === id);
+    const passagers = this.state.passagers.find(item => item._id === id);
     const { showModifierPassager } = this.state;
+
     this.setState({
       showModifierPassager: !showModifierPassager,
-      passagerModif: _id
+      passagerModif: passagers
     });
+
+    console.log(passagers);
   };
 
-  changeModifierPassager = result => {
+  changeModifierPassager = id => {
     const { showModifierPassager } = this.state;
 
-    this.setState({ showModifierPassager: !showModifierPassager });
+    this.setState({
+      showModifierPassager: !showModifierPassager
+    });
   };
 
   handleInputChange = e => {
