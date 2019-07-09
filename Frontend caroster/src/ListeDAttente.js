@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import ModifierPassager from "./ModifierPassager";
-import { MDBBtn, MDBIcon, MDBCol, MDBRow, MDBContainer } from "mdbreact";
+//import ModifierPassager from "./ModifierPassager";
+import PassagersEnAttente from "./PassagersEnAttente";
+import { MDBBtn, MDBIcon } from "mdbreact";
 import AjouterListeDAttente from "./AjouterListeDAttente";
 import backendURL from "./helpers/getBackendURL";
 
@@ -10,11 +11,10 @@ class ListeDAttente extends Component {
     this.state = {
       showListeDAttente: false,
       showModifierPassager: false,
-      passagers: [],
-      passagerModif: [],
-      showPassagers: []
+      passagers: []
     };
   }
+
   componentDidMount() {
     this.fetchPassagers();
   }
@@ -28,51 +28,6 @@ class ListeDAttente extends Component {
   changeListeDAttente = () => {
     const { showListeDAttente } = this.state;
     this.setState({ showListeDAttente: !showListeDAttente });
-  };
-
-  ModifierPassager = id => {
-    const passagers = this.state.passagers.find(item => item._id === id);
-    const { showModifierPassager } = this.state;
-
-    this.setState({
-      showModifierPassager: !showModifierPassager,
-      passagerModif: passagers
-    });
-
-    console.log(passagers);
-  };
-
-  changeModifierPassager = id => {
-    const { showModifierPassager } = this.state;
-
-    this.setState({
-      showModifierPassager: !showModifierPassager
-    });
-  };
-
-  handleInputChange = e => {
-    const target = e.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    fetch(`${backendURL()}/api/passagers/new`, {
-      method: "POST",
-      body: JSON.stringify(this.state),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    }).then(response => {
-      response.json().then(data => {
-        console.log("Success" + data);
-      });
-    });
   };
 
   render() {
@@ -108,41 +63,10 @@ class ListeDAttente extends Component {
               </MDBBtn>
             )}
           </div>
-          <MDBContainer className="mt-3">
-            {this.state.showModifierPassager ? (
-              <ModifierPassager
-                passagerModif={this.state.passagerModif}
-                changeModifierPassager={() => this.changeModifierPassager()}
-                fetchPassagers={() => this.fetchPassagers()}
-              />
-            ) : (
-              this.state.passagers.map(({ _id, nom }) => (
-                <MDBRow key={_id}>
-                  <MDBCol size="5" className="mr-0 mt-2">
-                    {" "}
-                    <i className="fas fa-user pr-0 mr-1" />
-                    {nom}
-                  </MDBCol>
-                  <MDBCol size="5" className="ml-0 ">
-                    <select
-                      className="form-control mb-3"
-                      id="exampleFormControlSelect1"
-                    >
-                      <option>Aller avec</option>
-                      <option>Voiture 1</option>
-                      <option>Voiture 2</option>
-                    </select>
-                  </MDBCol>
-                  <MDBCol size="1" className="mt-2">
-                    <MDBIcon
-                      icon="pencil-alt"
-                      onClick={() => this.ModifierPassager(_id)}
-                    />
-                  </MDBCol>
-                </MDBRow>
-              ))
-            )}
-          </MDBContainer>
+          <PassagersEnAttente
+            passagers={this.state.passagers}
+            fetchPassagers={() => this.fetchPassagers()}
+          />
         </div>
       </div>
     );

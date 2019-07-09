@@ -14,7 +14,7 @@ class ModifierPassager extends Component {
     super(props);
     this.state = {
       nom: this.props.passagerModif.nom,
-      showModifierPassager: false
+      showModifierPassager: true
     };
   }
 
@@ -35,7 +35,7 @@ class ModifierPassager extends Component {
       response.json().then(data => {
         console.log(data.result);
         this.props.fetchPassagers();
-        this.props.changeModifierPassager(data.result);
+        this.props.changeShowModifierPassager(data.result);
       });
     });
   };
@@ -66,7 +66,7 @@ class ModifierPassager extends Component {
       response.json().then(data => {
         console.log(data.result);
         this.props.fetchPassagers();
-        this.props.changeModifierPassager(data.result);
+        this.props.changeShowModifierPassager(this.props.passagerModif._id);
       });
     });
   };

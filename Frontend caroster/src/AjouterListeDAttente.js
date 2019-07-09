@@ -15,7 +15,7 @@ class AjouterListeDAttente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nom: "",
+      nom: [],
       showListeDAttente: false
     };
   }
@@ -46,10 +46,6 @@ class AjouterListeDAttente extends Component {
       });
     });
   };
-
-  // componentDidMount() {
-  //   this.handleSubmit();
-  // }
 
   render() {
     return (
