@@ -34,7 +34,6 @@ class PassagersEnAttente extends Component {
   };
 
   render() {
-    console.log(this.props.passagers);
     return (
       <MDBContainer className="mt-3">
         {this.state.showModifierPassager ? (
