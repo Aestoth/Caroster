@@ -72,7 +72,7 @@ class Voiture extends Component {
       <div className="container">
         {this.state.voitures.map(
           ({ _id, nomVoiture, infoComp, contact, adresse, date, horaire }) => (
-            <div key={_id} className="card shadow marginTable">
+            <div key={_id} className="card shadow marginTable mb-4">
               <div className="card-header bg-info text-white d-flex justify-content-between">
                 <div />
                 <div>
