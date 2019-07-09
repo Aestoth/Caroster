@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import FormUpdate from "./FormModifier";
 import Footer from "./Footer";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import backendURL from "./helpers/getBackendURL";
 

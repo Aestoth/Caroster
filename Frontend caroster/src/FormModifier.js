@@ -11,8 +11,8 @@ class FormUpdate extends Component {
     this.state = {
       nomVoiture: this.props.nomVoiture,
       sieges: this.props.sieges,
-      infocomp: this.props.infocomp,
-      telephone: this.props.telephone,
+      infoComp: this.props.infocomp,
+      contact: this.props.telephone,
       adresse: this.props.adresse,
       date: this.props.date,
       horaire: this.props.horaire
@@ -99,8 +99,8 @@ class FormUpdate extends Component {
                 label="Infos complémentaires"
                 icon="pen"
                 className="mb-0"
-                name="infocomp"
-                value={this.state.infocomp}
+                name="infoComp"
+                value={this.state.infoComp}
                 onChange={this.handleInputChange}
               />
             </div>
@@ -110,8 +110,8 @@ class FormUpdate extends Component {
                 label="Téléphone"
                 icon="phone"
                 className="mb-0"
-                name="telephone"
-                value={this.state.telephone}
+                name="contact"
+                value={this.state.contact}
                 onChange={this.handleInputChange}
               />
             </div>
