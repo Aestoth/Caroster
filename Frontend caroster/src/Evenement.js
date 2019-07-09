@@ -96,7 +96,7 @@ class Evenement extends Component {
             </div>
           </div>
         </div>
-        <div className="mt-4 d-flex justify-content-center">
+        <div className="mt-4 mb-5 d-flex justify-content-center">
           <MDBBtn color="danger" onClick={this.toggle}>
             Supprimer événement
           </MDBBtn>

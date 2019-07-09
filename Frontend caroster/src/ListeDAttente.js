@@ -30,7 +30,7 @@ class ListeDAttente extends Component {
     this.setState({ showListeDAttente: !showListeDAttente });
   };
 
-  ModifierPassager = id => {
+  ModifierPassagerShow = id => {
     const passagers = this.state.passagers.find(item => item._id === id);
     const { showModifierPassager } = this.state;
 
@@ -42,7 +42,7 @@ class ListeDAttente extends Component {
     console.log(passagers);
   };
 
-  changeModifierPassager = id => {
+  changeShowModifierPassager = id => {
     const { showModifierPassager } = this.state;
 
     this.setState({
@@ -50,32 +50,8 @@ class ListeDAttente extends Component {
     });
   };
 
-  handleInputChange = e => {
-    const target = e.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-    this.setState({
-      [name]: value
-    });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    fetch(`${backendURL()}/api/passagers/new`, {
-      method: "POST",
-      body: JSON.stringify(this.state),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    }).then(response => {
-      response.json().then(data => {
-        console.log("Success" + data);
-      });
-    });
-  };
-
   render() {
+    console.log(this.state.passagerModif._id);
     if (!this.state.passagers) return "loading...";
     return (
       <div className="container">
@@ -112,7 +88,9 @@ class ListeDAttente extends Component {
             {this.state.showModifierPassager ? (
               <ModifierPassager
                 passagerModif={this.state.passagerModif}
-                changeModifierPassager={() => this.changeModifierPassager()}
+                changeShowModifierPassager={() =>
+                  this.changeShowModifierPassager()
+                }
                 fetchPassagers={() => this.fetchPassagers()}
               />
             ) : (
@@ -136,7 +114,7 @@ class ListeDAttente extends Component {
                   <MDBCol size="1" className="mt-2">
                     <MDBIcon
                       icon="pencil-alt"
-                      onClick={() => this.ModifierPassager(_id)}
+                      onClick={() => this.ModifierPassagerShow(_id)}
                     />
                   </MDBCol>
                 </MDBRow>

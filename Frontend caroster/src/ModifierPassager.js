@@ -35,7 +35,7 @@ class ModifierPassager extends Component {
       response.json().then(data => {
         console.log(data.result);
         this.props.fetchPassagers();
-        this.props.changeModifierPassager(data.result);
+        this.props.changeShowModifierPassager(data.result);
       });
     });
   };
@@ -66,7 +66,7 @@ class ModifierPassager extends Component {
       response.json().then(data => {
         console.log(data.result);
         this.props.fetchPassagers();
-        this.props.changeModifierPassager(data.result);
+        this.props.changeShowModifierPassager(data.result);
       });
     });
   };
