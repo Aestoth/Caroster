@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import { MDBBtn, MDBInput } from "mdbreact";
-//import Evenement from "./Evenement";
 import backendURL from "./helpers/getBackendURL";
 
 class CreerEvenement extends Component {
@@ -70,6 +69,7 @@ class CreerEvenement extends Component {
                 name="titre"
                 value={this.state.titre}
                 onChange={this.handleInputChange}
+                required
               />
             </div>
             <div className="form-group col-md-5 mx-auto">
@@ -80,6 +80,7 @@ class CreerEvenement extends Component {
                 name="email"
                 value={this.state.email}
                 onChange={this.handleInputChange}
+                required
               />
             </div>
             <div className="d-flex justify-content-center mt-4">
