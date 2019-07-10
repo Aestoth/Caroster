@@ -23,23 +23,13 @@ class PassagersEnAttente extends Component {
     console.log(passagers);
   };
 
-  changeShowModifierPassager = id => {
-    const passagers = this.props.passagers.find(item => item._id === id);
-    const { showModifierPassager } = this.state;
-
-    this.setState({
-      showModifierPassager: !showModifierPassager,
-      passagerModif: passagers
-    });
-  };
-
   render() {
     return (
       <MDBContainer className="mt-3">
         {this.state.showModifierPassager && (
           <ModifierPassager
             passagerModif={this.state.passagerModif}
-            changeShowModifierPassager={() => this.changeShowModifierPassager()}
+            ModifierPassagerShow={() => this.ModifierPassagerShow()}
             fetchPassagers={this.props.fetchPassagers}
           />
         )}

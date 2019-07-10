@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Voiture.css";
+import ButtonAddPassagers from "./ButtonAddPassagers";
 import {
   MDBContainer,
   MDBRow,
@@ -67,11 +68,19 @@ class Voiture extends Component {
   };
 
   render() {
-    console.log("test", this.state);
     return (
       <div className="container">
         {this.state.voitures.map(
-          ({ _id, nomVoiture, infoComp, contact, adresse, date, horaire }) => (
+          ({
+            _id,
+            nomVoiture,
+            infoComp,
+            contact,
+            adresse,
+            date,
+            horaire,
+            sieges
+          }) => (
             <div key={_id} className="card shadow marginTable mb-4">
               <div className="card-header bg-info text-white d-flex justify-content-between">
                 <div />
@@ -154,20 +163,11 @@ class Voiture extends Component {
                 {this.state.show ? (
                   <Passagers changeDiv={() => this.changeDiv()} />
                 ) : (
-                  <MDBBtn
-                    color="primary"
-                    className="list-group-item bg-primary border border-white mb-0"
-                    onClick={this.changeDiv}
-                  >
-                    <i className="fas fa-user-plus  mr-3" />
-                    Ajouter passager
-                  </MDBBtn>
+                  <ButtonAddPassagers
+                    sieges={sieges}
+                    changeDiv={() => this.changeDiv()}
+                  />
                 )}
-
-                <MDBBtn color="primary">
-                  <i className="fas fa-user-plus  mr-3" />
-                  Ajouter passager
-                </MDBBtn>
               </ul>
             </div>
           )

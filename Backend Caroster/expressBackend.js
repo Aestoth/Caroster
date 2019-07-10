@@ -7,9 +7,12 @@ const app = express();
 const mongoose = require("mongoose");
 
 const MONGO_URL = process.env.MONGO_URL || "localhost";
-mongoose.connect(`mongodb://${MONGO_URL}/caroster`, {
-  useNewUrlParser: true
-});
+mongoose.connect(
+  `mongodb://${MONGO_URL}/caroster`,
+  {
+    useNewUrlParser: true
+  }
+);
 
 mongoose.connection.on("connected", err => {
   if (err) throw err;
@@ -18,7 +21,8 @@ mongoose.connection.on("connected", err => {
 
 const PostSchemaEvenement = mongoose.Schema({
   titre: String,
-  email: String
+  email: String,
+  voiture: [_id]
 });
 
 const PostModelEvenement = mongoose.model(
@@ -41,7 +45,7 @@ const PostModelVoiture = mongoose.model("voiture", PostShemaVoiture, "voiture");
 
 const PostShemaPassagers = mongoose.Schema({
   nom: String
-  //evenement: [{ type: PostShemaPassagers.Types.ObjectId, ref: "evenement" }]
+  //evenementId: [{ type: PostShemaPassagers.Types.ObjectId, ref: "evenement" }]
 });
 const PostModelPassagers = mongoose.model(
   "passagers",
