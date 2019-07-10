@@ -43,7 +43,7 @@ const PostModelVoiture = mongoose.model("voiture", PostShemaVoiture, "voiture");
 
 const PostShemaPassagers = mongoose.Schema({
   nom: String
-  //evenement: [{ type: PostShemaPassagers.Types.ObjectId, ref: "evenement" }]
+  //evenementId: [{ type: PostShemaPassagers.Types.ObjectId, ref: "evenement" }]
 });
 const PostModelPassagers = mongoose.model(
   "passagers",

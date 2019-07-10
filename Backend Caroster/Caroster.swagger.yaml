@@ -5,8 +5,8 @@ info:
   version: "1.0.0"
   title: "Caroster"
 
-host: "caroster.io"
-basePath: "/v1"
+host: "caroster.test.octr.ee"
+basePath: "/api"
 
 schemes:
 - "https"
@@ -457,7 +457,7 @@ definitions:
         type: "array"
         items:
          $ref: '#/definitions/Car'
-      passagers:
+      passengers:
         type: "array"
         items:
          $ref: '#/definitions/Passengers'
@@ -487,7 +487,7 @@ definitions:
         type: "string"
       horaire:
         type: "string"
-      passagers:
+      passengers:
        type: "array"
        items:
          $ref: '#/definitions/Passengers'
