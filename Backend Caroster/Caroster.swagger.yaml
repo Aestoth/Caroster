@@ -5,8 +5,8 @@ info:
   version: "1.0.0"
   title: "Caroster"
 
-host: "caroster.io"
-basePath: "/v1"
+host: "caroster.test.octr.ee"
+basePath: "/api"
 
 schemes:
 - "https"
