@@ -160,14 +160,13 @@ class Voiture extends Component {
               </MDBContainer>
 
               <ul className="list-group list-group-flush mt-4">
-                {this.state.show ? (
+                {this.state.show && (
                   <Passagers changeDiv={() => this.changeDiv()} />
-                ) : (
-                  <ButtonAddPassagers
-                    sieges={sieges}
-                    changeDiv={() => this.changeDiv()}
-                  />
                 )}
+                <ButtonAddPassagers
+                  sieges={sieges}
+                  changeDiv={() => this.changeDiv()}
+                />
               </ul>
             </div>
           )
