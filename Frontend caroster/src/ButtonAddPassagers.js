@@ -29,7 +29,7 @@ class ButtonAddPassagers extends Component {
   };
 
   render() {
-    return <div className="">{this.buttonAddPassager()}</div>;
+    return <div>{this.buttonAddPassager()}</div>;
   }
 }
 
