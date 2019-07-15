@@ -19,13 +19,14 @@ mongoose.connection.on("connected", err => {
 const PostSchemaEvenement = mongoose.Schema({
   titre: String,
   email: String,
-  cars: [{ type: mongoose.Schema.Types.ObjectId, ref: "voiture" }]
+  cars: [{ type: mongoose.Schema.Types.ObjectId, ref: "car" }],
+  passengers: [{ type: mongoose.Schema.Types.ObjectId, ref: "passengers" }]
 });
 
 const PostModelEvenement = mongoose.model(
-  "evenement",
+  "event",
   PostSchemaEvenement,
-  "evenement"
+  "event"
 );
 
 const PostShemaVoiture = mongoose.Schema({
@@ -36,19 +37,23 @@ const PostShemaVoiture = mongoose.Schema({
   adresse: String,
   date: String,
   horaire: String,
-  eventId: { type: mongoose.Schema.Types.ObjectId, ref: "evenement" }
+  passengers: [{ type: mongoose.Schema.Types.ObjectId, ref: "passengers" }]
+  //eventId: { type: mongoose.Schema.Types.ObjectId, ref: "event" },
+  //passengersId: { type: mongoose.Schema.Types.ObjectId, ref: "passengers" }
 });
 
-const PostModelVoiture = mongoose.model("voiture", PostShemaVoiture, "voiture");
+const PostModelVoiture = mongoose.model("car", PostShemaVoiture, "car");
 
 const PostShemaPassagers = mongoose.Schema({
   nom: String
-  //evenementId: [{ type: PostShemaPassagers.Types.ObjectId, ref: "evenement" }]
+  //evenementId: { type: mongoose.Schema.Types.ObjectId, ref: "event" },
+  //carId: { type: mongoose.Schema.Types.ObjectId, ref: "car" }
 });
+
 const PostModelPassagers = mongoose.model(
-  "passagers",
+  "passengers",
   PostShemaPassagers,
-  "passagers"
+  "passengers"
 );
 
 mongoose.set("useFindAndModify", false);
@@ -61,7 +66,7 @@ app.use(cors());
 
 //Function Evenement//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.post("/api/event/new", async (req, res) => {
+app.post("/api/event", async (req, res) => {
   const newPost = PostModelEvenement(req.body);
   const event = await newPost.save();
   res.status(200).json(event);
@@ -87,30 +92,28 @@ app.get("/api/event/:id", (req, res) => {
     });
 });
 
-app.post("/api/event/delete/:id", (req, res) => {
-  let id = req.params.id;
-  PostModelEvenement.findById(id).deleteOne((err, result) => {
-    if (err) res.send({ success: false, msg: err });
-
-    res.send({ success: true, result: result });
-  });
+app.put("/api/event/:id", (req, res) => {
+  const postData = req.body;
+  PostModelEvenement.findByIdAndUpdate(
+    req.params.id,
+    postData,
+    (err, result) => {
+      if (err) res.send({ success: false, msg: err });
+      res.send({ success: true, result: result });
+    }
+  );
 });
 
-//Function new Passagers////////////////////////////////////////////////////////////////////////////////////////////////////
-
-app.post("/api/passagers/new", (req, res) => {
-  let payload = {
-    nom: req.body.nom
-  };
-
-  const newPost = PostModelPassagers(payload);
-  newPost.save((err, result) => {
+app.delete("/api/event/:id", (req, res) => {
+  PostModelEvenement.findByIdAndDelete(req.params.id, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
 });
 
-app.get("/api/passagers", (req, res) => {
+//Function Passagers////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.get("/api/passengers", (req, res) => {
   PostModelPassagers.find((err, result) => {
     if (err) res.send({ success: false, msg: err });
 
@@ -118,28 +121,98 @@ app.get("/api/passagers", (req, res) => {
   });
 });
 
-app.post("/api/passagers/update/:id", (req, res) => {
-  let id = req.params.id;
-  let payload = req.body;
-  PostModelPassagers.findOneAndUpdate(
-    { _id: id },
-    { $set: payload },
+app.post("/api/:id/passengersEvent", async (req, res) => {
+  try {
+    let { id } = req.params;
+    const newPassengers = PostModelPassagers(req.body);
+    console.log("newPassengers", newPassengers);
+
+    const events = await PostModelEvenement.findById(id);
+    await newPassengers.save();
+
+    await events.passengers.push(newPassengers);
+
+    await events.save();
+    res.status(201).json(newPassengers);
+  } catch (err) {
+    res.status(err.response.status);
+    return res.send(err.message);
+  }
+});
+
+app.post("/api/:id/passengersCar", async (req, res) => {
+  try {
+    let { id } = req.params;
+    const newPassengers = PostModelPassagers(req.body);
+    console.log("newPassengers", newPassengers);
+    // Get User
+    const car = await PostModelVoiture.findById(id);
+
+    await newPassengers.save();
+    // Add car to the Event array 'cars'
+    await car.passengers.push(newPassengers);
+    //Save the Event
+    await car.save();
+    res.status(201).json(newPassengers);
+  } catch (err) {
+    res.status(err.response.status);
+    return res.send(err.message);
+  }
+});
+
+app.get("/api/passengers/:id", (req, res) => {
+  PostModelPassagers.findById(req.params.id, (err, result) => {
+    if (err) res.send({ success: false, msg: err });
+    res.send({ success: true, result: result });
+  });
+});
+
+app.put("/api/passengers/:id", (req, res) => {
+  const postData = req.body;
+  PostModelPassagers.findByIdAndUpdate(
+    req.params.id,
+    postData,
     (err, result) => {
       if (err) res.send({ success: false, msg: err });
-
       res.send({ success: true, result: result });
     }
   );
 });
 
-app.post("/api/passagers/delete/:id", (req, res) => {
-  let id = req.params.id;
-  PostModelPassagers.findById(id).deleteOne((err, result) => {
+app.delete("/api/passengers/:id", (req, res) => {
+  PostModelPassagers.findByIdAndDelete(req.params.id, (err, result) => {
     if (err) res.send({ success: false, msg: err });
-
     res.send({ success: true, result: result });
   });
 });
+
+app.get("/api/:eventId/passengers", (req, res) => {
+  const { eventId } = req.params;
+  const events = PostModelEvenement.findById(eventId)
+    .populate("passengers")
+    .exec((err, events) => {
+      console.log("passengers", events.passengers);
+      res.send(events.passengers);
+    });
+});
+
+app.get("/api/:voitureId/passengers", (req, res) => {
+  const { cartId } = req.params;
+  const cars = PostModelVoiture.findById(cartId)
+    .populate("passengers")
+    .exec((err, cars) => {
+      console.log("passengers", cars.passengers);
+      res.send(cars.passengers);
+    });
+});
+
+// app.get("/api/:eventId/passengers", (req, res) => {
+//   const { eventId } = req.params;
+//   PostModelEvenement.findById(eventId, (err, events) => {
+//     if (err) res.send(err);
+//     res.send(events.passengers);
+//   });
+// });
 
 //Function new Voiture/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -160,7 +233,8 @@ app.post("/api/:id/ajouter-voiture", async (req, res) => {
     await events.save();
     res.status(201).json(newVoiture);
   } catch (err) {
-    next(err);
+    res.status(err.response.status);
+    return res.send(err.message);
   }
 });
 

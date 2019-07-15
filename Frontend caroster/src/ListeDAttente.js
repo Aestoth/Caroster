@@ -20,9 +20,10 @@ class ListeDAttente extends Component {
   }
 
   fetchPassagers = () => {
-    fetch(`${backendURL()}/api/passagers`)
+    fetch(`${backendURL()}/api/${this.props.eventId}/passengers`)
       .then(response => response.json())
-      .then(data => this.setState({ passagers: data.result }));
+      .then(data => this.setState({ passagers: data }));
+    console.log(this.state.passagers);
   };
 
   changeListeDAttente = () => {
@@ -31,7 +32,8 @@ class ListeDAttente extends Component {
   };
 
   render() {
-    if (!this.state.passagers) return "loading...";
+    console.log(this.state.passagers);
+    console.log(this.props.eventId);
     return (
       <div className="container">
         <div className="card shadow">
@@ -51,6 +53,7 @@ class ListeDAttente extends Component {
               <AjouterListeDAttente
                 changeListeDAttente={() => this.changeListeDAttente()}
                 fetchPassagers={() => this.fetchPassagers()}
+                eventId={this.props.eventId}
               />
             ) : (
               <MDBBtn

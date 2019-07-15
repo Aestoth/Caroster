@@ -43,8 +43,8 @@ class Evenement extends Component {
 
   deleteEvenement = e => {
     e.preventDefault();
-    fetch(`${backendURL()}/api/event/delete/${this.props.match.params.id}`, {
-      method: "POST",
+    fetch(`${backendURL()}/api/event/${this.props.match.params.id}`, {
+      method: "DELETE",
       body: JSON.stringify(this.state),
       headers: {
         Accept: "application/json",
@@ -89,7 +89,7 @@ class Evenement extends Component {
         <div className="container">
           <div className="row d-flex justify-content-center mt-4">
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6">
-              <ListeDAttente />
+              <ListeDAttente eventId={this.props.match.params.id} />
             </div>
             <div className="col-md-6 marginTable col-sm-6 col-lg-6 col-xl-6">
               <Voiture id={this.props.match.params.id} />

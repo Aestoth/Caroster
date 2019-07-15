@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MDBIcon, MDBCol, MDBRow, MDBContainer } from "mdbreact";
 import ModifierPassager from "./ModifierPassager";
+//import backendURL from "./helpers/getBackendURL";
 
 class PassagersEnAttente extends Component {
   constructor(props) {
@@ -24,6 +25,8 @@ class PassagersEnAttente extends Component {
   };
 
   render() {
+    console.log(this.props.passagers);
+    if (!this.props.passagers) return "Liste d-attente vide";
     return (
       <MDBContainer className="mt-3">
         {this.state.showModifierPassager && (

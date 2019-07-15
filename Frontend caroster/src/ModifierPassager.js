@@ -21,17 +21,14 @@ class ModifierPassager extends Component {
   deletePassager = e => {
     e.preventDefault();
     console.log(this.props.passagerModif._id);
-    fetch(
-      `${backendURL()}/api/passagers/delete/${this.props.passagerModif._id}`,
-      {
-        method: "POST",
-        body: JSON.stringify(this.state),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
+    fetch(`${backendURL()}/api/passengers/${this.props.passagerModif._id}`, {
+      method: "DELETE",
+      body: JSON.stringify(this.state),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
       }
-    ).then(response => {
+    }).then(response => {
       response.json().then(data => {
         console.log(data.result);
         this.props.fetchPassagers();
@@ -52,17 +49,14 @@ class ModifierPassager extends Component {
   handleSubmit = e => {
     e.preventDefault();
     console.log(this.props.passagerModif._id);
-    fetch(
-      `${backendURL()}/api/passagers/update/${this.props.passagerModif._id}`,
-      {
-        method: "POST",
-        body: JSON.stringify(this.state),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
+    fetch(`${backendURL()}/api/passengers/${this.props.passagerModif._id}`, {
+      method: "PUT",
+      body: JSON.stringify(this.state),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
       }
-    ).then(response => {
+    }).then(response => {
       response.json().then(data => {
         console.log(data.result);
         this.props.fetchPassagers();

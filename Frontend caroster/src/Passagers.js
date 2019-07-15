@@ -30,7 +30,7 @@ class Passagers extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch(`${backendURL()}/api/passagers/new`, {
+    fetch(`${backendURL()}/api/${this.props.id}/passengersCar`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -40,7 +40,7 @@ class Passagers extends Component {
     }).then(response => {
       response.json().then(data => {
         console.log("Success", data);
-        this.props.changeDiv(data.result);
+        this.props.changeDiv(data);
       });
     });
   };

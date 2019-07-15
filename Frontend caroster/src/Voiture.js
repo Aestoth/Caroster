@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Voiture.css";
 import ButtonAddPassagers from "./ButtonAddPassagers";
+import PassagerDansVoiture from "./PassagerDansVoiture";
 import {
   MDBContainer,
   MDBRow,
@@ -26,7 +27,7 @@ class Voiture extends Component {
   }
 
   componentDidMount() {
-    fetch(`${backendURL()}/api/voiture/all`)
+    fetch(`${backendURL()}/api/voiture`)
       .then(res => res.json())
       .then(data => this.setState({ voitures: data.result }));
   }
@@ -53,7 +54,7 @@ class Voiture extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch(`${backendURL()}/api/passagers/new`, {
+    fetch(`${backendURL()}/api/:id/passengersCar`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -160,8 +161,9 @@ class Voiture extends Component {
               </MDBContainer>
 
               <ul className="list-group list-group-flush mt-4">
+                <PassagerDansVoiture />
                 {this.state.show && (
-                  <Passagers changeDiv={() => this.changeDiv()} />
+                  <Passagers id={_id} changeDiv={() => this.changeDiv()} />
                 )}
                 <ButtonAddPassagers
                   sieges={sieges}

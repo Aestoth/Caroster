@@ -31,7 +31,7 @@ class AjouterListeDAttente extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch(`${backendURL()}/api/passagers/new`, {
+    fetch(`${backendURL()}/api/${this.props.eventId}/passengersEvent`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -42,7 +42,7 @@ class AjouterListeDAttente extends Component {
       response.json().then(data => {
         console.log("Success" + data);
         this.props.fetchPassagers();
-        this.props.changeListeDAttente(data.result);
+        this.props.changeListeDAttente(data);
       });
     });
   };

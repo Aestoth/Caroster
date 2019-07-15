@@ -24,7 +24,7 @@ class CreerEvenement extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch(`${backendURL()}/api/event/new`, {
+    fetch(`${backendURL()}/api/event`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -34,7 +34,7 @@ class CreerEvenement extends Component {
     }).then(response => {
       response.json().then(data => {
         console.log("Success", data);
-        this.props.history.push("/Evenement/" + data.result._id);
+        this.props.history.push("/Evenement/" + data._id);
       });
     });
   };
