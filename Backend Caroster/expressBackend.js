@@ -16,20 +16,16 @@ mongoose.connection.on("connected", err => {
   console.log("Connecté a la Base de donnees");
 });
 
-const PostSchemaEvenement = mongoose.Schema({
+const PostSchemaEvent = mongoose.Schema({
   titre: String,
   email: String,
   cars: [{ type: mongoose.Schema.Types.ObjectId, ref: "car" }],
   passengers: [{ type: mongoose.Schema.Types.ObjectId, ref: "passengers" }]
 });
 
-const PostModelEvenement = mongoose.model(
-  "event",
-  PostSchemaEvenement,
-  "event"
-);
+const PostModelEvent = mongoose.model("event", PostSchemaEvent, "event");
 
-const PostShemaVoiture = mongoose.Schema({
+const PostShemaCar = mongoose.Schema({
   nomVoiture: String,
   sieges: Number,
   contact: String,
@@ -42,17 +38,17 @@ const PostShemaVoiture = mongoose.Schema({
   //passengersId: { type: mongoose.Schema.Types.ObjectId, ref: "passengers" }
 });
 
-const PostModelVoiture = mongoose.model("car", PostShemaVoiture, "car");
+const PostModelCar = mongoose.model("car", PostShemaCar, "car");
 
-const PostShemaPassagers = mongoose.Schema({
+const PostShemaPassengers = mongoose.Schema({
   nom: String
   //evenementId: { type: mongoose.Schema.Types.ObjectId, ref: "event" },
   //carId: { type: mongoose.Schema.Types.ObjectId, ref: "car" }
 });
 
-const PostModelPassagers = mongoose.model(
+const PostModelPassengers = mongoose.model(
   "passengers",
-  PostShemaPassagers,
+  PostShemaPassengers,
   "passengers"
 );
 
@@ -67,13 +63,13 @@ app.use(cors());
 //Function Evenement//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.post("/api/event", async (req, res) => {
-  const newPost = PostModelEvenement(req.body);
+  const newPost = PostModelEvent(req.body);
   const event = await newPost.save();
   res.status(200).json(event);
 });
 
 app.get("/api/event", (req, res) => {
-  PostModelEvenement.find((err, result) => {
+  PostModelEvent.find((err, result) => {
     if (err) res.send({ success: false, msg: err });
 
     res.send({ success: true, result: result });
@@ -82,7 +78,7 @@ app.get("/api/event", (req, res) => {
 
 app.get("/api/event/:id", (req, res) => {
   let id = req.params.id;
-  PostModelEvenement.findById(id)
+  PostModelEvent.findById(id)
     .populate("cars")
     .then(doc => {
       if (!doc) {
@@ -94,18 +90,14 @@ app.get("/api/event/:id", (req, res) => {
 
 app.put("/api/event/:id", (req, res) => {
   const postData = req.body;
-  PostModelEvenement.findByIdAndUpdate(
-    req.params.id,
-    postData,
-    (err, result) => {
-      if (err) res.send({ success: false, msg: err });
-      res.send({ success: true, result: result });
-    }
-  );
+  PostModelEvent.findByIdAndUpdate(req.params.id, postData, (err, result) => {
+    if (err) res.send({ success: false, msg: err });
+    res.send({ success: true, result: result });
+  });
 });
 
 app.delete("/api/event/:id", (req, res) => {
-  PostModelEvenement.findByIdAndDelete(req.params.id, (err, result) => {
+  PostModelEvent.findByIdAndDelete(req.params.id, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
@@ -114,7 +106,7 @@ app.delete("/api/event/:id", (req, res) => {
 //Function Passagers////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/api/passengers", (req, res) => {
-  PostModelPassagers.find((err, result) => {
+  PostModelPassengers.find((err, result) => {
     if (err) res.send({ success: false, msg: err });
 
     res.send({ success: true, result: result });
@@ -124,10 +116,10 @@ app.get("/api/passengers", (req, res) => {
 app.post("/api/:id/passengersEvent", async (req, res) => {
   try {
     let { id } = req.params;
-    const newPassengers = PostModelPassagers(req.body);
+    const newPassengers = PostModelPassengers(req.body);
     console.log("newPassengers", newPassengers);
 
-    const events = await PostModelEvenement.findById(id);
+    const events = await PostModelEvent.findById(id);
     await newPassengers.save();
 
     await events.passengers.push(newPassengers);
@@ -143,10 +135,10 @@ app.post("/api/:id/passengersEvent", async (req, res) => {
 app.post("/api/:id/passengersCar", async (req, res) => {
   try {
     let { id } = req.params;
-    const newPassengers = PostModelPassagers(req.body);
+    const newPassengers = PostModelPassengers(req.body);
     console.log("newPassengers", newPassengers);
     // Get User
-    const car = await PostModelVoiture.findById(id);
+    const car = await PostModelCar.findById(id);
 
     await newPassengers.save();
     // Add car to the Event array 'cars'
@@ -161,7 +153,7 @@ app.post("/api/:id/passengersCar", async (req, res) => {
 });
 
 app.get("/api/passengers/:id", (req, res) => {
-  PostModelPassagers.findById(req.params.id, (err, result) => {
+  PostModelPassengers.findById(req.params.id, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
@@ -169,7 +161,7 @@ app.get("/api/passengers/:id", (req, res) => {
 
 app.put("/api/passengers/:id", (req, res) => {
   const postData = req.body;
-  PostModelPassagers.findByIdAndUpdate(
+  PostModelPassengers.findByIdAndUpdate(
     req.params.id,
     postData,
     (err, result) => {
@@ -180,7 +172,7 @@ app.put("/api/passengers/:id", (req, res) => {
 });
 
 app.delete("/api/passengers/:id", (req, res) => {
-  PostModelPassagers.findByIdAndDelete(req.params.id, (err, result) => {
+  PostModelPassengers.findByIdAndDelete(req.params.id, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
@@ -188,7 +180,7 @@ app.delete("/api/passengers/:id", (req, res) => {
 
 app.get("/api/:eventId/passengers", (req, res) => {
   const { eventId } = req.params;
-  const events = PostModelEvenement.findById(eventId)
+  const events = PostModelEvent.findById(eventId)
     .populate("passengers")
     .exec((err, events) => {
       console.log("passengers", events.passengers);
@@ -197,8 +189,8 @@ app.get("/api/:eventId/passengers", (req, res) => {
 });
 
 app.get("/api/:voitureId/passengers", (req, res) => {
-  const { cartId } = req.params;
-  const cars = PostModelVoiture.findById(cartId)
+  const { carId } = req.params;
+  const cars = PostModelCar.findById(carId)
     .populate("passengers")
     .exec((err, cars) => {
       console.log("passengers", cars.passengers);
@@ -206,9 +198,19 @@ app.get("/api/:voitureId/passengers", (req, res) => {
     });
 });
 
+app.get("/api/:eventId/cars", (req, res) => {
+  const { eventId } = req.params;
+  const events = PostModelEvent.findById(eventId)
+    .populate("cars")
+    .exec((err, events) => {
+      console.log("cars", events.cars);
+      res.send(events.cars);
+    });
+});
+
 // app.get("/api/:eventId/passengers", (req, res) => {
 //   const { eventId } = req.params;
-//   PostModelEvenement.findById(eventId, (err, events) => {
+//   PostModelEvent.findById(eventId, (err, events) => {
 //     if (err) res.send(err);
 //     res.send(events.passengers);
 //   });
@@ -219,12 +221,12 @@ app.get("/api/:voitureId/passengers", (req, res) => {
 app.post("/api/:id/ajouter-voiture", async (req, res) => {
   try {
     let { id } = req.params;
-    const newVoiture = PostModelVoiture(req.body);
+    const newVoiture = PostModelCar(req.body);
     console.log("newVoiture", newVoiture);
     // Get User
-    const events = await PostModelEvenement.findById(id);
+    const events = await PostModelEvent.findById(id);
     // Assign Evenement as a Cars
-    newVoiture.eventId = events;
+
     // Save the car
     await newVoiture.save();
     // Add car to the Event array 'cars'
@@ -233,15 +235,15 @@ app.post("/api/:id/ajouter-voiture", async (req, res) => {
     await events.save();
     res.status(201).json(newVoiture);
   } catch (err) {
-    res.status(err.response.status);
-    return res.send(err.message);
+    // res.status(err.response.status);
+    // return res.send(err.message);
   }
 });
 
 //Récupérer Voiture///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/api/voiture", (req, res) => {
-  PostModelVoiture.find((err, result) => {
+  PostModelCar.find((err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
@@ -250,7 +252,7 @@ app.get("/api/voiture", (req, res) => {
 //Récupérer Voiture par ID ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/api/voiture/:id", (req, res) => {
-  PostModelVoiture.findById(req.params.id, (err, result) => {
+  PostModelCar.findById(req.params.id, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
@@ -260,7 +262,7 @@ app.get("/api/voiture/:id", (req, res) => {
 
 app.put("/api/voiture/update/:id", (req, res) => {
   const postData = req.body;
-  PostModelVoiture.findByIdAndUpdate(req.params.id, postData, (err, result) => {
+  PostModelCar.findByIdAndUpdate(req.params.id, postData, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
@@ -269,7 +271,7 @@ app.put("/api/voiture/update/:id", (req, res) => {
 //Delete Voiture///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.delete("/api/voiture/delete/:id", (req, res) => {
-  PostModelVoiture.findByIdAndDelete(req.params.id, (err, result) => {
+  PostModelCar.findByIdAndDelete(req.params.id, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });

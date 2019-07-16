@@ -30,17 +30,22 @@ class FormAddVoiture extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    fetch(`${backendURL()}/api/ajouter-voiture/`, {
-      method: "POST",
-      body: JSON.stringify(this.state),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+    fetch(
+      `${backendURL()}/api/${
+        this.props.location.state.params.id
+      }/ajouter-voiture`,
+      {
+        method: "POST",
+        body: JSON.stringify(this.state),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
       }
-    }).then(response => {
+    ).then(response => {
       response.json().then(data => {
         console.log("Success", data);
-        console.log("id", data.result._id);
+        console.log("id", data._id);
         this.props.history.push(
           `/Evenement/${this.props.location.state.params.id}`
         );
@@ -49,6 +54,7 @@ class FormAddVoiture extends Component {
   }
 
   render() {
+    console.log(this.props.location.state.params.id);
     return (
       <div className="container-fluid cover-container d-flex">
         <div className="row col-12 align-items-center justify-content-center flex-fill mx-auto ">

@@ -27,9 +27,9 @@ class Voiture extends Component {
   }
 
   componentDidMount() {
-    fetch(`${backendURL()}/api/voiture`)
+    fetch(`${backendURL()}/api/${this.props.id}/cars`)
       .then(res => res.json())
-      .then(data => this.setState({ voitures: data.result }));
+      .then(data => this.setState({ voitures: data }));
   }
 
   changeDiv = () => {
@@ -54,7 +54,7 @@ class Voiture extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch(`${backendURL()}/api/:id/passengersCar`, {
+    fetch(`${backendURL()}/api/${this.state.voitures}/passengersCar`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -63,12 +63,13 @@ class Voiture extends Component {
       }
     }).then(response => {
       response.json().then(data => {
-        console.log("Success" + data);
+        console.log("Success", data);
       });
     });
   };
 
   render() {
+    console.log(this.state.voitures);
     return (
       <div className="container">
         {this.state.voitures.map(
@@ -162,8 +163,9 @@ class Voiture extends Component {
 
               <ul className="list-group list-group-flush mt-4">
                 <PassagerDansVoiture />
+
                 {this.state.show && (
-                  <Passagers id={_id} changeDiv={() => this.changeDiv()} />
+                  <Passagers carId={_id} changeDiv={() => this.changeDiv()} />
                 )}
                 <ButtonAddPassagers
                   sieges={sieges}

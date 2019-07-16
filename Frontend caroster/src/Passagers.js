@@ -30,7 +30,7 @@ class Passagers extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch(`${backendURL()}/api/${this.props.id}/passengersCar`, {
+    fetch(`${backendURL()}/api/${this.props.carId}/passengersCar`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -46,6 +46,7 @@ class Passagers extends Component {
   };
 
   render() {
+    console.log(this.props.carId);
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="row">

@@ -60,6 +60,7 @@ class Evenement extends Component {
 
   render() {
     if (!this.state.evenement) return "loading";
+    console.log(this.props.match.params.id);
     return (
       <div>
         <Navbar />

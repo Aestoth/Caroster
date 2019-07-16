@@ -7,6 +7,7 @@ import FormAddVoiture from "./FormAddVoiture";
 
 class AjouterVoiture extends Component {
   render() {
+    console.log(this.props.location.state.params.id);
     const Button = styled.button`
       background-color: transparent;
       border: none;
