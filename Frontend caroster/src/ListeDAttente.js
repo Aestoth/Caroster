@@ -20,10 +20,9 @@ class ListeDAttente extends Component {
   }
 
   fetchPassagers = () => {
-    fetch(`${backendURL()}/api/${this.props.eventId}/passengers`)
+    fetch(`${backendURL()}/api/event/${this.props.eventId}/passengers`)
       .then(response => response.json())
       .then(data => this.setState({ passagers: data }));
-    console.log(this.state.passagers);
   };
 
   changeListeDAttente = () => {
@@ -33,7 +32,6 @@ class ListeDAttente extends Component {
 
   render() {
     console.log(this.state.passagers);
-    console.log(this.props.eventId);
     return (
       <div className="container">
         <div className="card shadow">

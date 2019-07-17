@@ -15,7 +15,9 @@ class Passagers extends Component {
     super(props);
     this.state = {
       nom: "",
-      show: false
+      show: true,
+      cars: [],
+      passengers: []
     };
   }
 
@@ -40,13 +42,15 @@ class Passagers extends Component {
     }).then(response => {
       response.json().then(data => {
         console.log("Success", data);
-        this.props.changeDiv(data);
+        this.props.changeDiv();
+        this.props.fetchCarPassengers();
       });
     });
   };
 
   render() {
     console.log(this.props.carId);
+    console.log(this.state.passengers);
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="row">

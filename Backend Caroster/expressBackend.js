@@ -178,7 +178,7 @@ app.delete("/api/passengers/:id", (req, res) => {
   });
 });
 
-app.get("/api/:eventId/passengers", (req, res) => {
+app.get("/api/event/:eventId/passengers", (req, res) => {
   const { eventId } = req.params;
   const events = PostModelEvent.findById(eventId)
     .populate("passengers")
@@ -188,7 +188,7 @@ app.get("/api/:eventId/passengers", (req, res) => {
     });
 });
 
-app.get("/api/:voitureId/passengers", (req, res) => {
+app.get("/api/car/:carId/passengers", (req, res) => {
   const { carId } = req.params;
   const cars = PostModelCar.findById(carId)
     .populate("passengers")
