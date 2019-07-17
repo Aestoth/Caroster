@@ -7,9 +7,9 @@ class PassagerDansVoiture extends Component {
     return (
       <MDBContainer>
         {this.props.passengersCar.map(({ _id, nom }) => (
-          <MDBRow key={_id}>
+          <MDBRow key={_id} className="green lighten-4 border border-white p-2">
             <MDBCol size="10">
-              <i className="fas fa-user pr-0 mr-1" />
+              <i className="fas fa-user pr-0 mr-3" />
               {nom}
             </MDBCol>
             <MDBCol size="2">
