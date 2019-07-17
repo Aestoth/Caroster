@@ -130,6 +130,7 @@ class UniqueVoiture extends Component {
             <PassagerDansVoiture
               carId={this.props._id}
               passengersCar={this.state.passengers}
+              fetchCarPassengers={() => this.fetchCarPassengers()}
             />
             {this.state.show && (
               <Passagers
