@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ButtonAddPassagers from "./ButtonAddPassagers";
 import PassagerDansVoiture from "./PassagerDansVoiture";
+
 import backendURL from "./helpers/getBackendURL";
 
 import {
@@ -20,7 +21,8 @@ class UniqueVoiture extends Component {
     super();
     this.state = {
       show: false,
-      passengers: []
+      passengers: [],
+      carPlaces: []
     };
   }
 
@@ -34,23 +36,17 @@ class UniqueVoiture extends Component {
   }
 
   fetchCarPassengers = () => {
-    console.log(">>>>" + this.state.passengers);
     fetch(`${backendURL()}/api/car/${this.props._id}/passengers`)
       .then(response => response.json())
       .then(data => this.setState({ passengers: data }));
     console.log(this.state.passengers);
   };
 
-  countPassengers = () => {
-    const passenger = this.state.passengers;
-    const passengerSieges = passenger.length;
-    return passengerSieges;
-  };
-
   render() {
-    const passenger = this.state.passengers;
-    const passengerSieges = passenger.length;
-    console.log(passengerSieges);
+    const passengers = this.state.passengers;
+    const nombPassengerCar = passengers.length;
+    // const place = this.props.sieges;
+
     return (
       <div className="container">
         <div className="card shadow marginTable mb-4">
@@ -142,7 +138,7 @@ class UniqueVoiture extends Component {
             <ButtonAddPassagers
               sieges={
                 this.state.show || this.state.passengers
-                  ? this.props.sieges - passengerSieges
+                  ? this.props.sieges - nombPassengerCar
                   : this.props.sieges
               }
               changeDiv={() => this.changeDiv()}
@@ -156,3 +152,9 @@ class UniqueVoiture extends Component {
 }
 
 export default UniqueVoiture;
+
+// <CarFreePlaces
+//   carId={nombPassengerCar !== place && this.state.carPlaces}
+//   cars={this.props.cars}
+//   result={this.state.carPlaces}
+// />

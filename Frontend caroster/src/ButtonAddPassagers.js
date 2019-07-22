@@ -11,7 +11,6 @@ class ButtonAddPassagers extends Component {
 
   buttonAddPassager = () => {
     const buttonSieges = [];
-
     for (let i = 0; i < this.props.sieges; i++) {
       buttonSieges.push(
         <MDBBtn

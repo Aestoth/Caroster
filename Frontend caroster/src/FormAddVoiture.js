@@ -15,7 +15,8 @@ class FormAddVoiture extends Component {
       contact: "",
       adresse: "",
       date: "",
-      horaire: ""
+      horaire: "",
+      carId: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -54,12 +55,12 @@ class FormAddVoiture extends Component {
   }
 
   render() {
-    console.log(this.props.location.state.params.id);
+    console.log("iddd", this.props.location.state.params.id);
     return (
-      <div className="container-fluid cover-container d-flex">
-        <div className="row col-12 align-items-center justify-content-center flex-fill mx-auto ">
-          <form className="mx-auto" onSubmit={this.handleSubmit}>
-            <div className="form-group col-12">
+      <div className="container cover-container d-flex justify-content-center mt-4">
+        <div className="card col-md-8">
+          <form className="p-4" onSubmit={this.handleSubmit}>
+            <div className="form-group ">
               <MDBInput
                 type="text"
                 label="Nom de la voiture"
@@ -71,7 +72,7 @@ class FormAddVoiture extends Component {
                 required
               />
             </div>
-            <div className="form-group col-12">
+            <div className="form-group ">
               <MDBInput
                 type="number"
                 id="defaultFormRegisterNameEx"
@@ -79,13 +80,13 @@ class FormAddVoiture extends Component {
                 icon="chair"
                 className="mb-0 form-control"
                 name="sieges"
-                value={this.state.sieges}
+                value={this.state.sieges <= 10 && this.state.sieges}
                 onChange={this.handleChange}
                 validate={this.state.validate}
                 required
               />
             </div>
-            <div className="form-group col-12 flex">
+            <div className="form-group flex">
               <MDBInput
                 type="text"
                 id="defaultFormRegisterNameEx"
@@ -98,7 +99,7 @@ class FormAddVoiture extends Component {
                 required
               />
             </div>
-            <div className="form-group col-12">
+            <div className="form-group ">
               <MDBInput
                 type="text"
                 id="defaultFormRegisterNameEx"
@@ -115,7 +116,7 @@ class FormAddVoiture extends Component {
             <h6 className="text-center text-uppercase mt-5">
               Lieu de rendez-vous
             </h6>
-            <div className="form-group col-12">
+            <div className="form-group ">
               <MDBInput
                 type="text"
                 id="defaultFormRegisterNameEx"
@@ -129,7 +130,7 @@ class FormAddVoiture extends Component {
                 required
               />
             </div>
-            <div className="md-form form-group col-12">
+            <div className="md-form form-group ">
               <MDBInput
                 type="date"
                 id="defaultFormRegisterNameEx"
@@ -142,7 +143,7 @@ class FormAddVoiture extends Component {
                 required
               />
             </div>
-            <div className="md-form form-group col-12">
+            <div className="md-form form-group ">
               <MDBInput
                 type="time"
                 id="defaultFormRegisterNameEx"

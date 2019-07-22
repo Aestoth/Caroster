@@ -9,8 +9,7 @@ class Voiture extends Component {
     super(props);
     this.state = {
       show: false,
-      nom: [],
-      voitures: [],
+      cars: [],
       EventId: this.props.id
     };
   }
@@ -18,15 +17,15 @@ class Voiture extends Component {
   componentDidMount() {
     fetch(`${backendURL()}/api/${this.props.id}/cars`)
       .then(res => res.json())
-      .then(data => this.setState({ voitures: data }));
+      .then(data => this.setState({ cars: data }));
   }
 
   render() {
-    console.log(this.state.voitures);
+    console.log(this.state.cars);
 
     return (
       <div>
-        {this.state.voitures.map(
+        {this.state.cars.map(
           ({
             _id,
             nomVoiture,
@@ -48,6 +47,7 @@ class Voiture extends Component {
               horaire={horaire}
               sieges={sieges}
               EventId={this.props.id}
+              carId={this.state.cars}
             />
           )
         )}

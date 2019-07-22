@@ -21,8 +21,10 @@ class Evenement extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      evenement: false,
-      mondal: false
+      event: false,
+      mondal: false,
+      carId: [],
+      passengers: []
     };
   }
 
@@ -31,7 +33,7 @@ class Evenement extends Component {
       .then(response => response.json())
       .then(data => {
         console.log("event in fetch", data);
-        this.setState({ evenement: data });
+        this.setState({ event: data });
       });
   }
 
@@ -41,7 +43,7 @@ class Evenement extends Component {
     });
   };
 
-  deleteEvenement = e => {
+  deleteEvent = e => {
     e.preventDefault();
     fetch(`${backendURL()}/api/event/${this.props.match.params.id}`, {
       method: "DELETE",
@@ -59,8 +61,7 @@ class Evenement extends Component {
   };
 
   render() {
-    if (!this.state.evenement) return "loading";
-    console.log(this.props.match.params.id);
+    if (!this.state.event) return "loading";
     return (
       <div>
         <Navbar />
@@ -70,14 +71,18 @@ class Evenement extends Component {
           </div>
 
           <div className="ml-5 text-white">
-            <h5>{this.state.evenement.titre}</h5>
+            <h5>{this.state.event.titre}</h5>
           </div>
 
           <div>
             <Link
               to={{
                 pathname: "/Ajouter-Voiture",
-                state: { params: { id: this.props.match.params.id } }
+                state: {
+                  params: {
+                    id: this.props.match.params.id
+                  }
+                }
               }}
             >
               <MDBBtn color="indigo btn-sm">
@@ -103,14 +108,14 @@ class Evenement extends Component {
           </MDBBtn>
           <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
             <MDBModalHeader toggle={this.toggle}>
-              {this.state.evenement.titre}
+              {this.state.event.titre}
             </MDBModalHeader>
             <MDBModalBody>Attention! L'événement será supprimé </MDBModalBody>
             <MDBModalFooter>
               <MDBBtn color="secondary" onClick={this.toggle}>
                 Annuler
               </MDBBtn>
-              <MDBBtn onClick={this.deleteEvenement} color="primary">
+              <MDBBtn onClick={this.deleteEvent} color="primary">
                 Continuer
               </MDBBtn>
             </MDBModalFooter>
