@@ -1,503 +1,426 @@
-
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: "API de covoiturage"
-  version: "1.0.0"
-  title: "Caroster"
-
-host: "caroster.test.octr.ee"
-basePath: "/api"
-
+  description: API de covoiturage
+  version: 1.0.0
+  title: Caroster
+host: localhost:3000
+basePath: /api
 schemes:
-- "https"
-- "http"
+  
+  - http
 paths:
   /event:
     post:
-      summary: "Créer evenement"
-      description: ""
-      operationId: "ajouterEvenement"
+      summary: Créer evenement
+      description: ''
+      operationId: ajouterEvenement
       consumes:
-      - "application/json"
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: ""
-        required: true
-        schema:
-          $ref: "#/definitions/Event"
-      responses:
-        405:
-          description: "Input ne pas valide"
-    get:
-      summary: "Liste d'evenements"
-      description: ""
-      responses:
-        200:
-          description: "Liste d'evenements"
+        - in: body
+          name: body
+          description: ''
+          required: true
           schema:
-            $ref: "#/definitions/Event"
-        400:
-          description: "ID fournie ne pas valide"
-        404:
-          description: "Evenement non trouvé"
-  
-  /event/{eventId}:
+            $ref: '#/definitions/Event'
+      responses:
+        '405':
+          description: Input ne pas valide
     get:
-      summary: "Trouver evenement par son ID"
-      description: ""
-      operationId: "getEventById"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "eventId"
-        in: "path"
-        description: "ID d'evenement"
-        required: true
-        type: "string"
+      summary: Liste d'evenements
+      description: ''
       responses:
-        200:
-          description: "Operation réussie"
+        '200':
+          description: Liste d'evenements
           schema:
-            $ref: "#/definitions/Event"
-        400:
-          description: "ID fournie ne pas valide"
-        404:
-          description: "Evenement non trouvé"
-    post:
-      summary: "Modifier les données d'evenement"
-      description: ""
-      operationId: "updateEventWithForm"
-      consumes:
-      - "application/x-www-form-urlencoded"
+            $ref: '#/definitions/Event'
+        '400':
+          description: ID fournie ne pas valide
+        '404':
+          description: Evenement non trouvé
+  '/event/{eventId}':
+    get:
+      summary: Trouver evenement par son ID
+      description: ''
+      operationId: getEventById
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "eventId"
-        in: "path"
-        description: ""
-        required: true
-        type: "string"
-      - name:  "nom"
-        in: "formData"
-        description: "Mise a jour nom d'evenement"
-        required: false
-        type: "string"
-      - name:  "email"
-        in: "formData"
-        description: "Mise a jour email d'evenement"
-        required: false
-        type: "string"
+        - name: eventId
+          in: path
+          description: ID d'evenement
+          required: true
+          type: string
       responses:
-        405:
-          description: "Input ne pas valide"
+        '200':
+          description: Operation réussie
+          schema:
+            $ref: '#/definitions/Event'
+        '400':
+          description: ID fournie ne pas valide
+        '404':
+          description: Evenement non trouvé
     delete:
-      summary: "Supprimer evenement"
-      description: ""
-      operationId: "deleteEvenement"
+      summary: Supprimer evenement
+      description: ''
+      operationId: deleteEvenement
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "eventId"
-        in: "path"
-        description: ""
-        required: true
-        type: "string"
+        - name: api_key
+          in: header
+          required: false
+          type: string
+        - name: eventId
+          in: path
+          description: ''
+          required: true
+          type: string
       responses:
-        400:
-          description: "ID fournie ne pas valide"
-        404:
-          description: "Evenement non trouvé"
-        
-  /event/car:
-    post:
-      summary: "Ajouter voiture a l'evenement"
-      description: ""
-      operationId: "addVoiture"
+        '400':
+          description: ID fournie ne pas valide
+        '404':
+          description: Evenement non trouvé
+    put:
+      summary: Modifier les données d'evenement
+      description: ''
+      operationId: updateEventWithForm
       consumes:
-      - "application/json"
+        - application/x-www-form-urlencoded
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Ajoute une voiture"
-        required: true
-        schema:
-          $ref: "#/definitions/Car"
+        - name: eventId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: titre
+          in: formData
+          description: Mise a jour nom d'evenement
+          required: false
+          type: string
+        - name: email
+          in: formData
+          description: Mise a jour email d'evenement
+          required: false
+          type: string
       responses:
-        405:
-          description: "Input ne pas valide"
-      
-  /event/car/list:      
-    get:
-      summary: "Liste des voitures"
-      description: ""
-      responses:
-        200:
-          description: "Liste des voitures"
-          schema:
-            $ref: "#/definitions/Car"
-        400:
-          description: "ID fournie ne pas valide"
-        404:
-          description: "Voiture non trouvé"
-  
-  /event/car/{carId}:
-    get:
-      summary: "Trouver voiture par son ID"
-      description: " "
-      operationId: "getCarById"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "carId"
-        in: "path"
-        description: ""
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "Operation réussie"
-          schema:
-            $ref: "#/definitions/Car"
-        400:
-          description: "ID fournie ne pas valide"
-        404:
-          description: "Voiture non trouvé"
+        '405':
+          description: Input ne pas valide
+  '/{eventId}/newcar':
     post:
-      summary: "Modifier les données de la voiture"
-      description: ""
-      operationId: "updateVoitureWithForm"
+      summary: Ajouter voiture a l'evenement
+      description: ''
+      operationId: addVoiture
       consumes:
-      - "application/x-www-form-urlencoded"
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "carId"
-        in: "path"
-        description: ""
-        required: true
-        type: "string"
-      - name: "nom"
-        in: "formData"
-        description: "Mise a jour nom de la voiture"
-        required: false
-        type: "string"
-      - name: "sieges"
-        in: "formData"
-        description: "Mise a jour sieges de la voiture"
-        required: false
-        type: "number"
-      - name: "info complementaires"
-        in: "formData"
-        description: "Mise a jour info complementaires voiture"
-        required: false
-        type: "string"
-      - name: "contact proprietaire"
-        in: "formData"
-        description: "Mise a jour contact proprietaire voiture"
-        required: false
-        type: "string"
-      - name: "adresse"
-        in: "formData"
-        description: "Mise a jour adresse lieu rendez-vous"
-        required: false
-        type: "string"
-      - name: "date"
-        in: "formData"
-        description: "Mise a jour date de rendez-vous"
-        required: false
-        type: "string"
-      - name: "heure"
-        in: "formData"
-        description: "Mise a jour heure du rendez-vous"
-        required: false
-        type: "string"
+        - in: path
+          name: eventId
+          type: string
+          description: Ajoute une voiture
+          required: true
       responses:
-        405:
-          description: "Input ne pas valide"
+        '405':
+          description: Input ne pas valide
+  '/{eventId}/cars':
+    get:
+      summary: Liste des voitures
+      description: ''
+      operationId: eventId
+      produces:
+        - application/json
+      parameters:
+        - name: eventId
+          in: path
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Liste des voitures
+          schema:
+            $ref: '#/definitions/Car'
+        '400':
+          description: ID fournie ne pas valide
+        '404':
+          description: Voiture non trouvé
+  '/car/{carId}':
+    get:
+      summary: Trouver voiture par son ID
+      description: ''
+      operationId: getCarById
+      produces:
+        - application/json
+      parameters:
+        - name: carId
+          in: path
+          description: ID de la voiture
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Operation réussie
+          schema:
+            $ref: '#/definitions/Car'
+        '400':
+          description: ID fournie ne pas valide
+        '404':
+          description: Voiture non trouvé
+    put:
+      summary: Modifier les données de la voiture
+      description: ''
+      operationId: updateCarWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: carId
+          in: path
+          description: ''
+          required: true
+          type: string
+        - name: carName
+          in: formData
+          description: Mise a jour nom de la voiture
+          required: false
+          type: string
+        - name: seats
+          in: formData
+          description: Mise a jour sieges de la voiture
+          required: false
+          type: number
+        - name: infos
+          in: formData
+          description: Mise a jour info complementaires voiture
+          required: false
+          type: string
+        - name: contact
+          in: formData
+          description: Mise a jour contact proprietaire voiture
+          required: false
+          type: string
+        - name: address
+          in: formData
+          description: Mise a jour adresse lieu rendez-vous
+          required: false
+          type: string
+        - name: date
+          in: formData
+          description: Mise a jour date de rendez-vous
+          required: false
+          type: string
+        - name: time
+          in: formData
+          description: Mise a jour heure du rendez-vous
+          required: false
+          type: string
+      responses:
+        '405':
+          description: Input ne pas valide
     delete:
-      summary: "Supprimer Voiture"
-      description: ""
-      operationId: "deleteVoiture"
+      summary: Supprimer Voiture
+      description: ''
+      operationId: deleteVoiture
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "carId"
-        in: "path"
-        description: "supprime la voiture par son ID"
-        required: true
-        type: "string"
+        - name: api_key
+          in: header
+          required: false
+          type: string
+        - name: carId
+          in: path
+          description: supprime la voiture par son ID
+          required: true
+          type: string
       responses:
-        400:
-          description: "ID fournie ne pas valide"
-      
-  /event/car/passengers:
+        '400':
+          description: ID fournie ne pas valide
+  '/{carId}/passengersCar':
     post:
-      summary: "Ajouter passagers"
-      description: ""
-      operationId: "addPassagers"
+      summary: Ajouter passagers
+      description: ''
+      operationId: addPassagers
       consumes:
-      - "application/json"
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Ajoute passager dans la voiture"
-        required: true
-        schema:
-          $ref: "#/definitions/Passengers"
+        - in: path
+          name: carId
+          description: Ajoute passager dans la voiture
+          type: string
+          required: true
       responses:
-        405:
-          description: "Input ne pas valide"
-
-  /event/car/passengers/{passengersId}:
-    get:
-      summary: "Trouver passagers par son ID"
-      description: ""
-      operationId: "getPassagersById"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "passengersId"
-        in: "path"
-        description: ""
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "Operation réussie"
-          schema:
-            $ref: "#/definitions/Passengers"
-        400:
-          description: "ID fournie ne pas valide"
-        404:
-          description: "Passagers non trouvé"
+        '405':
+          description: Input ne pas valide
+  '/{eventId}/passengersEvent':
     post:
-      summary: "Modifier les données du passagers"
-      description: ""
-      operationId: "updatePassagersWithForm"
+      summary: Ajouter passagers
+      description: ''
+      operationId: getAddPassengers
       consumes:
-      - "application/x-www-form-urlencoded"
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "passengersId"
-        in: "path"
-        description: "ID du passagres"
-        required: true
-        type: "string"
-      - name:  "nom"
-        in: "formData"
-        description: "Mise a jour nom du passagers"
-        required: false
-        type: "string"
+        - in: path
+          name: eventId
+          type: string
+          description: Ajoute passager dans la voiture
+          required: true
       responses:
-        405:
-          description: "Input ne pas valide"
+        '405':
+          description: Input ne pas valide
+  '/passengers/{passengersId}':
+    put:
+      summary: Modifier les données du passagers
+      description: ''
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: passengersId
+          in: path
+          description: ID du passagres
+          required: true
+          type: string
+        - name: name
+          in: formData
+          description: Mise a jour nom du passagers
+          required: false
+          type: string
+      responses:
+        '405':
+          description: Input ne pas valide
     delete:
-      summary: "Supprimer passagers"
-      description: ""
-      operationId: "deletePassager"
+      summary: Supprimer passagers
+      description: ''
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "passengersId"
-        in: "path"
-        description: "Passagers Id a supprimer"
-        required: true
-        type: "string"
+        - name: api_key
+          in: header
+          required: false
+          type: string
+        - name: passengersId
+          in: path
+          description: Passagers Id a supprimer
+          required: true
+          type: string
       responses:
-        400:
-          description: "ID fournie ne pas valide"
-        404:
-          description: "Passagers non trouvé"
-     
-  /event/car/passengers/list:      
+        '400':
+          description: ID fournie ne pas valide
+        '404':
+          description: Passagers non trouvé
+  '/event/{eventId}/passengers':
     get:
-      summary: "Liste des passagers"
-      description: ""
-      responses:
-        200:
-          description: "Operation réussie"
-          schema:
-            $ref: "#/definitions/Event"
-        400:
-          description: "ID fournie ne pas valide"
-        404:
-          description: "Passagers non trouvé"
-          
-  /event/passengers:
-    post:
-      summary: "Ajouter passagers"
-      description: ""
-      consumes:
-      - "application/json"
+      summary: Liste des passagers de l'événement
+      description: Afficher liste passagers
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Ajoute passager dans la voiture"
-        required: true
-        schema:
-          $ref: "#/definitions/Passengers"
+        - name: eventId
+          in: path
+          description: ''
+          required: true
+          type: string
       responses:
-        405:
-          description: "Input ne pas valide"
-
-  /event/passengers/{passengersId}:
+        '200':
+          description: Operation réussie
+          schema:
+            $ref: '#/definitions/Event'
+        '400':
+          description: ID fournie ne pas valide
+        '404':
+          description: Passagers non trouvé
+  '/car/{eventId}/passengers':
     get:
-      summary: "Trouver passagers par son ID"
-      description: ""
-      operationId: "PassagersId"
+      summary: Liste des passagers dans la voiture de l'événement
+      description: Afficher liste passagers d'une voiture
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - name: "passengersId"
-        in: "path"
-        description: ""
-        required: true
-        type: "string"
+        - name: eventId
+          in: path
+          description: ''
+          required: true
+          type: string
       responses:
-        200:
-          description: "Operation réussie"
+        '200':
+          description: Operation réussie
           schema:
-            $ref: "#/definitions/Passengers"
-        400:
-          description: "ID fournie ne pas valide"
-        404:
-          description: "Passagers non trouvé"
-    post:
-      summary: "Modifier les données du passagers"
-      description: ""
-      consumes:
-      - "application/x-www-form-urlencoded"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "passengersId"
-        in: "path"
-        description: "ID du passagres"
-        required: true
-        type: "string"
-      - name:  "nom"
-        in: "formData"
-        description: "Mise a jour nom du passagers"
-        required: false
-        type: "string"
-      responses:
-        405:
-          description: "Input ne pas valide"
-    delete:
-      summary: "Supprimer passagers"
-      description: ""
-      produces:
-      - "application/json"
-      parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "passengersId"
-        in: "path"
-        description: "Passagers Id a supprimer"
-        required: true
-        type: "string"
-      responses:
-        400:
-          description: "ID fournie ne pas valide"
-        404:
-          description: "Passagers non trouvé"
-     
-  /event/passengers/list:      
-    get:
-      summary: "Liste des passagers"
-      description: ""
-      responses:
-        200:
-          description: "Operation réussie"
-          schema:
-            $ref: "#/definitions/Event"
-        400:
-          description: "ID fournie ne pas valide"
-        404:
-          description: "Passagers non trouvé"
-   
+            $ref: '#/definitions/Event'
+        '400':
+          description: ID fournie ne pas valide
+        '404':
+          description: Passagers non trouvé
 definitions:
   Event:
-    type: "object"
+    type: object
     required:
-    - "titre"
-    - "email"
+      - titre
+      - email
     properties:
       id:
-        type: "string"
+        type: string
       titre:
-        type: "string"
+        type: string
       email:
-        type: "string"
+        type: string
       car:
-        type: "array"
+        type: array
         items:
-         $ref: '#/definitions/Car'
+          $ref: '#/definitions/Car'
       passengers:
-        type: "array"
+        type: array
         items:
-         $ref: '#/definitions/Passengers'
+          $ref: '#/definitions/Passengers'
   Car:
-    type: "object"
-    required: 
-    - "nom"
-    - "sieges"
-    - "contact proprietaire"
-    - "adresse"
-    - "date"
-    - "horaire"
+    type: object
+    required:
+      - nomVoiture
+      - sieges
+      - infoComp
+      - contact
+      - adresse
+      - date
+      - horaire
     properties:
       id:
-        type: "string"
-      nom:
-        type: "string"
+        type: string
+      nomVoiture:
+        type: string
       sieges:
-        type: "number"
-      info complementaires:
-        type: "string"
-      contact proprietaire:
-        type: "string"
-      adresse: 
-        type: "string"
+        type: number
+      infocomp:
+        type: string
+      contact:
+        type: string
+      adresse:
+        type: string
       date:
-        type: "string"
+        type: string
       horaire:
-        type: "string"
+        type: string
       passengers:
-       type: "array"
-       items:
-         $ref: '#/definitions/Passengers'
+        type: array
+        items:
+          $ref: '#/definitions/Passengers'
   Passengers:
-    type: "object"
-    required: 
-    - "nom"
+    type: object
+    required:
+      - nom
     properties:
       id:
-        type: "string"
-      nom:
-        type: "string"
-   
+        type: string
+      name:
+        type: string

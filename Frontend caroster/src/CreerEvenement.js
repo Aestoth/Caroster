@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
-import { MDBBtn, MDBInput } from "mdbreact";
+import { MDBBtn, MDBInput, MDBFooter, MDBContainer } from "mdbreact";
 import backendURL from "./helpers/getBackendURL";
 
 class CreerEvenement extends Component {
@@ -95,23 +95,25 @@ class CreerEvenement extends Component {
           </form>
 
           <div className="mt-5">
-            <footer className="page-footer font-small teal fixed-bottom mt-5">
-              <div className="footer-copyright text-center footerCopy bg-dark text-white">
-                <div>
-                  <small>A Propos</small>{" "}
-                  <p className="mr-5 ml-5">
-                    <small>
-                      caroster.io est une façon simple et gratuite d'organiser
-                      du covoiturage avec un groupe de personnes pour se rendre
-                      a un evenement
-                    </small>
-                  </p>
-                </div>
-                <small>
-                  Caroster <i className="far fa-copyright" /> 2019 Copyright:
-                </small>
+            <MDBFooter color="blue" className="font-small pt-4 mt-4">
+              <MDBContainer fluid className="text-center text-md-center">
+                <h5 className="title">A Propos</h5>
+                <p>
+                  Caroster.io est une façon simple et gratuite d'organiser du
+                  covoiturage avec un groupe de personnes pour se rendre a un
+                  événement, un week-end, une fête, un tournoi ou juste quelque
+                  part. Seulement 3 cliques et 1 e-mail suffisent. Caroster.io
+                  est fait avec le but de vous simplifier vos covoiturages de
+                  groupe.
+                </p>
+              </MDBContainer>
+              <div className="footer-copyright text-center py-3">
+                <MDBContainer fluid>
+                  &copy; {new Date().getFullYear()} Copyright:{" "}
+                  <a href="https://www.MDBootstrap.com"> Caroster </a>
+                </MDBContainer>
               </div>
-            </footer>
+            </MDBFooter>
           </div>
         </div>
       </div>
