@@ -14,7 +14,7 @@ class ModifierVoiture extends Component {
     console.log("route param", this.props);
     fetch(`${backendURL()}/api/car/${this.props.match.params.id}`)
       .then(res => res.json())
-      .then(data => this.setState({ voiture: data }));
+      .then(data => this.setState({ voiture: data.result }));
   }
 
   render() {
