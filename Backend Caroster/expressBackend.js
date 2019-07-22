@@ -34,11 +34,6 @@ const PostShemaCar = mongoose.Schema({
   date: String,
   horaire: String,
   passengers: [{ type: mongoose.Schema.Types.ObjectId, ref: "passengers" }]
-<<<<<<< HEAD
-=======
-  // eventId: { type: mongoose.Schema.Types.ObjectId, ref: "event" }
-  //passengersId: { type: mongoose.Schema.Types.ObjectId, ref: "passengers" }
->>>>>>> 121d667e882494711312cb6e59ba5592d8b71d03
 });
 
 const PostModelCar = mongoose.model("car", PostShemaCar, "car");
