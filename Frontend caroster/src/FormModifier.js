@@ -30,7 +30,7 @@ class FormUpdate extends Component {
     console.log(this.props.match.params.id);
     console.log("test", this.state);
     e.preventDefault();
-    fetch(`${backendURL()}/api/voiture/update/${this.props.match.params.id}`, {
+    fetch(`${backendURL()}/api/car/${this.props.match.params.id}`, {
       method: "PUT",
       body: JSON.stringify(this.state),
       headers: { "Content-Type": "application/json" }
@@ -51,7 +51,7 @@ class FormUpdate extends Component {
   handleDelete = e => {
     console.log("test", this.state);
     e.preventDefault();
-    fetch(`${backendURL()}/api/voiture/delete/${this.props.match.params.id}`, {
+    fetch(`${backendURL()}/api/car/${this.props.match.params.id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(this.state)

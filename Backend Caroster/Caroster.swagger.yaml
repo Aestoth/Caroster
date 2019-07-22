@@ -3,10 +3,10 @@ info:
   description: API de covoiturage
   version: 1.0.0
   title: Caroster
-host: caroster.test.octr.ee
+host: localhost:3000
 basePath: /api
 schemes:
-  - https
+  
   - http
 paths:
   /event:
@@ -151,6 +151,27 @@ paths:
         '404':
           description: Voiture non trouvé
   '/car/{carId}':
+    get:
+      summary: Trouver voiture par son ID
+      description: ''
+      operationId: getCarById
+      produces:
+        - application/json
+      parameters:
+        - name: carId
+          in: path
+          description: ID de la voiture
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Operation réussie
+          schema:
+            $ref: '#/definitions/Car'
+        '400':
+          description: ID fournie ne pas valide
+        '404':
+          description: Voiture non trouvé
     put:
       summary: Modifier les données de la voiture
       description: ''

@@ -22,7 +22,7 @@ class Voiture extends Component {
   }
 
   render() {
-    console.log(this.state.voitures);
+    console.log("this.state", this.state.voitures);
 
     return (
       <div>

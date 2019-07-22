@@ -40,18 +40,6 @@ const PostShemaCar = mongoose.Schema({
 
 const PostModelCar = mongoose.model("car", PostShemaCar, "car");
 
-PostShemaCar.pre("remove", function(next) {
-  let car = this;
-  car
-    .model("event")
-    .update(
-      { cars: car._id },
-      { $pull: { cars: car._id } },
-      { multi: true },
-      next
-    );
-});
-
 const PostShemaPassengers = mongoose.Schema({
   nom: String
   //evenementId: { type: mongoose.Schema.Types.ObjectId, ref: "event" },
@@ -234,6 +222,14 @@ app.get("/api/:id/cars", (req, res) => {
     });
 });
 
+//Get Cars By Id //////////////////////////////////////////
+app.get("/api/car/:id", (req, res) => {
+  PostModelCar.findById(req.params.id, (err, result) => {
+    if (err) res.send({ success: false, msg: err });
+    res.send({ success: true, result: result });
+  });
+});
+
 //Update Car //////////////////////////////////////////
 app.put("/api/car/:id", (req, res) => {
   const postData = req.body;
@@ -249,17 +245,6 @@ app.delete("/api/car/:id", (req, res) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
   });
-});
-
-app.get("/api/:carId/event", (req, res) => {
-  PostModelCar.findById(req.params.id)
-    .populate("events")
-    .then(result => {
-      res.json(result);
-    })
-    .catch(err => {
-      res.status(500).json({ err });
-    });
 });
 
 // Sert les fichiers du frontend

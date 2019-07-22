@@ -30,19 +30,14 @@ class FormAddVoiture extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    fetch(
-      `${backendURL()}/api/${
-        this.props.location.state.params.id
-      }/ajouter-voiture`,
-      {
-        method: "POST",
-        body: JSON.stringify(this.state),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
+    fetch(`${backendURL()}/api/${this.props.location.state.params.id}/newcar`, {
+      method: "POST",
+      body: JSON.stringify(this.state),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
       }
-    ).then(response => {
+    }).then(response => {
       response.json().then(data => {
         console.log("Success", data);
         console.log("id", data._id);
@@ -162,10 +157,11 @@ class FormAddVoiture extends Component {
                   Annuler
                 </MDBBtn>
               </Link>
-
-              <MDBBtn className="text-uppercase text-white" type="submit">
-                Creer
-              </MDBBtn>
+              <Link to={`/Evenement/${this.props.location.state.params.id}`}>
+                <MDBBtn className="text-uppercase text-white" type="submit">
+                  Creer
+                </MDBBtn>
+              </Link>
             </div>
           </form>
         </div>
