@@ -157,11 +157,9 @@ class FormAddVoiture extends Component {
                   Annuler
                 </MDBBtn>
               </Link>
-              <Link to={`/Evenement/${this.props.location.state.params.id}`}>
                 <MDBBtn className="text-uppercase text-white" type="submit">
                   Creer
                 </MDBBtn>
-              </Link>
             </div>
           </form>
         </div>
