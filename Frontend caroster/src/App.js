@@ -7,6 +7,10 @@ import Acceuil from "./Acceuil";
 import Inscription from "./Inscription";
 import AjouterVoiture from "./AjouterVoiture";
 import ModifierVoiture from "./ModifierVoiture";
+import Login from "./Login";
+import withAuth from "./withAuth";
+import User from "./User";
+
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
@@ -23,6 +27,8 @@ class App extends Component {
             <Route path="/Evenement/:id" component={Evenement} />
             <Route path="/Ajouter-voiture" component={AjouterVoiture} />
             <Route path="/ModifierVoiture/:id" component={ModifierVoiture} />
+            <Route path="/Connexion" component={Login} />
+            <Route path="/User" component={withAuth(User)} />
           </Switch>
         </div>
       </Router>

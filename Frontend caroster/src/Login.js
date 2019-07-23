@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-import Navbar from "./Navbar";
 import { MDBInput, MDBContainer, MDBCol, MDBRow, MDBBtn } from "mdbreact";
 import backendURL from "./helpers/getBackendURL";
 
-class Insciption extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      contact: "",
       email: "",
       password: ""
     };
@@ -24,50 +21,38 @@ class Insciption extends Component {
   };
 
   handleSubmit = event => {
-    fetch(`${backendURL()}/api/register`, {
+    event.preventDefault();
+    fetch(`${backendURL()}/api/authenticate`, {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json"
       }
-    }).then(response => {
-      response.json().then(data => {
-        console.log("Success", data);
+    })
+      .then(res => {
+        if (res.status === 200) {
+          this.props.history.push("/User");
+        } else {
+          const error = new Error(res.error);
+          throw error;
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error logging in please try again");
       });
-    });
   };
 
   render() {
     return (
       <div>
-        <Navbar />
-
         <MDBContainer className="mt-5 col-md-5 py-5">
           <div className="card shadow ">
             <div className="card-header bg-info text-white text-center">
-              INSCRIPTION
+              LOGIN
             </div>
             <form onSubmit={this.handleSubmit}>
               <MDBRow className="d-flex justify-content-center mt-3">
-                <MDBCol size="10">
-                  <MDBInput
-                    label="Prénom"
-                    type="text"
-                    name="name"
-                    value={this.state.name}
-                    onChange={this.handleInputChange}
-                  />
-                </MDBCol>
-                <MDBCol size="10">
-                  <MDBInput
-                    label="Télephone"
-                    type="text"
-                    name="contact"
-                    value={this.state.contact}
-                    onChange={this.handleInputChange}
-                  />
-                </MDBCol>
                 <MDBCol size="10">
                   <MDBInput
                     label="Your e-mail"
@@ -103,4 +88,4 @@ class Insciption extends Component {
   }
 }
 
-export default Insciption;
+export default Login;

@@ -5,6 +5,13 @@ const path = require("path");
 const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+
+const secret = "mysecretcaroster";
+
+const saltRounds = 10;
 
 const MONGO_URL = process.env.MONGO_URL || "localhost";
 mongoose.connect(`mongodb://${MONGO_URL}/caroster`, {
@@ -15,6 +22,7 @@ mongoose.connection.on("connected", err => {
   if (err) throw err;
   console.log("Connecté a la Base de donnees");
 });
+mongoose.set("useCreateIndex", true);
 
 const PostSchemaEvent = mongoose.Schema({
   titre: String,
@@ -48,6 +56,43 @@ const PostModelPassengers = mongoose.model(
   "passengers"
 );
 
+const PostSchemaUser = mongoose.Schema({
+  name: String,
+  contact: String,
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true }
+});
+
+PostSchemaUser.pre("save", function(next) {
+  if (this.isNew || this.isModified("password")) {
+    const document = this;
+    bcrypt.hash(document.password, saltRounds, function(err, hashedPassword) {
+      if (err) {
+        next(err);
+      } else {
+        document.password = hashedPassword;
+        next();
+      }
+    });
+  } else {
+    next();
+  }
+});
+
+PostSchemaUser.methods.isCorrectPassword = function(password, callback) {
+  bcrypt.compare(password, this.password, function(err, same) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(err, same);
+    }
+  });
+};
+
+const PostModelUser = mongoose.model("user", PostSchemaUser, "user");
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 mongoose.set("useFindAndModify", false);
 const PORT = 3000;
 
@@ -55,6 +100,84 @@ app.use(morgan("combined"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(cookieParser());
+
+////USER LOGIN///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.post("/api/register", function(req, res) {
+  const { name, contact, email, password } = req.body;
+  const user = PostModelUser({ name, contact, email, password });
+  user.save(function(err) {
+    if (err) {
+      res.status(500).send("Error registering new user please try again.");
+    } else {
+      res.status(200).send("Welcome to the club!");
+    }
+  });
+});
+
+app.post("/api/authenticate", function(req, res) {
+  const { email, password } = req.body;
+  const user = PostModelUser.findOne({ email }, function(err, user) {
+    if (err) {
+      console.error(err);
+      res.status(500).json({
+        error: "Internal error please try again"
+      });
+    } else if (!user) {
+      res.status(401).json({
+        error: "Incorrect email or password"
+      });
+    } else {
+      user.isCorrectPassword(password, function(err, same) {
+        if (err) {
+          res.status(500).json({
+            error: "Internal error please try again"
+          });
+        } else if (!same) {
+          res.status(401).json({
+            error: "Incorrect email or password"
+          });
+        } else {
+          // Issue token
+          const payload = { email };
+          const token = jwt.sign(payload, secret, {
+            expiresIn: "1h"
+          });
+          res.cookie("token", token, { httpOnly: true }).sendStatus(200);
+        }
+      });
+    }
+  });
+});
+
+const withAuth = function(req, res, next) {
+  const token =
+    req.body.token ||
+    req.query.token ||
+    req.headers["x-access-token"] ||
+    req.cookies.token;
+  if (!token) {
+    res.status(401).send("Unauthorized: No token provided");
+  } else {
+    jwt.verify(token, secret, function(err, decoded) {
+      if (err) {
+        res.status(401).send("Unauthorized: Invalid token");
+      } else {
+        req.email = decoded.email;
+        next();
+      }
+    });
+  }
+};
+
+app.get("/api/secret", withAuth, function(req, res) {
+  res.send("The password is potato");
+});
+
+app.get("/checkToken", withAuth, function(req, res) {
+  res.sendStatus(200);
+});
 
 //Add  Event //////////////////////////////////////////
 app.post("/api/event", async (req, res) => {

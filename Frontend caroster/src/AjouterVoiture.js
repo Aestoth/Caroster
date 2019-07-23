@@ -11,7 +11,7 @@ class AjouterVoiture extends Component {
       background-color: transparent;
       border: none;
     `;
-
+    console.log("kkk", this.props.location.state.params.id);
     return (
       <div>
         <Navbar />

@@ -45,7 +45,7 @@ class Navbar extends Component {
               </MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="/CreerEvenement">
+              <MDBNavLink to="/Connexion">
                 <MDBIcon icon="sign-in-alt mr-1" />
                 Connexion
               </MDBNavLink>
