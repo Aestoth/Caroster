@@ -182,10 +182,12 @@ app.get("/checkToken", withAuth, function(req, res) {
   res.sendStatus(200);
 });
 
-app.get("/logout", function(req, res) {
-  req.logout();
-  req.session.destroy();
-  res.redirect("/");
+app.put("/api/user/:id", (req, res) => {
+  const postData = req.body;
+  PostModelUser.findByIdAndUpdate(req.params.id, postData, (err, result) => {
+    if (err) res.send({ success: false, msg: err });
+    res.send({ success: true, result: result });
+  });
 });
 
 //Add  Event //////////////////////////////////////////
