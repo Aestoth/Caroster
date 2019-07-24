@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
 import "./User.css";
+//import backendURL from "./helpers/getBackendURL";
 
 import {
   MDBContainer,
@@ -13,7 +14,22 @@ import {
 } from "mdbreact";
 
 class User extends Component {
+  // componentDidMount() {
+  //   this.logout();
+  // }
+  //
+  // logout = () => {
+  //   fetch(`${backendURL()}/logout`)
+  //     .then(response => response.json())
+  //     .then(data => console.log("bye"));
+  // };
+
+  logoutHandler = e => {
+    this.props.history.replace("/");
+  };
+
   render() {
+    console.log("idUser", this.props.location.state);
     return (
       <div>
         <Navbar />
@@ -21,9 +37,13 @@ class User extends Component {
           <div className="text-white">
             <i className="far fa-arrow-alt-circle-left fa-2x" />
           </div>
-          <div className="ml-5 text-white">Name User</div>
+          <div className="ml-5 text-white">
+            {this.props.location.state.user.name}
+          </div>
           <div>
-            <MDBBtn color="indigo btn-sm">Déconnexion</MDBBtn>
+            <MDBBtn onClick={this.logoutHandler} color="indigo btn-sm">
+              Déconnexion
+            </MDBBtn>
           </div>
         </nav>
         <MDBContainer className="mt-5">
@@ -92,7 +112,7 @@ class User extends Component {
                       className="d-flex align-items-center d-flex justify-content-center"
                       size="8"
                     >
-                      Nom Utilisateur
+                      {this.props.location.state.user.name}
                     </MDBCol>
                   </MDBRow>
                   <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
@@ -103,7 +123,7 @@ class User extends Component {
                       className="d-flex align-items-center d-flex justify-content-center text-center"
                       size="8"
                     >
-                      Email
+                      {this.props.location.state.user.email}
                     </MDBCol>
                   </MDBRow>
                   <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
@@ -114,7 +134,7 @@ class User extends Component {
                       className="d-flex align-items-center d-flex justify-content-center text-center"
                       size="8"
                     >
-                      Contact
+                      {this.props.location.state.user.contact}
                     </MDBCol>
                   </MDBRow>
                 </MDBContainer>

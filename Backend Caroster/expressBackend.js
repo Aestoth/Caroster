@@ -107,11 +107,11 @@ app.use(cookieParser());
 app.post("/api/register", function(req, res) {
   const { name, contact, email, password } = req.body;
   const user = PostModelUser({ name, contact, email, password });
-  user.save(function(err) {
+  user.save(function(err, result) {
     if (err) {
       res.status(500).send("Error registering new user please try again.");
     } else {
-      res.status(200).send("Welcome to the club!");
+      res.status(200).json(user);
     }
   });
 });
@@ -144,7 +144,10 @@ app.post("/api/authenticate", function(req, res) {
           const token = jwt.sign(payload, secret, {
             expiresIn: "1h"
           });
-          res.cookie("token", token, { httpOnly: true }).sendStatus(200);
+          res
+            .cookie("token", token, { httpOnly: true })
+            .status(200)
+            .json(user);
         }
       });
     }
@@ -177,6 +180,12 @@ app.get("/api/secret", withAuth, function(req, res) {
 
 app.get("/checkToken", withAuth, function(req, res) {
   res.sendStatus(200);
+});
+
+app.get("/logout", function(req, res) {
+  req.logout();
+  req.session.destroy();
+  res.redirect("/");
 });
 
 //Add  Event //////////////////////////////////////////
