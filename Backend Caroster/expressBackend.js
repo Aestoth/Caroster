@@ -11,7 +11,7 @@ const cookieParser = require("cookie-parser");
 const secret = "mysecretcaroster";
 const saltRounds = 10;
 const nodemailer = require("nodemailer");
-const sgMail = require("@sendgrid/mail");
+
 
 
 const MONGO_URL = process.env.MONGO_URL || "localhost";
