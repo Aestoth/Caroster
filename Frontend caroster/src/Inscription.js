@@ -10,7 +10,8 @@ class Insciption extends Component {
       name: "",
       contact: "",
       email: "",
-      password: ""
+      password: "",
+      user: []
     };
   }
 
@@ -24,6 +25,7 @@ class Insciption extends Component {
   };
 
   handleSubmit = event => {
+    event.preventDefault();
     fetch(`${backendURL()}/api/register`, {
       method: "POST",
       body: JSON.stringify(this.state),
@@ -33,17 +35,24 @@ class Insciption extends Component {
       }
     }).then(response => {
       response.json().then(data => {
-        console.log("Success", data);
+        this.setState({ user: data });
+        console.log("Success", data._id);
+        this.props.history.push({
+          pathname: "/User",
+          state: {
+            user: this.state.user
+          }
+        });
       });
     });
   };
 
   render() {
+    console.log("S", this.state.user._id);
     return (
       <div>
         <Navbar />
-
-        <MDBContainer className="mt-5 col-md-5 py-5">
+        <MDBContainer className="mt-5 col-md-5 py-3">
           <div className="card shadow ">
             <div className="card-header bg-info text-white text-center">
               INSCRIPTION

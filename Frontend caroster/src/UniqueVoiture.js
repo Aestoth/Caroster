@@ -45,12 +45,11 @@ class UniqueVoiture extends Component {
   render() {
     const passengers = this.state.passengers;
     const nombPassengerCar = passengers.length;
-    const place = this.props.sieges;
+    // const place = this.props.sieges;
 
     return (
       <div className="container">
         <div className="card shadow marginTable mb-4">
-          {nombPassengerCar !== place && <p>Places ok!</p>}
           <div className="card-header bg-info text-white d-flex justify-content-between">
             <div />
             <div>
