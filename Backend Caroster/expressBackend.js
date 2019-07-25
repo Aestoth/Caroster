@@ -8,10 +8,11 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-
 const secret = "mysecretcaroster";
-
 const saltRounds = 10;
+const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
+
 
 const MONGO_URL = process.env.MONGO_URL || "localhost";
 mongoose.connect(`mongodb://${MONGO_URL}/caroster`, {
@@ -20,7 +21,7 @@ mongoose.connect(`mongodb://${MONGO_URL}/caroster`, {
 
 mongoose.connection.on("connected", err => {
   if (err) throw err;
-  console.log("Connecté a la Base de donnees");
+  console.log("Connected to Database");
 });
 mongoose.set("useCreateIndex", true);
 
@@ -37,6 +38,7 @@ const PostShemaCar = mongoose.Schema({
   nomVoiture: String,
   sieges: Number,
   contact: String,
+  email: String,
   infoComp: String,
   adresse: String,
   date: String,
@@ -183,8 +185,38 @@ app.get("/checkToken", withAuth, function(req, res) {
 app.post("/api/event", async (req, res) => {
   const newPost = PostModelEvent(req.body);
   const event = await newPost.save();
+  console.log("event22", event);
+   let transporter = nodemailer.createTransport({
+    host: "smtp.sendgrid.net",
+    port: 465,
+    secure: true, // true for 465, false for other ports,
+    auth: {
+      user: "apikey",
+      pass: "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"
+    }
+  });
+
+  // send mail with defined transport object
+  let pathname = req.get("origin");
+  let info = await transporter.sendMail({
+    from: '"Caroster" <caroster@goodguys.com>', // sender address
+    to: `${req.body.email}`, // list of receivers
+    subject: `Lien événement: ${req.body.titre}`, // Subject line
+    html: `
+        <p>Voici le lien de votre événement: ${pathname}/Evenement/${
+       event._id
+    }</p>`
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
   res.status(200).json(event);
 });
+
 
 //Get Event //////////////////////////////////////////
 app.get("/api/event", (req, res) => {
@@ -244,19 +276,45 @@ app.post("/api/:id/passengersEvent", async (req, res) => {
 
 //Add Passengers into  Car Event //////////////////////////////////////////
 app.post("/api/:id/passengersCar", async (req, res) => {
-  try {
-    let { id } = req.params;
-    const newPassengers = PostModelPassengers(req.body);
-    console.log("newPassengers", newPassengers);
-    const car = await PostModelCar.findById(id); // Get Car
-    await newPassengers.save(); //Save the Passenger
-    await car.passengers.push(newPassengers); // Add Passenger to the Event array 'cars'
-    await car.save(); //Save the Car
-    res.status(201).json(newPassengers);
-  } catch (err) {
-    res.status(err.response.status);
-    return res.send(err.message);
-  }
+  let { id } = req.params;
+  const newPassengers = PostModelPassengers(req.body);
+  console.log("newPassengers", newPassengers);
+  const car = await PostModelCar.findById(id); // Get Car
+  await newPassengers.save(); //Save the Passenger
+  await car.passengers.push(newPassengers); // Add Passenger to the Event array 'cars'
+  await car.save(); //Save the Car
+  console.log("passengers", newPassengers);
+  let transporter = nodemailer.createTransport({
+    host: "smtp.sendgrid.net",
+    port: 465,
+    secure: true, // true for 465, false for other ports,
+    auth: {
+      user: "apikey",
+      pass: "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"
+    }
+  });
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Caroster" <caroster@goodguys.com>', // sender address
+    to: `${car.email}`, // list of receivers
+    subject: `Ajout d'un passager`, // Subject line
+    html: `
+        <p>Bonjour,
+        Cette personne "<strong>${
+          newPassengers.nom
+        }</strong>" s'est inscrite dans votre voiture.</p> 
+      ` // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+
+  res.status(201).json(newPassengers);
 });
 
 //Update Passengers //////////////////////////////////////////
@@ -270,6 +328,17 @@ app.put("/api/passengers/:id", (req, res) => {
       res.send({ success: true, result: result });
     }
   );
+});
+
+//Get Event by ID //////////////////////////////////////////
+app.get("/api/passengers/:id", (req, res) => {
+  let id = req.params.id;
+  PostModelPassengers.findById(id).then(doc => {
+    if (!doc) {
+      return res.status(404).end();
+    }
+    return res.status(200).json(doc);
+  });
 });
 
 //Delete Passengers //////////////////////////////////////////

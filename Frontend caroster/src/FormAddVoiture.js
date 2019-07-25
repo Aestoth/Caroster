@@ -13,6 +13,7 @@ class FormAddVoiture extends Component {
       sieges: "",
       infoComp: "",
       contact: "",
+      email: "",
       adresse: "",
       date: "",
       horaire: "",
@@ -58,6 +59,8 @@ class FormAddVoiture extends Component {
             <div className="form-group ">
               <MDBInput
                 type="text"
+                htmlFor="defaultFormRegisterNameEx"
+                id="defaultFormRegisterNameEx"
                 label="Nom de la voiture"
                 icon="car"
                 className="mb-0 form-control"
@@ -70,7 +73,8 @@ class FormAddVoiture extends Component {
             <div className="form-group ">
               <MDBInput
                 type="number"
-                id="defaultFormRegisterNameEx"
+                htmlFor="defaultFormRegisterNameEx2"
+                id="defaultFormRegisterNameEx2"
                 label="Sieges"
                 icon="chair"
                 className="mb-0 form-control"
@@ -84,25 +88,41 @@ class FormAddVoiture extends Component {
             <div className="form-group flex">
               <MDBInput
                 type="text"
-                id="defaultFormRegisterNameEx"
+                htmlFor="defaultFormRegisterNameEx3"
+                id="defaultFormRegisterNameEx3"
                 label="Infos complémentaires"
                 icon="pen"
                 className="mb-0 form-control"
                 name="infoComp"
                 value={this.state.infocomp}
                 onChange={this.handleChange}
-                required
               />
             </div>
             <div className="form-group ">
               <MDBInput
                 type="text"
-                id="defaultFormRegisterNameEx"
+                htmlFor="defaultFormRegisterNameEx4"
+                id="defaultFormRegisterNameEx4"
                 label="Téléphone"
                 icon="phone"
                 className="mb-0 form-control"
                 name="contact"
                 value={this.state.contact}
+                onChange={this.handleChange}
+                validate={this.state.validate}
+                required
+              />
+            </div>
+            <div className="form-group ">
+              <MDBInput
+                type="email"
+                htmlFor="defaultFormRegisterNameEx5"
+                id="defaultFormRegisterNameEx5"
+                label="Email"
+                icon="envelope"
+                className="mb-0 form-control"
+                name="email"
+                value={this.state.email}
                 onChange={this.handleChange}
                 validate={this.state.validate}
                 required
@@ -114,7 +134,8 @@ class FormAddVoiture extends Component {
             <div className="form-group ">
               <MDBInput
                 type="text"
-                id="defaultFormRegisterNameEx"
+                htmlFor="defaultFormRegisterNameEx6"
+                id="defaultFormRegisterNameEx6"
                 label="Adresse"
                 icon="map-marker-alt"
                 className="mb-0 form-control"
@@ -128,7 +149,8 @@ class FormAddVoiture extends Component {
             <div className="md-form form-group ">
               <MDBInput
                 type="date"
-                id="defaultFormRegisterNameEx"
+                htmlFor="defaultFormRegisterNameEx7"
+                id="defaultFormRegisterNameEx7"
                 icon="calendar"
                 className="mb-2 textbox-n form-control"
                 name="date"
@@ -141,7 +163,8 @@ class FormAddVoiture extends Component {
             <div className="md-form form-group ">
               <MDBInput
                 type="time"
-                id="defaultFormRegisterNameEx"
+                htmlFor="defaultFormRegisterNameEx8"
+                id="defaultFormRegisterNameEx8"
                 icon="clock"
                 className="mb-2 form-control"
                 name="horaire"
@@ -158,9 +181,9 @@ class FormAddVoiture extends Component {
                   Annuler
                 </MDBBtn>
               </Link>
-                <MDBBtn className="text-uppercase text-white" type="submit">
-                  Creer
-                </MDBBtn>
+              <MDBBtn className="text-uppercase text-white" type="submit">
+                Creer
+              </MDBBtn>
             </div>
           </form>
         </div>

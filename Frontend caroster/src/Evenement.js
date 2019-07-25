@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import ListeDAttente from "./ListeDAttente";
 import Voiture from "./Voiture";
+import styled from "styled-components";
 import backendURL from "./helpers/getBackendURL";
 
 import {
@@ -62,14 +63,21 @@ class Evenement extends Component {
   };
 
   render() {
+    const Button = styled.button`
+      background-color: transparent;
+      border: none;
+    `;
     if (!this.state.event) return "loading";
     return (
       <div>
         <Navbar />
         <nav className="navbar navbar-dark primary-color d-flex justify-content-between">
-          <div className="text-white">
+          <Button
+            className="text-white"
+            onClick={() => this.props.history.goBack()}
+          >
             <i className="far fa-arrow-alt-circle-left fa-2x" />
-          </div>
+          </Button>
 
           <div className="ml-5 text-white">
             <h5>{this.state.event.titre}</h5>
