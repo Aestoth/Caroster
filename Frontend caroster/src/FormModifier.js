@@ -13,6 +13,7 @@ class FormUpdate extends Component {
       sieges: this.props.sieges,
       infoComp: this.props.infoComp,
       contact: this.props.contact,
+      email: this.props.email,
       adresse: this.props.adresse,
       date: this.props.date,
       horaire: this.props.horaire
@@ -74,6 +75,8 @@ class FormUpdate extends Component {
             <div className="form-group col-12">
               <MDBInput
                 type="text"
+                htmlFor="defaultFormRegisterNameEx"
+                id="defaultFormRegisterNameEx"
                 label="Nom de la voiture"
                 icon="car"
                 className="mb-0"
@@ -85,6 +88,8 @@ class FormUpdate extends Component {
             <div className="form-group col-12">
               <MDBInput
                 type="number"
+                htmlFor="defaultFormRegisterNameEx2"
+                id="defaultFormRegisterNameEx2"
                 label="Sieges"
                 icon="chair"
                 className="mb-0"
@@ -96,6 +101,8 @@ class FormUpdate extends Component {
             <div className="form-group col-12 flex">
               <MDBInput
                 type="text"
+                htmlFor="defaultFormRegisterNameEx3"
+                id="defaultFormRegisterNameEx3"
                 label="Infos complémentaires"
                 icon="pen"
                 className="mb-0"
@@ -107,11 +114,26 @@ class FormUpdate extends Component {
             <div className="form-group col-12">
               <MDBInput
                 type="text"
+                htmlFor="defaultFormRegisterNameEx4"
+                id="defaultFormRegisterNameEx4"
                 label="Téléphone"
                 icon="phone"
                 className="mb-0"
                 name="contact"
                 value={this.state.contact}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="form-group col-12">
+              <MDBInput
+                type="text"
+                htmlFor="defaultFormRegisterNameEx5"
+                id="defaultFormRegisterNameEx5"
+                label="Email"
+                icon="envelope"
+                className="mb-0"
+                name="email"
+                value={this.state.email}
                 onChange={this.handleInputChange}
               />
             </div>
@@ -121,6 +143,8 @@ class FormUpdate extends Component {
             <div className="form-group col-12">
               <MDBInput
                 type="text"
+                htmlFor="defaultFormRegisterNameEx6"
+                id="defaultFormRegisterNameEx6"
                 label="Adresse"
                 icon="map-marker-alt"
                 className="mb-0"
@@ -132,6 +156,8 @@ class FormUpdate extends Component {
             <div className="md-form form-group col-12">
               <MDBInput
                 type="date"
+                htmlFor="defaultFormRegisterNameEx7"
+                id="defaultFormRegisterNameEx7"
                 icon="calendar"
                 className="mb-2 textbox-n"
                 name="date"
@@ -142,6 +168,8 @@ class FormUpdate extends Component {
             <div className="md-form form-group col-12">
               <MDBInput
                 type="time"
+                htmlFor="defaultFormRegisterNameEx8"
+                id="defaultFormRegisterNameEx8"
                 icon="clock"
                 className="mb-2"
                 name="horaire"
