@@ -2,15 +2,12 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import "./User.css";
 import UserInfos from "./UserInfos";
-//import backendURL from "./helpers/getBackendURL";
-import UserEdit from "./UserEdit";
+
 import {
   MDBContainer,
   MDBCard,
   MDBCardBody,
   MDBBtn,
-  MDBIcon,
-  MDBCol,
   MDBFooter
 } from "mdbreact";
 
@@ -19,7 +16,8 @@ class User extends Component {
     super(props);
     this.state = {
       userInfos: this.props.location.state,
-      show: false
+      show: false,
+      userChange: []
     };
   }
 
@@ -27,13 +25,8 @@ class User extends Component {
     this.props.history.replace("/");
   };
 
-  changeInfo = () => {
-    const { show } = this.state;
-    this.setState({ show: !show });
-  };
-
   render() {
-    console.log("idUser", this.props.location.state);
+    console.log("uptd", this.state.userChange.name);
     return (
       <div>
         <Navbar />
@@ -54,78 +47,37 @@ class User extends Component {
           <div className="row d-flex justify-content-center">
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6 mb-5">
               <div className="card shadow">
-                <div className="card-header blue-grey darken-1 text-center text-white d-flex justify-content-center">
+                <div className="card-header bg-info text-center text-white d-flex justify-content-center">
                   Mes événements
                 </div>
                 <MDBCard color="cyan lighten-5" text="" className="text-center">
                   <MDBCardBody>BARBECUE BOB</MDBCardBody>
                 </MDBCard>
               </div>
-            </div>
-            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6  mb-5">
-              <div className="card shadow">
-                <div className=" card-header bg-info text-center text-white d-flex justify-content-between">
-                  <div className="col-md-2 col-sm-2"></div>
-                  <div className="col-md-5 col-sm-5">Mes infos</div>
-                  <div className="col-md-2 col-sm-2">
-                    <MDBCol size="2">
-                      <MDBIcon
-                        icon="pencil-alt"
-                        className="ml-3 mr-5"
-                        onClick={this.changeInfo}
-                      />
-                    </MDBCol>
-                  </div>
+              <div className="card shadow mt-5">
+                <div className="card-header bg-info text-center text-white ">
+                  Mes participantions
                 </div>
-                {this.state.show ? (
-                  <UserEdit
-                    name={this.props.location.state.user.name}
-                    contact={this.props.location.state.user.contact}
-                    email={this.props.location.state.user.email}
-                    password={this.props.location.state.user.password}
-                    _id={this.props.location.state.user._id}
-                    changeInfo={() => this.changeInfo()}
-                  />
-                ) : (
-                  <UserInfos
-                    _id={this.props.location.state.user._id}
-                    name={this.props.location.state.user.name}
-                    contact={this.props.location.state.user.contact}
-                    email={this.props.location.state.user.email}
-                  />
-                )}
+                <MDBCard color="cyan lighten-5" className="text-center">
+                  <MDBCardBody>ANNIVERSAIRE DUPONT</MDBCardBody>
+                </MDBCard>
               </div>
-            </div>
-
-            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6  mb-5">
-              {" "}
-              <div className="card shadow">
+              <div className="card shadow mt-5">
                 <div className="card-header bg-info text-center text-white">
                   Mes voitures
                 </div>
-                <MDBCard
-                  color="mdb-color lighten-2"
-                  text="white"
-                  className="text-center"
-                >
+                <MDBCard color="cyan lighten-5" className="text-center">
                   <MDBCardBody>Golf blue</MDBCardBody>
                 </MDBCard>
               </div>
             </div>
-            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6 ">
-              {" "}
-              <div className="card shadow">
-                <div className="card-header bg-info text-center text-white ">
-                  Mes participantions
-                </div>
-                <MDBCard
-                  color="mdb-color lighten-2"
-                  text="white"
-                  className="text-center"
-                >
-                  <MDBCardBody>ANNIVERSAIRE DUPONT</MDBCardBody>
-                </MDBCard>
-              </div>
+            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6  mb-5">
+              <UserInfos
+                _id={this.props.location.state.user._id}
+                name={this.props.location.state.user.name}
+                contact={this.props.location.state.user.contact}
+                email={this.props.location.state.user.email}
+              />
             </div>
           </div>
         </MDBContainer>

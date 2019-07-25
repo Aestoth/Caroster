@@ -174,10 +174,6 @@ const withAuth = function(req, res, next) {
   }
 };
 
-app.get("/api/secret", withAuth, function(req, res) {
-  res.send("The password is potato");
-});
-
 app.get("/checkToken", withAuth, function(req, res) {
   res.sendStatus(200);
 });
@@ -187,6 +183,17 @@ app.put("/api/user/:id", (req, res) => {
   PostModelUser.findByIdAndUpdate(req.params.id, postData, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
+  });
+});
+
+app.get("/api/user/:id", (req, res) => {
+  let id = req.params.id;
+  PostModelUser.findById(id)
+  .then(doc => {
+    if (!doc) {
+      return res.status(404).end();
+    }
+    return res.status(200).json(doc);
   });
 });
 

@@ -6,10 +6,10 @@ class UserEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.name,
-      contact: this.props.contact,
-      email: this.props.email,
-      password: this.props.password,
+      name: this.props.user.name,
+      contact: this.props.user.contact,
+      email: this.props.user.email,
+      password: this.props.user.password,
       showChangeInfo: true
     };
   }
@@ -25,7 +25,6 @@ class UserEdit extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.props._id);
     fetch(`${backendURL()}/api/user/${this.props._id}`, {
       method: "PUT",
       body: JSON.stringify(this.state),
@@ -35,8 +34,9 @@ class UserEdit extends Component {
       }
     }).then(response => {
       response.json().then(data => {
-        console.log(data.result);
-        // this.props.fetchPassagers();
+        this.setState({ state: data });
+        console.log(data);
+        this.props.fetchUsers();
         this.props.changeInfo();
       });
       return response;
@@ -44,6 +44,7 @@ class UserEdit extends Component {
   };
 
   render() {
+    console.log("edit", this.state);
     return (
       <form onSubmit={this.handleSubmit}>
         <MDBRow className="d-flex justify-content-center mt-3">
@@ -79,7 +80,6 @@ class UserEdit extends Component {
               label="Password"
               type="password"
               name="password"
-              value={this.state.password}
               onChange={this.handleInputChange}
             />
           </MDBCol>
