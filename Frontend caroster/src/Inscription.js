@@ -100,7 +100,7 @@ class Insciption extends Component {
                   className="d-flex justify-content-center mb-4 mt-4"
                 >
                   <MDBBtn type="submit" value="Submit" color="primary">
-                    LOGIN
+                    S'incrire
                   </MDBBtn>
                 </MDBCol>
               </MDBRow>

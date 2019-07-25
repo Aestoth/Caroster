@@ -34,9 +34,7 @@ class User extends Component {
           <div className="text-white">
             <i className="far fa-arrow-alt-circle-left fa-2x" />
           </div>
-          <div className="ml-5 text-white">
-            {this.props.location.state.user.name}
-          </div>
+          <div className="ml-5 text-white">PROFIL</div>
           <div>
             <MDBBtn onClick={this.logoutHandler} color="indigo btn-sm">
               Déconnexion

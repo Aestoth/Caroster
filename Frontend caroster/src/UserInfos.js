@@ -58,7 +58,7 @@ class UserInfos extends Component {
               fetchUsers={() => this.fetchUsers()}
             />
           ) : (
-            <MDBContainer className="mt-2 mb-2 ml-4">
+            <MDBContainer className="mt-2 mb-2 ml-5">
               <MDBRow className=" py-2">
                 <MDBCol size="2">
                   <MDBIcon icon="user-alt" className="ml-5 mr-5" />
