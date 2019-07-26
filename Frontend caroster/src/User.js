@@ -16,8 +16,7 @@ class User extends Component {
     super(props);
     this.state = {
       userInfos: this.props.location.state,
-      show: false,
-      userChange: []
+      show: false
     };
   }
 
@@ -26,14 +25,11 @@ class User extends Component {
   };
 
   render() {
-    console.log("uptd", this.state.userChange.name);
     return (
       <div>
         <Navbar />
         <nav className="navbar navbar-dark primary-color d-flex justify-content-between">
-          <div className="text-white">
-            <i className="far fa-arrow-alt-circle-left fa-2x" />
-          </div>
+          <div className="text-white"></div>
           <div className="ml-5 text-white">PROFIL</div>
           <div>
             <MDBBtn onClick={this.logoutHandler} color="indigo btn-sm">

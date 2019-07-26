@@ -12,8 +12,6 @@ const secret = "mysecretcaroster";
 const saltRounds = 10;
 const nodemailer = require("nodemailer");
 
-
-
 const MONGO_URL = process.env.MONGO_URL || "localhost";
 mongoose.connect(`mongodb://${MONGO_URL}/caroster`, {
   useNewUrlParser: true
@@ -127,9 +125,7 @@ app.post("/api/authenticate", function(req, res) {
         error: "Internal error please try again"
       });
     } else if (!user) {
-      res.status(401).json({
-        error: "Incorrect email or password"
-      });
+      res.redirect("/");
     } else {
       user.isCorrectPassword(password, function(err, same) {
         if (err) {
@@ -137,9 +133,7 @@ app.post("/api/authenticate", function(req, res) {
             error: "Internal error please try again"
           });
         } else if (!same) {
-          res.status(401).json({
-            error: "Incorrect email or password"
-          });
+          res.redirect("/");
         } else {
           // Issue token
           const payload = { email };
@@ -190,12 +184,18 @@ app.put("/api/user/:id", (req, res) => {
 
 app.get("/api/user/:id", (req, res) => {
   let id = req.params.id;
-  PostModelUser.findById(id)
-  .then(doc => {
+  PostModelUser.findById(id).then(doc => {
     if (!doc) {
       return res.status(404).end();
     }
     return res.status(200).json(doc);
+  });
+});
+
+app.delete("/api/user/delete/:id", (req, res) => {
+  PostModelUser.findByIdAndDelete(req.params.id, (err, result) => {
+    if (err) res.send({ success: false, msg: err });
+    res.send({ success: true, result: result });
   });
 });
 
@@ -204,13 +204,14 @@ app.post("/api/event", async (req, res) => {
   const newPost = PostModelEvent(req.body);
   const event = await newPost.save();
   console.log("event22", event);
-   let transporter = nodemailer.createTransport({
+  let transporter = nodemailer.createTransport({
     host: "smtp.sendgrid.net",
     port: 465,
     secure: true, // true for 465, false for other ports,
     auth: {
       user: "apikey",
-      pass: "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"
+      pass:
+        "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"
     }
   });
 
@@ -221,9 +222,7 @@ app.post("/api/event", async (req, res) => {
     to: `${req.body.email}`, // list of receivers
     subject: `Lien événement: ${req.body.titre}`, // Subject line
     html: `
-        <p>Voici le lien de votre événement: ${pathname}/Evenement/${
-       event._id
-    }</p>`
+        <p>Voici le lien de votre événement: ${pathname}/Evenement/${event._id}</p>`
   });
 
   console.log("Message sent: %s", info.messageId);
@@ -234,7 +233,6 @@ app.post("/api/event", async (req, res) => {
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
   res.status(200).json(event);
 });
-
 
 //Get Event //////////////////////////////////////////
 app.get("/api/event", (req, res) => {
@@ -308,7 +306,8 @@ app.post("/api/:id/passengersCar", async (req, res) => {
     secure: true, // true for 465, false for other ports,
     auth: {
       user: "apikey",
-      pass: "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"
+      pass:
+        "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"
     }
   });
 
@@ -319,9 +318,7 @@ app.post("/api/:id/passengersCar", async (req, res) => {
     subject: `Ajout d'un passager`, // Subject line
     html: `
         <p>Bonjour,
-        Cette personne "<strong>${
-          newPassengers.nom
-        }</strong>" s'est inscrite dans votre voiture.</p> 
+        Cette personne "<strong>${newPassengers.nom}</strong>" s'est inscrite dans votre voiture.</p>
       ` // html body
   });
 

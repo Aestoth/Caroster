@@ -10,8 +10,10 @@ class UserEdit extends Component {
       contact: this.props.user.contact,
       email: this.props.user.email,
       password: this.props.user.password,
-      showChangeInfo: true
+      showChangeInfo: true,
+      value: ""
     };
+    this.textInput = React.createRef();
   }
 
   handleInputChange = e => {
@@ -34,7 +36,10 @@ class UserEdit extends Component {
       }
     }).then(response => {
       response.json().then(data => {
-        this.setState({ state: data });
+        this.setState({
+          state: data,
+          value: this.textInput.current.value
+        });
         console.log(data);
         this.props.fetchUsers();
         this.props.changeInfo();
@@ -42,6 +47,23 @@ class UserEdit extends Component {
       return response;
     });
   };
+
+  // deleteUser = e => {
+  //   e.preventDefault();
+  //   fetch(`${backendURL()}/api/user/delete/${this.props._id}`, {
+  //     method: "DELETE",
+  //     body: JSON.stringify(this.state),
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json"
+  //     }
+  //   }).then(response => {
+  //     response.json().then(data => {
+  //       console.log(data.result);
+  //       this.props.history.push("/");
+  //     });
+  //   });
+  // };
 
   render() {
     console.log("edit", this.state);
@@ -73,18 +95,27 @@ class UserEdit extends Component {
               name="email"
               value={this.state.email}
               onChange={this.handleInputChange}
+              ref={this.textInput}
             />
           </MDBCol>
           <MDBCol size="10">
-            <MDBInput
-              label="Password"
-              type="password"
-              name="password"
-              onChange={this.handleInputChange}
-            />
+            <MDBInput label="Password" type="password" />
           </MDBCol>
-          <MDBCol size="6" className="d-flex justify-content-center mb-4 mt-4">
-            <MDBBtn type="submit" value="Submit" color="primary">
+          <MDBCol size="9" className="d-flex justify-content-center mb-4 mt-4">
+            <MDBBtn
+              // onClick={this.deleteUser}
+              className="btn-sm"
+              outline
+              color="danger"
+            >
+              Supprimer
+            </MDBBtn>
+            <MDBBtn
+              className="btn-sm"
+              type="submit"
+              value="Submit"
+              color="primary"
+            >
               Enregister
             </MDBBtn>
           </MDBCol>

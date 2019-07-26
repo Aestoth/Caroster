@@ -33,12 +33,16 @@ class Login extends Component {
       response.json().then(data => {
         this.setState({ user: data });
         console.log("login", this.state.user);
-        this.props.history.push({
-          pathname: "/User",
-          state: {
-            user: this.state.user
-          }
-        });
+        if (this.state.user === false) {
+          this.props.history.push("/");
+        } else {
+          this.props.history.push({
+            pathname: "/User",
+            state: {
+              user: this.state.user
+            }
+          });
+        }
       });
     });
   };

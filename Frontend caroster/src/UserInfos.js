@@ -40,7 +40,7 @@ class UserInfos extends Component {
               <MDBCol size="2">
                 <MDBIcon
                   icon="pencil-alt"
-                  className="ml-3 mr-5"
+                  className="ml-3 mr-4"
                   onClick={this.changeInfo}
                 />
               </MDBCol>
