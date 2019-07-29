@@ -69,6 +69,7 @@ class CreerEvenement extends Component {
                 name="titre"
                 value={this.state.titre}
                 onChange={this.handleInputChange}
+                pattern="[a-zA-Z0-9_\.][a-zA-Z0-9_\-\.]*[a-zA-Z0-9_\-]|[a-zA-Z0-9_]"
                 required
               />
             </div>
