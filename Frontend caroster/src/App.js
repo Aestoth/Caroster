@@ -8,7 +8,7 @@ import Inscription from "./Inscription";
 import AjouterVoiture from "./AjouterVoiture";
 import ModifierVoiture from "./ModifierVoiture";
 import Login from "./Login";
-import withAuth from "./withAuth";
+//import withAuth from "./withAuth";
 import User from "./User";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -28,7 +28,7 @@ class App extends Component {
             <Route path="/Ajouter-voiture" component={AjouterVoiture} />
             <Route path="/ModifierVoiture/:id" component={ModifierVoiture} />
             <Route path="/Connexion" component={Login} />
-            <Route path="/User" component={withAuth(User)} />
+            <Route path="/User" component={User} />
           </Switch>
         </div>
       </Router>

@@ -118,6 +118,9 @@ app.post("/api/register", function(req, res) {
 
 app.post("/api/authenticate", function(req, res) {
   const { email, password } = req.body;
+  const redirectURL = req.secure
+    ? `https://${req.hostname}`
+    : `http://${req.hostname}`;
   const user = PostModelUser.findOne({ email }, function(err, user) {
     if (err) {
       console.error(err);
@@ -125,7 +128,7 @@ app.post("/api/authenticate", function(req, res) {
         error: "Internal error please try again"
       });
     } else if (!user) {
-      res.redirect("/");
+      res.redirect(`${redirectURL}/Connexion`);
     } else {
       user.isCorrectPassword(password, function(err, same) {
         if (err) {
@@ -133,46 +136,38 @@ app.post("/api/authenticate", function(req, res) {
             error: "Internal error please try again"
           });
         } else if (!same) {
-          res.redirect("/");
+          res.redirect(`${redirectURL}/Connexion`);
         } else {
-          // Issue token
-          const payload = { email };
-          const token = jwt.sign(payload, secret, {
-            expiresIn: "1h"
-          });
-          res
-            .cookie("token", token, { httpOnly: true })
-            .status(200)
-            .json(user);
+          res.status(200).json(user);
         }
       });
     }
   });
 });
 
-const withAuth = function(req, res, next) {
-  const token =
-    req.body.token ||
-    req.query.token ||
-    req.headers["x-access-token"] ||
-    req.cookies.token;
-  if (!token) {
-    res.status(401).send("Unauthorized: No token provided");
-  } else {
-    jwt.verify(token, secret, function(err, decoded) {
-      if (err) {
-        res.status(401).send("Unauthorized: Invalid token");
-      } else {
-        req.email = decoded.email;
-        next();
-      }
-    });
-  }
-};
-
-app.get("/checkToken", withAuth, function(req, res) {
-  res.sendStatus(200);
-});
+// const withAuth = function(req, res, next) {
+//   const token =
+//     req.body.token ||
+//     req.query.token ||
+//     req.headers["x-access-token"] ||
+//     req.cookies.token;
+//   if (!token) {
+//     res.status(401).send("Unauthorized: No token provided");
+//   } else {
+//     jwt.verify(token, secret, function(err, decoded) {
+//       if (err) {
+//         res.status(401).send("Unauthorized: Invalid token");
+//       } else {
+//         req.email = decoded.email;
+//         next();
+//       }
+//     });
+//   }
+// };
+//
+// app.get("/checkToken", withAuth, function(req, res) {
+//   res.sendStatus(200);
+// });
 
 app.put("/api/user/:id", (req, res) => {
   const postData = req.body;
