@@ -24,7 +24,7 @@ class Evenement extends Component {
     console.log("props", props);
     this.state = {
       event: false,
-      mondal: false,
+      modal: false,
       carId: [],
       passengers: []
     };

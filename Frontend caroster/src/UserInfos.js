@@ -48,10 +48,6 @@ class UserInfos extends Component {
           </div>
           {this.state.show ? (
             <UserEdit
-              name={this.state.userChange.name}
-              contact={this.state.userChange.contact}
-              email={this.state.userChange.email}
-              password={this.state.userChange.password}
               _id={this.state.userChange._id}
               changeInfo={() => this.changeInfo()}
               user={this.state.userChange}

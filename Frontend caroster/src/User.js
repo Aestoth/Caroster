@@ -2,13 +2,18 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import "./User.css";
 import UserInfos from "./UserInfos";
+import backendURL from "./helpers/getBackendURL";
 
 import {
   MDBContainer,
   MDBCard,
   MDBCardBody,
   MDBBtn,
-  MDBFooter
+  MDBFooter,
+  MDBModal,
+  MDBModalBody,
+  MDBModalFooter,
+  MDBModalHeader
 } from "mdbreact";
 
 class User extends Component {
@@ -16,7 +21,8 @@ class User extends Component {
     super(props);
     this.state = {
       userInfos: this.props.location.state,
-      show: false
+      show: false,
+      modal: false
     };
   }
 
@@ -24,14 +30,54 @@ class User extends Component {
     this.props.history.replace("/");
   };
 
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
+
+  deleteUser = e => {
+    e.preventDefault();
+    fetch(
+      `${backendURL()}/api/user/delete/${this.props.location.state.user._id}`,
+      {
+        method: "DELETE",
+        body: JSON.stringify(this.state),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      }
+    ).then(response => {
+      response.json().then(data => {
+        console.log(data.result);
+        this.props.history.push("/");
+      });
+    });
+  };
+
   render() {
     return (
       <div>
         <Navbar />
         <nav className="navbar navbar-dark primary-color d-flex justify-content-between">
-          <div className="text-white"></div>
-          <div className="ml-5 text-white">PROFIL</div>
+          <div className="text-white ml-5">PROFIL</div>
           <div>
+            <MDBBtn onClick={this.toggle} className="btn-sm" color="danger">
+              Supprimer
+            </MDBBtn>
+            <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
+              <MDBModalHeader toggle={this.toggle}>ATTENTION!</MDBModalHeader>
+              <MDBModalBody> L'Utilisateur será supprimé </MDBModalBody>
+              <MDBModalFooter>
+                <MDBBtn color="secondary" onClick={this.toggle}>
+                  Annuler
+                </MDBBtn>
+                <MDBBtn onClick={this.deleteUser} color="primary">
+                  Continuer
+                </MDBBtn>
+              </MDBModalFooter>
+            </MDBModal>
             <MDBBtn onClick={this.logoutHandler} color="indigo btn-sm">
               Déconnexion
             </MDBBtn>
