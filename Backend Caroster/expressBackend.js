@@ -125,7 +125,7 @@ app.post("/api/authenticate", function(req, res) {
         error: "Internal error please try again"
       });
     } else if (!user) {
-      res.redirect("http://localhost:46795/CreerEvenement");
+      res.redirect("/");
     } else {
       user.isCorrectPassword(password, function(err, same) {
         if (err) {
@@ -133,7 +133,7 @@ app.post("/api/authenticate", function(req, res) {
             error: "Internal error please try again"
           });
         } else if (!same) {
-          res.redirect("http://localhost:46795/CreerEvenement");
+          res.redirect("/");
         } else {
           // Issue token
           const payload = { email };
