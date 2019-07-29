@@ -36,8 +36,18 @@ class Evenement extends Component {
       .then(data => {
         console.log("event in fetch", data);
         this.setState({ event: data });
+        this.fetchCarPassengers();
       });
   }
+
+  fetchCarPassengers = () => {
+    fetch(
+      `${backendURL()}/api/car/${this.props.location.state.carId}/passengers`
+    )
+      .then(response => response.json())
+      .then(data => this.setState({ passengers: data }));
+    console.log(this.state.passengers);
+  };
 
   toggle = () => {
     this.setState({
@@ -63,6 +73,8 @@ class Evenement extends Component {
   };
 
   render() {
+    // console.log("locet", this.props.location.state.carId);
+    // console.log("sieges", this.props.location.state.sieges);
     const Button = styled.button`
       background-color: transparent;
       border: none;
@@ -104,10 +116,18 @@ class Evenement extends Component {
         <div className="container">
           <div className="row d-flex justify-content-center mt-4">
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6">
-              <ListeDAttente eventId={this.props.match.params.id} />
+              <ListeDAttente
+                eventId={this.props.match.params.id}
+                passengersCar={this.state.passengers}
+                // sieges={this.props.location.state.sieges}
+              />
             </div>
             <div className="col-md-6 marginTable col-sm-6 col-lg-6 col-xl-6">
-              <Voiture id={this.props.match.params.id} />
+              <Voiture
+                id={this.props.match.params.id}
+                fetchCarPassengers={() => this.fetchCarPassengers()}
+                passengers={this.state.passengers}
+              />
             </div>
           </div>
         </div>

@@ -25,8 +25,9 @@ class PassagersEnAttente extends Component {
   };
 
   render() {
-    console.log("bon Id", this.props.carId);
-    console.log(this.props.passagers);
+    console.log("statePass", this.props.passengersCar);
+    console.log("stateSieges", this.props.sieges);
+
     if (!this.props.passagers) return "Liste d-attente vide";
     return (
       <MDBContainer className="mt-3">

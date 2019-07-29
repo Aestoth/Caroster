@@ -21,7 +21,7 @@ class Voiture extends Component {
   }
 
   render() {
-    console.log(this.state.cars);
+    console.log(this.props.passengers);
 
     return (
       <div>
@@ -48,6 +48,8 @@ class Voiture extends Component {
               sieges={sieges}
               EventId={this.props.id}
               carId={this.state.cars}
+              passengers={this.props.passengers}
+              fetchCarPassengers={this.props.fetchCarPassengers}
             />
           )
         )}

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ButtonAddPassagers from "./ButtonAddPassagers";
 import PassagerDansVoiture from "./PassagerDansVoiture";
 
-import backendURL from "./helpers/getBackendURL";
+//import backendURL from "./helpers/getBackendURL";
 
 import {
   MDBContainer,
@@ -31,19 +31,20 @@ class UniqueVoiture extends Component {
     this.setState({ show: !show });
   };
 
-  componentDidMount() {
-    this.fetchCarPassengers();
-  }
-
-  fetchCarPassengers = () => {
-    fetch(`${backendURL()}/api/car/${this.props._id}/passengers`)
-      .then(response => response.json())
-      .then(data => this.setState({ passengers: data }));
-    console.log(this.state.passengers);
-  };
+  // componentDidMount() {
+  //   this.fetchCarPassengers();
+  // }
+  //
+  // fetchCarPassengers = () => {
+  //   fetch(`${backendURL()}/api/car/${this.props._id}/passengers`)
+  //     .then(response => response.json())
+  //     .then(data => this.setState({ passengers: data }));
+  //   console.log(this.state.passengers);
+  // };
 
   render() {
-    const passengers = this.state.passengers;
+    console.log("passeg", this.props.passengers);
+    const passengers = this.props.passengers;
     const nombPassengerCar = passengers.length;
     // const place = this.props.sieges;
 
@@ -125,19 +126,19 @@ class UniqueVoiture extends Component {
           <ul className="list-group list-group-flush mt-4">
             <PassagerDansVoiture
               carId={this.props._id}
-              passengersCar={this.state.passengers}
-              fetchCarPassengers={() => this.fetchCarPassengers()}
+              passengersCar={this.props.passengers}
+              fetchCarPassengers={this.props.fetchCarPassengers}
             />
             {this.state.show && (
               <Passagers
                 carId={this.props._id}
-                fetchCarPassengers={() => this.fetchCarPassengers()}
+                fetchCarPassengers={this.props.fetchCarPassengers}
                 changeDiv={() => this.changeDiv()}
               />
             )}
             <ButtonAddPassagers
               sieges={
-                this.state.show || this.state.passengers
+                this.state.show || this.props.passengers
                   ? this.props.sieges - nombPassengerCar
                   : this.props.sieges
               }

@@ -43,9 +43,10 @@ class FormAddVoiture extends Component {
       response.json().then(data => {
         console.log("Success", data);
         console.log("id", data._id);
-        this.props.history.push(
-          `/Evenement/${this.props.location.state.params.id}`
-        );
+        this.props.history.push({
+          pathname: `/Evenement/${this.props.location.state.params.id}`,
+          state: { carId: data._id, sieges: data.sieges }
+        });
       });
     });
   }

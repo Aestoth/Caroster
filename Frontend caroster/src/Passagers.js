@@ -52,7 +52,7 @@ class Passagers extends Component {
 
   render() {
     console.log(this.props.carId);
-    console.log(this.state.passengers);
+
     console.log("PaasInCar", this.state.passengersInCar);
     return (
       <form onSubmit={this.handleSubmit}>

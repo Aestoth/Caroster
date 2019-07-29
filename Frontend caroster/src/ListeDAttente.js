@@ -31,7 +31,7 @@ class ListeDAttente extends Component {
   };
 
   render() {
-    console.log(this.state.passagers);
+    console.log(this.props.sieges);
     return (
       <div className="container">
         <div className="card shadow">
@@ -67,6 +67,8 @@ class ListeDAttente extends Component {
           <PassagersEnAttente
             passagers={this.state.passagers}
             fetchPassagers={() => this.fetchPassagers()}
+            passengersCar={this.props.passengersCar}
+            sieges={this.props.sieges}
           />
         </div>
       </div>
