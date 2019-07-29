@@ -101,15 +101,7 @@ class UserEdit extends Component {
           <MDBCol size="10">
             <MDBInput label="Password" type="password" />
           </MDBCol>
-          <MDBCol size="9" className="d-flex justify-content-center mb-4 mt-4">
-            <MDBBtn
-              // onClick={this.deleteUser}
-              className="btn-sm"
-              outline
-              color="danger"
-            >
-              Supprimer
-            </MDBBtn>
+          <MDBCol size="6" className="d-flex justify-content-center mb-4 mt-4">
             <MDBBtn
               className="btn-sm"
               type="submit"

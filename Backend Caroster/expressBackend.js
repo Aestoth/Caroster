@@ -125,7 +125,7 @@ app.post("/api/authenticate", function(req, res) {
         error: "Internal error please try again"
       });
     } else if (!user) {
-      res.redirect("/");
+      res.redirect("http://localhost:46795/CreerEvenement");
     } else {
       user.isCorrectPassword(password, function(err, same) {
         if (err) {
@@ -133,7 +133,7 @@ app.post("/api/authenticate", function(req, res) {
             error: "Internal error please try again"
           });
         } else if (!same) {
-          res.redirect("/");
+          res.redirect("http://localhost:46795/CreerEvenement");
         } else {
           // Issue token
           const payload = { email };
@@ -198,6 +198,12 @@ app.delete("/api/user/delete/:id", (req, res) => {
     res.send({ success: true, result: result });
   });
 });
+
+// app.put("/api/user/password/update/:id", (req, res) => {
+//   const newPassword = req.body;
+//   const userPassword = PostModelUser({ newPassword });
+//   userPassword.update(req.params.id, { $set: { password: newPassword } });
+// });
 
 //Add  Event //////////////////////////////////////////
 app.post("/api/event", async (req, res) => {
