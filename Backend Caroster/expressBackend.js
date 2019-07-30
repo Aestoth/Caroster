@@ -47,11 +47,8 @@ const PostShemaCar = mongoose.Schema({
 const PostModelCar = mongoose.model("car", PostShemaCar, "car");
 
 const PostShemaPassengers = mongoose.Schema({
-<<<<<<< HEAD
-  name: String
-=======
-  nom: { type: String, required: true }
->>>>>>> 3cf1c0d589b44c9ccb84255af86b9b1dd5ed01eb
+  name: { type: String, required: true }
+
 });
 
 const PostModelPassengers = mongoose.model(
