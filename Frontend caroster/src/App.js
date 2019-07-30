@@ -10,6 +10,7 @@ import UpdateCar from "./UpdateCar";
 import Login from "./Login";
 //import withAuth from "./withAuth";
 import User from "./User";
+import NotFoundPage from "./NotFoundPage";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
@@ -27,8 +28,9 @@ class App extends Component {
             <Route path="/Event/:id" component={Event} />
             <Route path="/AddCar" component={AddCar} />
             <Route path="/UpdateCar/:id" component={UpdateCar} />
-            <Route path="/Connexion" component={Login} />
+            <Route path="/Login" component={Login} />
             <Route path="/User" component={User} />
+            <Route component={NotFoundPage} />
           </Switch>
         </div>
       </Router>

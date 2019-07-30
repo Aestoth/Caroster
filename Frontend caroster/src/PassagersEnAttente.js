@@ -26,7 +26,7 @@ class PassagersEnAttente extends Component {
 
   render() {
     console.log("statePass", this.props.passengersCar);
-    console.log("stateSieges", this.props.sieges);
+    console.log("stateSieges", this.props.seats);
 
     if (!this.props.passagers) return "Liste d-attente vide";
     return (
@@ -38,12 +38,12 @@ class PassagersEnAttente extends Component {
             fetchPassagers={this.props.fetchPassagers}
           />
         )}
-        {this.props.passagers.map(({ _id, nom }) => (
+        {this.props.passagers.map(({ _id, name }) => (
           <MDBRow key={_id}>
             <MDBCol size="5" className="mr-0 mt-2">
               {" "}
               <i className="fas fa-user pr-0 mr-1" />
-              {nom}
+              {name}
             </MDBCol>
             <MDBCol size="5" className="ml-0 ">
               <select

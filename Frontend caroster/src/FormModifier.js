@@ -9,14 +9,14 @@ class FormUpdate extends Component {
     super(props);
     console.log("props modifier", props);
     this.state = {
-      nomVoiture: this.props.nomVoiture,
-      sieges: this.props.sieges,
-      infoComp: this.props.infoComp,
+      carName: this.props.carName,
+      seats: this.props.seats,
+      message: this.props.message,
       contact: this.props.contact,
       email: this.props.email,
-      adresse: this.props.adresse,
+      address: this.props.address,
       date: this.props.date,
-      horaire: this.props.horaire
+      time: this.props.time
     };
   }
 
@@ -76,8 +76,8 @@ class FormUpdate extends Component {
                 label="Nom de la voiture"
                 icon="car"
                 className="mb-0"
-                name="nomVoiture"
-                value={this.state.nomVoiture}
+                name="carName"
+                value={this.state.carName}
                 onChange={this.handleInputChange}
               />
             </div>
@@ -86,11 +86,11 @@ class FormUpdate extends Component {
                 type="number"
                 htmlFor="defaultFormRegisterNameEx2"
                 id="defaultFormRegisterNameEx2"
-                label="Sieges"
+                label="Sièges"
                 icon="chair"
                 className="mb-0"
-                name="sieges"
-                value={this.state.sieges}
+                name="seats"
+                value={this.state.seats}
                 onChange={this.handleInputChange}
               />
             </div>
@@ -100,10 +100,10 @@ class FormUpdate extends Component {
                 htmlFor="defaultFormRegisterNameEx3"
                 id="defaultFormRegisterNameEx3"
                 label="Infos complémentaires"
-                icon="pen"
+                icon="comment-alt"
                 className="mb-0"
-                name="infoComp"
-                value={this.state.infoComp}
+                name="message"
+                value={this.state.message}
                 onChange={this.handleInputChange}
               />
             </div>
@@ -144,8 +144,8 @@ class FormUpdate extends Component {
                 label="Adresse"
                 icon="map-marker-alt"
                 className="mb-0"
-                name="adresse"
-                value={this.state.adresse}
+                name="address"
+                value={this.state.address}
                 onChange={this.handleInputChange}
               />
             </div>
@@ -168,8 +168,8 @@ class FormUpdate extends Component {
                 id="defaultFormRegisterNameEx8"
                 icon="clock"
                 className="mb-2"
-                name="horaire"
-                value={this.state.horaire}
+                name="time"
+                value={this.state.time}
                 onChange={this.handleInputChange}
               />
             </div>

@@ -8,7 +8,7 @@ class NewEvent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      titre: "",
+      title: "",
       email: ""
     };
   }
@@ -64,10 +64,10 @@ class NewEvent extends Component {
             <div className="form-group mt-4 col-md-5 mx-auto">
               <MDBInput
                 type="text"
-                label="Titre"
+                label="title"
                 outline
-                name="titre"
-                value={this.state.titre}
+                name="title"
+                value={this.state.title}
                 onChange={this.handleInputChange}
                 pattern="[a-zA-Z0-9_\.][a-zA-Z0-9_\-\.]*[a-zA-Z0-9_\-]|[a-zA-Z0-9_]"
                 required

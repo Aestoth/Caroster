@@ -14,7 +14,7 @@ class EditPassengersCar extends Component {
     super(props);
     this.state = {
       showEdit: true,
-      nom: this.props.passengerEdit.nom
+      name: this.props.passengerEdit.name
     };
   }
 
@@ -75,7 +75,7 @@ class EditPassengersCar extends Component {
               className="ml-2"
               label="Nom passagers"
               name="nom"
-              value={this.state.nom}
+              value={this.state.name}
               onChange={this.handleInputChange}
             />
           </div>

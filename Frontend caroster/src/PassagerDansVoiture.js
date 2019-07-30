@@ -34,11 +34,11 @@ class PassagerDansVoiture extends Component {
             fetchCarPassengers={this.props.fetchCarPassengers}
           />
         )}
-        {this.props.passengersCar.map(({ _id, nom }) => (
+        {this.props.passengersCar.map(({ _id, name }) => (
           <MDBRow key={_id} className="green lighten-4 border border-white p-2">
             <MDBCol size="10">
               <i className="fas fa-user pr-0 mr-3" />
-              {nom}
+              {name}
             </MDBCol>
             <MDBCol size="2">
               {" "}

@@ -24,7 +24,7 @@ mongoose.connection.on("connected", err => {
 mongoose.set("useCreateIndex", true);
 
 const PostSchemaEvent = mongoose.Schema({
-  titre: String,
+  title: String,
   email: String,
   cars: [{ type: mongoose.Schema.Types.ObjectId, ref: "car" }],
   passengers: [{ type: mongoose.Schema.Types.ObjectId, ref: "passengers" }]
@@ -33,21 +33,21 @@ const PostSchemaEvent = mongoose.Schema({
 const PostModelEvent = mongoose.model("event", PostSchemaEvent, "event");
 
 const PostShemaCar = mongoose.Schema({
-  nomVoiture: String,
-  sieges: Number,
+  carName: String,
+  seats: Number,
   contact: String,
   email: String,
-  infoComp: String,
-  adresse: String,
+  message: String,
+  address: String,
   date: String,
-  horaire: String,
+  time: String,
   passengers: [{ type: mongoose.Schema.Types.ObjectId, ref: "passengers" }]
 });
 
 const PostModelCar = mongoose.model("car", PostShemaCar, "car");
 
 const PostShemaPassengers = mongoose.Schema({
-  nom: String
+  name: String
 });
 
 const PostModelPassengers = mongoose.model(
@@ -187,7 +187,7 @@ app.get("/api/user/:id", (req, res) => {
   });
 });
 
-app.delete("/api/user/delete/:id", (req, res) => {
+app.delete("/api/user/:id", (req, res) => {
   PostModelUser.findByIdAndDelete(req.params.id, (err, result) => {
     if (err) res.send({ success: false, msg: err });
     res.send({ success: true, result: result });
@@ -234,9 +234,11 @@ app.post("/api/event", async (req, res) => {
   let info = await transporter.sendMail({
     from: '"Caroster" <caroster@goodguys.com>', // sender address
     to: `${req.body.email}`, // list of receivers
-    subject: `Lien événement: ${req.body.titre}`, // Subject line
+    subject: `Lien événement: ${req.body.title}`, // Subject line
     html: `
-        <p>Voici le lien de votre événement: ${pathname}/Evenement/${event._id}</p>`
+        <p>Voici le lien de votre événement: ${pathname}/Evenement/${
+      event._id
+    }</p>`
   });
 
   console.log("Message sent: %s", info.messageId);
@@ -332,7 +334,9 @@ app.post("/api/:id/passengersCar", async (req, res) => {
     subject: `Ajout d'un passager`, // Subject line
     html: `
         <p>Bonjour,
-        Cette personne "<strong>${newPassengers.nom}</strong>" s'est inscrite dans votre voiture.</p>
+        Cette personne "<strong>${
+          newPassengers.name
+        }</strong>" s'est inscrite dans votre voiture.</p>
       ` // html body
   });
 
@@ -415,13 +419,13 @@ app.get("/api/car/:carId/passengers", (req, res) => {
 app.post("/api/:id/newcar", async (req, res) => {
   try {
     let { id } = req.params;
-    const newVoiture = PostModelCar(req.body);
-    console.log("newVoiture", newVoiture);
+    const newCar = PostModelCar(req.body);
+    console.log("newCar", newCar);
     const events = await PostModelEvent.findById(id); // Get Event
-    await newVoiture.save(); // Save the new Car
-    await events.cars.push(newVoiture); // Add car to the Event array 'cars'
+    await newCar.save(); // Save the new Car
+    await events.cars.push(newCar); // Add car to the Event array 'cars'
     await events.save(); //Save the Event
-    res.status(201).json(newVoiture);
+    res.status(201).json(newCar);
   } catch (err) {
     // res.status(err.response.status);
     // return res.send(err.message);

@@ -33,11 +33,21 @@ class Event extends Component {
 
   componentDidMount() {
     fetch(`${backendURL()}/api/event/${this.props.match.params.id}`)
+      .then(response => {
+        if (response.status !== 200) {
+          throw new Error("Failed with HTTP code " + response.status);
+        }
+        return response;
+      })
+      //Examine text in the response
       .then(response => response.json())
       .then(data => {
         console.log("event in fetch", data);
         this.setState({ event: data });
-        //this.fetchCarPassengers();
+      })
+      .catch(err => {
+        console.log("error state", err);
+        this.setState({ hasError: true });
       });
   }
 
@@ -85,7 +95,12 @@ class Event extends Component {
       background-color: transparent;
       border: none;
     `;
-    if (!this.state.event) return "loading";
+    if (this.state.hasError) {
+      console.log("hasError", this.state.hasError);
+      return <h2>Something went wrong.</h2>;
+    } else {
+      if (!this.state.event) return "loading";
+    }
     return (
       <div>
         <Navbar />
@@ -103,7 +118,7 @@ class Event extends Component {
             </MDBBtn>
             <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
               <MDBModalHeader toggle={this.toggle}>
-                {this.state.event.titre}
+                {this.state.event.title}
               </MDBModalHeader>
               <MDBModalBody>Attention! L'événement será supprimé </MDBModalBody>
               <MDBModalFooter>
@@ -137,7 +152,7 @@ class Event extends Component {
             className=" d-flex justify-content-center mt-4 mb-5"
             style={{ fontFamily: "Righteous" }}
           >
-            {this.state.event.titre}
+            {this.state.event.title}
           </h1>
 
           <div className="row d-flex justify-content-center mt-4">

@@ -55,7 +55,7 @@ class Car extends Component {
             <div />
             <div>
               <i className="fas fa-car mr-2" />
-              {this.props.nomVoiture}
+              {this.props.carName}
             </div>
             <div>
               <Link
@@ -96,7 +96,7 @@ class Car extends Component {
                 className="d-flex align-items-center d-flex justify-content-center"
                 size="8"
               >
-                {this.props.date} à {this.props.horaire}
+                {this.props.date} à {this.props.time}
               </MDBCol>
             </MDBRow>
             <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
@@ -107,7 +107,7 @@ class Car extends Component {
                 className="d-flex align-items-center d-flex justify-content-center text-center"
                 size="8"
               >
-                <a href="#">{this.props.adresse}</a>
+                <a href="#">{this.props.address}</a>
               </MDBCol>
             </MDBRow>
             <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
@@ -118,7 +118,7 @@ class Car extends Component {
                 className="d-flex align-items-center d-flex justify-content-center text-center"
                 size="8"
               >
-                {this.props.infoComp}
+                {this.props.message}
               </MDBCol>
             </MDBRow>
           </MDBContainer>
@@ -137,10 +137,10 @@ class Car extends Component {
               />
             )}
             <ButtonAddPassagers
-              sieges={
+              seats={
                 this.state.show || this.state.passengers
-                  ? this.props.sieges - nombPassengerCar
-                  : this.props.sieges
+                  ? this.props.seats - nombPassengerCar
+                  : this.props.seats
               }
               changeDiv={() => this.changeDiv()}
               carId={this.props._id}

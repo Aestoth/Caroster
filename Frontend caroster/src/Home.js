@@ -42,60 +42,58 @@ class Home extends React.Component {
     return (
       <div>
         <header>
-          <Router>
-            <MDBNavbar
-              color="bg-primary"
-              fixed="top"
-              dark
-              expand="md"
-              scrolling
-              transparent
-            >
-              <MDBNavbarBrand href="/">
-                <strong>Caroster</strong>
-              </MDBNavbarBrand>
-              {!this.state.isWideEnough && (
-                <MDBNavbarToggler onClick={this.onClick} />
-              )}
-              <MDBCollapse isOpen={this.state.collapse} navbar>
-                <MDBNavbarNav right>
-                  <MDBNavItem>
-                    <MDBNavLink to="/">
-                      <MDBIcon icon="home mr-1" />
-                      Acceuil
-                    </MDBNavLink>
-                  </MDBNavItem>
-                  <MDBNavItem>
-                    <MDBNavLink to="/Registration">
-                      <MDBIcon icon="pencil-alt mr-1" />
-                      Inscription
-                    </MDBNavLink>
-                  </MDBNavItem>
-                  <MDBNavItem>
-                    <MDBNavLink to="/NewEvent">
-                      <MDBIcon icon="sign-in-alt mr-1" />
-                      Connexion
-                    </MDBNavLink>
-                  </MDBNavItem>
-                  <MDBNavItem />
-                  <MDBNavItem>
-                    <MDBDropdown>
-                      <MDBDropdownToggle nav caret>
-                        <div className=" d-md-inline">
-                          <MDBIcon icon="globe mr-1" />
-                          Français
-                        </div>
-                      </MDBDropdownToggle>
-                      <MDBDropdownMenu className="dropdown-default">
-                        <MDBDropdownItem href="#!">Français</MDBDropdownItem>
-                        <MDBDropdownItem href="#!">Anglais</MDBDropdownItem>
-                      </MDBDropdownMenu>
-                    </MDBDropdown>
-                  </MDBNavItem>
-                </MDBNavbarNav>
-              </MDBCollapse>
-            </MDBNavbar>
-          </Router>
+          <MDBNavbar
+            color="bg-primary"
+            fixed="top"
+            dark
+            expand="md"
+            scrolling
+            transparent
+          >
+            <MDBNavbarBrand href="/">
+              <strong>Caroster</strong>
+            </MDBNavbarBrand>
+            {!this.state.isWideEnough && (
+              <MDBNavbarToggler onClick={this.onClick} />
+            )}
+            <MDBCollapse isOpen={this.state.collapse} navbar>
+              <MDBNavbarNav right>
+                <MDBNavItem>
+                  <MDBNavLink to="/">
+                    <MDBIcon icon="home mr-1" />
+                    Acceuil
+                  </MDBNavLink>
+                </MDBNavItem>
+                <MDBNavItem>
+                  <MDBNavLink to="/Registration">
+                    <MDBIcon icon="pencil-alt mr-1" />
+                    Inscription
+                  </MDBNavLink>
+                </MDBNavItem>
+                <MDBNavItem>
+                  <MDBNavLink to="/Login">
+                    <MDBIcon icon="sign-in-alt mr-1" />
+                    Connexion
+                  </MDBNavLink>
+                </MDBNavItem>
+                <MDBNavItem />
+                <MDBNavItem>
+                  <MDBDropdown>
+                    <MDBDropdownToggle nav caret>
+                      <div className=" d-md-inline">
+                        <MDBIcon icon="globe mr-1" />
+                        Français
+                      </div>
+                    </MDBDropdownToggle>
+                    <MDBDropdownMenu className="dropdown-default">
+                      <MDBDropdownItem href="#!">Français</MDBDropdownItem>
+                      <MDBDropdownItem href="#!">Anglais</MDBDropdownItem>
+                    </MDBDropdownMenu>
+                  </MDBDropdown>
+                </MDBNavItem>
+              </MDBNavbarNav>
+            </MDBCollapse>
+          </MDBNavbar>
 
           <MDBView src="https://cap.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Fcap.2F2018.2F03.2F21.2Fcb986648-35c8-4b05-930f-796b651f246e.2Ejpeg/750x375/background-color/ffffff/quality/70/greve-sncf-et-ratp-vous-pouvez-beneficier-dun-covoiturage-gratuit-pour-aller-au-boulot-1278755.jpg">
             <MDBMask
