@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Evenement from "./Evenement";
-import CreerEvenement from "./CreerEvenement";
-import Acceuil from "./Acceuil";
-import Inscription from "./Inscription";
-import AjouterVoiture from "./AjouterVoiture";
-import ModifierVoiture from "./ModifierVoiture";
+import Event from "./Event";
+import NewEvent from "./NewEvent";
+import Home from "./Home";
+import Registration from "./Registration";
+import AddCar from "./AddCar";
+import UpdateCar from "./UpdateCar";
 import Login from "./Login";
 //import withAuth from "./withAuth";
 import User from "./User";
@@ -21,12 +21,12 @@ class App extends Component {
       <Router>
         <div>
           <Switch>
-            <Route exact path="/" component={Acceuil} />
-            <Route path="/CreerEvenement" component={CreerEvenement} />
-            <Route path="/Inscription" component={Inscription} />
-            <Route path="/Evenement/:id" component={Evenement} />
-            <Route path="/Ajouter-voiture" component={AjouterVoiture} />
-            <Route path="/ModifierVoiture/:id" component={ModifierVoiture} />
+            <Route exact path="/" component={Home} />
+            <Route path="/NewEvent" component={NewEvent} />
+            <Route path="/Registration" component={Registration} />
+            <Route path="/Event/:id" component={Event} />
+            <Route path="/AddCar" component={AddCar} />
+            <Route path="/UpdateCar/:id" component={UpdateCar} />
             <Route path="/Connexion" component={Login} />
             <Route path="/User" component={User} />
           </Switch>

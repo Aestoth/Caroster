@@ -22,7 +22,7 @@ import {
 
 import { MDBFooter } from "mdbreact";
 
-class Acceuil extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,13 +66,13 @@ class Acceuil extends React.Component {
                     </MDBNavLink>
                   </MDBNavItem>
                   <MDBNavItem>
-                    <MDBNavLink to="/Inscription">
+                    <MDBNavLink to="/Registration">
                       <MDBIcon icon="pencil-alt mr-1" />
                       Inscription
                     </MDBNavLink>
                   </MDBNavItem>
                   <MDBNavItem>
-                    <MDBNavLink to="/CreerEvenement">
+                    <MDBNavLink to="/NewEvent">
                       <MDBIcon icon="sign-in-alt mr-1" />
                       Connexion
                     </MDBNavLink>
@@ -119,7 +119,7 @@ class Acceuil extends React.Component {
                       </MDBBtn>
                     </Link>
 
-                    <Link to="/CreerEvenement">
+                    <Link to="/NewEvent">
                       <MDBBtn color="primary">COMMENCER</MDBBtn>
                     </Link>
                   </p>
@@ -203,4 +203,4 @@ class Acceuil extends React.Component {
   }
 }
 
-export default Acceuil;
+export default Home;

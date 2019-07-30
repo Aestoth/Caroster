@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import styled from "styled-components";
 import backendURL from "./helpers/getBackendURL";
 
-class ModifierVoiture extends Component {
+class UpdateCar extends Component {
   state = {
     voiture: false
   };
@@ -44,4 +44,4 @@ class ModifierVoiture extends Component {
   }
 }
 
-export default ModifierVoiture;
+export default UpdateCar;

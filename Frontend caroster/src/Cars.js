@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./Voiture.css";
-import UniqueVoiture from "./UniqueVoiture";
+import Car from "./Car";
 
 import backendURL from "./helpers/getBackendURL";
 
-class Voiture extends Component {
+class Cars extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,8 +21,6 @@ class Voiture extends Component {
   }
 
   render() {
-    console.log(this.props.passengers);
-
     return (
       <div>
         {this.state.cars.map(
@@ -36,7 +34,7 @@ class Voiture extends Component {
             horaire,
             sieges
           }) => (
-            <UniqueVoiture
+            <Car
               key={_id}
               _id={_id}
               nomVoiture={nomVoiture}
@@ -48,8 +46,8 @@ class Voiture extends Component {
               sieges={sieges}
               EventId={this.props.id}
               carId={this.state.cars}
-              passengers={this.props.passengers}
-              fetchCarPassengers={this.props.fetchCarPassengers}
+              // passengers={this.props.passengers}
+              // fetchCarPassengers={this.props.fetchCarPassengers}
             />
           )
         )}
@@ -58,4 +56,4 @@ class Voiture extends Component {
   }
 }
 
-export default Voiture;
+export default Cars;

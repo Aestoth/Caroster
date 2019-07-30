@@ -39,7 +39,7 @@ class Navbar extends Component {
               </MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
-              <MDBNavLink to="/Inscription">
+              <MDBNavLink to="/Registration">
                 <MDBIcon icon="pencil-alt mr-1" />
                 Inscription
               </MDBNavLink>

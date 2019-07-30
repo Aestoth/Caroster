@@ -194,11 +194,24 @@ app.delete("/api/user/delete/:id", (req, res) => {
   });
 });
 
-// app.put("/api/user/password/update/:id", (req, res) => {
-//   const newPassword = req.body;
-//   const userPassword = PostModelUser({ newPassword });
-//   userPassword.update(req.params.id, { $set: { password: newPassword } });
-// });
+app.put("/api/user/password/update/:id", (req, res) => {
+  const newPassword = req.body.password;
+  const userId = req.params.id;
+
+  bcrypt.hash(newPassword, saltRounds, function(err, hashedPassword) {
+    if (err) {
+      next(err);
+    } else {
+      console.log(newPassword);
+      console.log(req.params.id);
+      PostModelUser.update(
+        { _id: userId },
+        { $set: { password: hashedPassword } }
+      );
+      res.send(hashedPassword);
+    }
+  });
+});
 
 //Add  Event //////////////////////////////////////////
 app.post("/api/event", async (req, res) => {

@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import { MDBInput, MDBContainer, MDBCol, MDBRow, MDBBtn } from "mdbreact";
 import backendURL from "./helpers/getBackendURL";
 
-class Insciption extends Component {
+class Registration extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -112,4 +112,4 @@ class Insciption extends Component {
   }
 }
 
-export default Insciption;
+export default Registration;

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ButtonAddPassagers from "./ButtonAddPassagers";
 import PassagerDansVoiture from "./PassagerDansVoiture";
 
-//import backendURL from "./helpers/getBackendURL";
+import backendURL from "./helpers/getBackendURL";
 
 import {
   MDBContainer,
@@ -16,7 +16,7 @@ import {
 } from "mdbreact";
 import Passagers from "./Passagers";
 
-class UniqueVoiture extends Component {
+class Car extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -31,20 +31,20 @@ class UniqueVoiture extends Component {
     this.setState({ show: !show });
   };
 
-  // componentDidMount() {
-  //   this.fetchCarPassengers();
-  // }
-  //
-  // fetchCarPassengers = () => {
-  //   fetch(`${backendURL()}/api/car/${this.props._id}/passengers`)
-  //     .then(response => response.json())
-  //     .then(data => this.setState({ passengers: data }));
-  //   console.log(this.state.passengers);
-  // };
+  componentDidMount() {
+    this.fetchCarPassengers();
+  }
+
+  fetchCarPassengers = () => {
+    fetch(`${backendURL()}/api/car/${this.props._id}/passengers`)
+      .then(response => response.json())
+      .then(data => this.setState({ passengers: data }));
+    console.log(this.state.passengers);
+  };
 
   render() {
-    console.log("passeg", this.props.passengers);
-    const passengers = this.props.passengers;
+    console.log("passeg", this.state.passengers);
+    const passengers = this.state.passengers;
     const nombPassengerCar = passengers.length;
     // const place = this.props.sieges;
 
@@ -60,7 +60,7 @@ class UniqueVoiture extends Component {
             <div>
               <Link
                 to={{
-                  pathname: `/ModifierVoiture/${this.props._id}`,
+                  pathname: `/UpdateCar/${this.props._id}`,
                   state: { params: { id: this.props.EventId } }
                 }}
               >
@@ -126,19 +126,19 @@ class UniqueVoiture extends Component {
           <ul className="list-group list-group-flush mt-4">
             <PassagerDansVoiture
               carId={this.props._id}
-              passengersCar={this.props.passengers}
-              fetchCarPassengers={this.props.fetchCarPassengers}
+              passengersCar={this.state.passengers}
+              fetchCarPassengers={() => this.fetchCarPassengers()}
             />
             {this.state.show && (
               <Passagers
                 carId={this.props._id}
-                fetchCarPassengers={this.props.fetchCarPassengers}
+                fetchCarPassengers={() => this.fetchCarPassengers()}
                 changeDiv={() => this.changeDiv()}
               />
             )}
             <ButtonAddPassagers
               sieges={
-                this.state.show || this.props.passengers
+                this.state.show || this.state.passengers
                   ? this.props.sieges - nombPassengerCar
                   : this.props.sieges
               }
@@ -152,7 +152,7 @@ class UniqueVoiture extends Component {
   }
 }
 
-export default UniqueVoiture;
+export default Car;
 
 // <CarFreePlaces
 //   carId={nombPassengerCar !== place && this.state.carPlaces}

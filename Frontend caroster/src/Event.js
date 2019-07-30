@@ -3,7 +3,7 @@ import "./Evenement.css";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import ListeDAttente from "./ListeDAttente";
-import Voiture from "./Voiture";
+import Cars from "./Cars";
 import styled from "styled-components";
 import backendURL from "./helpers/getBackendURL";
 
@@ -18,7 +18,7 @@ import {
   MDBModalFooter
 } from "mdbreact";
 
-class Evenement extends Component {
+class Event extends Component {
   constructor(props) {
     super(props);
     console.log("props", props);
@@ -26,7 +26,8 @@ class Evenement extends Component {
       event: false,
       modal: false,
       carId: [],
-      passengers: []
+      passengers: [],
+      sieges: []
     };
   }
 
@@ -36,18 +37,23 @@ class Evenement extends Component {
       .then(data => {
         console.log("event in fetch", data);
         this.setState({ event: data });
-        this.fetchCarPassengers();
+        //this.fetchCarPassengers();
       });
   }
 
-  fetchCarPassengers = () => {
-    fetch(
-      `${backendURL()}/api/car/${this.props.location.state.carId}/passengers`
-    )
-      .then(response => response.json())
-      .then(data => this.setState({ passengers: data }));
-    console.log(this.state.passengers);
-  };
+  // fetchCarPassengers = () => {
+  //   if (
+  //     typeof this.props.location.state.carId !== "object" ||
+  //     typeof this.props.location.state.carId !== "undefined"
+  //   ) {
+  //     fetch(
+  //       `${backendURL()}/api/car/${this.props.location.state.carId}/passengers`
+  //     )
+  //       .then(response => response.json())
+  //       .then(data => this.setState({ passengers: data }));
+  //     console.log(this.state.passengers);
+  //   }
+  // };
 
   toggle = () => {
     this.setState({
@@ -91,14 +97,27 @@ class Evenement extends Component {
             <i className="far fa-arrow-alt-circle-left fa-2x" />
           </Button>
 
-          <div className="ml-5 text-white">
-            <h5>{this.state.event.titre}</h5>
-          </div>
-
           <div>
+            <MDBBtn className="btn-sm" color="danger" onClick={this.toggle}>
+              Supprimer événement
+            </MDBBtn>
+            <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
+              <MDBModalHeader toggle={this.toggle}>
+                {this.state.event.titre}
+              </MDBModalHeader>
+              <MDBModalBody>Attention! L'événement será supprimé </MDBModalBody>
+              <MDBModalFooter>
+                <MDBBtn color="secondary" onClick={this.toggle}>
+                  Annuler
+                </MDBBtn>
+                <MDBBtn onClick={this.deleteEvent} color="primary">
+                  Continuer
+                </MDBBtn>
+              </MDBModalFooter>
+            </MDBModal>
             <Link
               to={{
-                pathname: "/Ajouter-Voiture",
+                pathname: "/AddCar",
                 state: {
                   params: {
                     id: this.props.match.params.id
@@ -114,42 +133,31 @@ class Evenement extends Component {
           </div>
         </nav>
         <div className="container">
+          <h1
+            className=" d-flex justify-content-center mt-4 mb-5"
+            style={{ fontFamily: "Righteous" }}
+          >
+            {this.state.event.titre}
+          </h1>
+
           <div className="row d-flex justify-content-center mt-4">
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6">
               <ListeDAttente
                 eventId={this.props.match.params.id}
-                passengersCar={this.state.passengers}
-                // sieges={this.props.location.state.sieges}
+                //passengersCar={this.state.passengers}
+                //sieges={this.state.sieges}
               />
             </div>
             <div className="col-md-6 marginTable col-sm-6 col-lg-6 col-xl-6">
-              <Voiture
+              <Cars
                 id={this.props.match.params.id}
-                fetchCarPassengers={() => this.fetchCarPassengers()}
-                passengers={this.state.passengers}
+                // fetchCarPassengers={() => this.fetchCarPassengers()}
+                // passengers={this.state.passengers}
               />
             </div>
           </div>
         </div>
-        <div className="mt-4 mb-5 d-flex justify-content-center">
-          <MDBBtn color="danger" onClick={this.toggle}>
-            Supprimer événement
-          </MDBBtn>
-          <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
-            <MDBModalHeader toggle={this.toggle}>
-              {this.state.event.titre}
-            </MDBModalHeader>
-            <MDBModalBody>Attention! L'événement será supprimé </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={this.toggle}>
-                Annuler
-              </MDBBtn>
-              <MDBBtn onClick={this.deleteEvent} color="primary">
-                Continuer
-              </MDBBtn>
-            </MDBModalFooter>
-          </MDBModal>
-        </div>
+
         <MDBFooter color="blue" className="font-small pt-4 mt-4">
           <MDBContainer fluid className="text-center text-md-center">
             <h5 className="title">A Propos</h5>
@@ -173,4 +181,4 @@ class Evenement extends Component {
   }
 } //Fin de la class
 
-export default Evenement;
+export default Event;

@@ -44,7 +44,7 @@ class FormAddVoiture extends Component {
         console.log("Success", data);
         console.log("id", data._id);
         this.props.history.push({
-          pathname: `/Evenement/${this.props.location.state.params.id}`,
+          pathname: `/Event/${this.props.location.state.params.id}`,
           state: { carId: data._id, sieges: data.sieges }
         });
       });
@@ -177,7 +177,7 @@ class FormAddVoiture extends Component {
             </div>
 
             <div className="text-center mt-2">
-              <Link to={`/Evenement/${this.props.location.state.params.id}`}>
+              <Link to={`/Event/${this.props.location.state.params.id}`}>
                 <MDBBtn className="text-uppercase text-white" type="cancel">
                   Annuler
                 </MDBBtn>

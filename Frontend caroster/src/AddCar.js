@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Footer from "./Footer";
 import FormAddVoiture from "./FormAddVoiture";
 
-class AjouterVoiture extends Component {
+class AddCar extends Component {
   render() {
     const Button = styled.button`
       background-color: transparent;
@@ -32,4 +32,4 @@ class AjouterVoiture extends Component {
   }
 }
 
-export default AjouterVoiture;
+export default AddCar;

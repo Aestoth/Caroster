@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { MDBBtn, MDBInput, MDBFooter, MDBContainer } from "mdbreact";
 import backendURL from "./helpers/getBackendURL";
 
-class CreerEvenement extends Component {
+class NewEvent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +34,7 @@ class CreerEvenement extends Component {
     }).then(response => {
       response.json().then(data => {
         console.log("Success", data);
-        this.props.history.push("/Evenement/" + data._id);
+        this.props.history.push("/Event/" + data._id);
       });
     });
   };
@@ -120,4 +120,4 @@ class CreerEvenement extends Component {
   }
 }
 
-export default CreerEvenement;
+export default NewEvent;

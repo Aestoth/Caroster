@@ -44,9 +44,7 @@ class FormUpdate extends Component {
       })
       .catch(err => err);
 
-    this.props.history.push(
-      `/Evenement/${this.props.location.state.params.id}`
-    );
+    this.props.history.push(`/Event/${this.props.location.state.params.id}`);
   };
 
   handleDelete = e => {
@@ -60,9 +58,7 @@ class FormUpdate extends Component {
       .then(res => res.json())
       .then(res => console.log(res));
 
-    this.props.history.push(
-      `/Evenement/${this.props.location.state.params.id}`
-    );
+    this.props.history.push(`/Event/${this.props.location.state.params.id}`);
   };
 
   render() {
