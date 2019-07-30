@@ -197,7 +197,7 @@ app.delete("/api/user/delete/:id", (req, res) => {
 app.put("/api/user/password/update/:id", (req, res) => {
   const newPassword = req.body.password;
   //let userId = req.params.id;
-  const user = PostModelUser.findOne(req.params.id);
+  const user = PostModelUser.findById(req.params.id);
 
   bcrypt.hash(newPassword, saltRounds, function(err, hashedPassword) {
     if (err) {
