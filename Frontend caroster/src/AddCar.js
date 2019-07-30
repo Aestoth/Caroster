@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import styled from "styled-components";
 import Footer from "./Footer";
-import FormAddVoiture from "./FormAddVoiture";
+import FormAddCar from "./FormAddCar";
 
 class AddCar extends Component {
   render() {
@@ -25,7 +25,7 @@ class AddCar extends Component {
             </Button>
           </div>
         </nav>
-        <FormAddVoiture />
+        <FormAddCar />
         <Footer />
       </div>
     );

@@ -7,14 +7,14 @@ import backendURL from "./helpers/getBackendURL";
 
 class UpdateCar extends Component {
   state = {
-    voiture: false
+    car: false
   };
 
   componentDidMount() {
     console.log("route param", this.props);
     fetch(`${backendURL()}/api/car/${this.props.match.params.id}`)
       .then(res => res.json())
-      .then(data => this.setState({ voiture: data.result }));
+      .then(data => this.setState({ car: data.result }));
   }
 
   render() {
@@ -22,7 +22,7 @@ class UpdateCar extends Component {
       background-color: transparent;
       border: none;
     `;
-    if (!this.state.voiture) {
+    if (!this.state.car) {
       return "loading";
     }
 
@@ -37,7 +37,7 @@ class UpdateCar extends Component {
             <i className="far fa-arrow-alt-circle-left fa-2x" />
           </Button>
         </nav>
-        <FormUpdate {...this.state.voiture} />
+        <FormUpdate {...this.state.car} />
         <Footer />
       </div>
     );

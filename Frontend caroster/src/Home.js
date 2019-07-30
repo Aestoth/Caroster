@@ -71,7 +71,7 @@ class Home extends React.Component {
                   </MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem>
-                  <MDBNavLink to="/Connexion">
+                  <MDBNavLink to="/Login">
                     <MDBIcon icon="sign-in-alt mr-1" />
                     Connexion
                   </MDBNavLink>

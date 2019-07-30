@@ -24,26 +24,17 @@ class Cars extends Component {
     return (
       <div>
         {this.state.cars.map(
-          ({
-            _id,
-            nomVoiture,
-            infoComp,
-            contact,
-            adresse,
-            date,
-            horaire,
-            sieges
-          }) => (
+          ({ _id, carName, message, contact, address, date, time, seats }) => (
             <Car
               key={_id}
               _id={_id}
-              nomVoiture={nomVoiture}
-              infoComp={infoComp}
+              carName={carName}
+              message={message}
               contact={contact}
-              adresse={adresse}
+              address={address}
               date={date}
-              horaire={horaire}
-              sieges={sieges}
+              time={time}
+              seats={seats}
               EventId={this.props.id}
               carId={this.state.cars}
               // passengers={this.props.passengers}

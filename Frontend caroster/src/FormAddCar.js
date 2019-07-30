@@ -9,14 +9,14 @@ class FormAddVoiture extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nomVoiture: "",
-      sieges: "",
-      infoComp: "",
+      carName: "",
+      seats: "",
+      message: "",
       contact: "",
       email: "",
-      adresse: "",
+      address: "",
       date: "",
-      horaire: "",
+      time: "",
       carId: []
     };
     this.handleChange = this.handleChange.bind(this);
@@ -45,7 +45,7 @@ class FormAddVoiture extends Component {
         console.log("id", data._id);
         this.props.history.push({
           pathname: `/Event/${this.props.location.state.params.id}`,
-          state: { carId: data._id, sieges: data.sieges }
+          state: { carId: data._id, seats: data.seats }
         });
       });
     });
@@ -65,8 +65,8 @@ class FormAddVoiture extends Component {
                 label="Nom de la voiture"
                 icon="car"
                 className="mb-0 form-control"
-                name="nomVoiture"
-                value={this.state.nomVoiture}
+                name="carName"
+                value={this.state.carName}
                 onChange={this.handleChange}
                 required
               />
@@ -79,8 +79,8 @@ class FormAddVoiture extends Component {
                 label="Sieges"
                 icon="chair"
                 className="mb-0 form-control"
-                name="sieges"
-                value={this.state.sieges <= 10 && this.state.sieges}
+                name="seats"
+                value={this.state.seats <= 10 && this.state.seats}
                 onChange={this.handleChange}
                 validate={this.state.validate}
                 required
@@ -92,10 +92,10 @@ class FormAddVoiture extends Component {
                 htmlFor="defaultFormRegisterNameEx3"
                 id="defaultFormRegisterNameEx3"
                 label="Infos complémentaires"
-                icon="pen"
+                icon="comment-alt"
                 className="mb-0 form-control"
-                name="infoComp"
-                value={this.state.infocomp}
+                name="message"
+                value={this.state.message}
                 onChange={this.handleChange}
               />
             </div>
@@ -140,8 +140,8 @@ class FormAddVoiture extends Component {
                 label="Adresse"
                 icon="map-marker-alt"
                 className="mb-0 form-control"
-                name="adresse"
-                value={this.state.adresse}
+                name="address"
+                value={this.state.address}
                 onChange={this.handleChange}
                 validate={this.state.validate}
                 required
@@ -168,8 +168,8 @@ class FormAddVoiture extends Component {
                 id="defaultFormRegisterNameEx8"
                 icon="clock"
                 className="mb-2 form-control"
-                name="horaire"
-                value={this.state.horaire}
+                name="time"
+                value={this.state.time}
                 onChange={this.handleChange}
                 validate={this.state.validate}
                 required

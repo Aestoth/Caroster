@@ -10,9 +10,9 @@ class ButtonAddPassagers extends Component {
   }
 
   buttonAddPassager = () => {
-    const buttonSieges = [];
-    for (let i = 0; i < this.props.sieges; i++) {
-      buttonSieges.push(
+    const buttonseats = [];
+    for (let i = 0; i < this.props.seats; i++) {
+      buttonseats.push(
         <MDBBtn
           key={i}
           color="primary"
@@ -25,7 +25,7 @@ class ButtonAddPassagers extends Component {
         </MDBBtn>
       );
     }
-    return buttonSieges;
+    return buttonseats;
   };
 
   render() {

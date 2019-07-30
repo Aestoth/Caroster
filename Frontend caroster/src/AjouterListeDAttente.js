@@ -15,7 +15,7 @@ class AjouterListeDAttente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nom: [],
+      name: [],
       showListeDAttente: false
     };
   }
@@ -56,8 +56,8 @@ class AjouterListeDAttente extends Component {
               size="sm"
               className="ml-2"
               label="Nom passagers"
-              name="nom"
-              value={this.state.nom}
+              name="name"
+              value={this.state.name}
               onChange={this.handleInputChange}
             />
           </div>
