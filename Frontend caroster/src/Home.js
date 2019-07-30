@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   MDBNavbar,
@@ -71,7 +71,11 @@ class Home extends React.Component {
                   </MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem>
+<<<<<<< HEAD
                   <MDBNavLink to="/Login">
+=======
+                  <MDBNavLink to="/Connexion">
+>>>>>>> 3cf1c0d589b44c9ccb84255af86b9b1dd5ed01eb
                     <MDBIcon icon="sign-in-alt mr-1" />
                     Connexion
                   </MDBNavLink>

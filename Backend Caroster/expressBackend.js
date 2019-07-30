@@ -47,7 +47,11 @@ const PostShemaCar = mongoose.Schema({
 const PostModelCar = mongoose.model("car", PostShemaCar, "car");
 
 const PostShemaPassengers = mongoose.Schema({
+<<<<<<< HEAD
   name: String
+=======
+  nom: { type: String, required: true }
+>>>>>>> 3cf1c0d589b44c9ccb84255af86b9b1dd5ed01eb
 });
 
 const PostModelPassengers = mongoose.model(
@@ -57,8 +61,8 @@ const PostModelPassengers = mongoose.model(
 );
 
 const PostSchemaUser = mongoose.Schema({
-  name: String,
-  contact: String,
+  name: { type: String, required: true },
+  contact: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true }
 });
@@ -196,16 +200,16 @@ app.delete("/api/user/:id", (req, res) => {
 
 app.put("/api/user/password/update/:id", (req, res) => {
   const newPassword = req.body.password;
-  const userId = req.params.id;
+  //let userId = req.params.id;
+  const user = PostModelUser.findOne(req.params.id);
 
   bcrypt.hash(newPassword, saltRounds, function(err, hashedPassword) {
     if (err) {
       next(err);
     } else {
-      console.log(newPassword);
       console.log(req.params.id);
-      PostModelUser.update(
-        { _id: userId },
+      user.update(
+        { _id: req.params.id },
         { $set: { password: hashedPassword } }
       );
       res.send(hashedPassword);

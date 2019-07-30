@@ -68,7 +68,10 @@ class User extends Component {
             </MDBBtn>
             <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
               <MDBModalHeader toggle={this.toggle}>ATTENTION!</MDBModalHeader>
-              <MDBModalBody> L'Utilisateur será supprimé </MDBModalBody>
+              <MDBModalBody>
+                {" "}
+                Le Profil d'utilisateur será supprimé{" "}
+              </MDBModalBody>
               <MDBModalFooter>
                 <MDBBtn color="secondary" onClick={this.toggle}>
                   Annuler
