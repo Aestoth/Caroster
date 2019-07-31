@@ -6,12 +6,13 @@ class UserEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.user.name,
-      contact: this.props.user.contact,
-      email: this.props.user.email,
-      password: this.props.user.password,
+      name: this.props.users.name,
+      contact: this.props.users.contact,
+      email: this.props.users.email,
+      password: this.props.users.password,
       showChangeInfo: true,
-      value: ""
+      value: "",
+      show: true
     };
     this.textInput = React.createRef();
   }
@@ -27,7 +28,7 @@ class UserEdit extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    fetch(`${backendURL()}/api/user/${this.props._id}`, {
+    fetch(`${backendURL()}/api/user/${this.props.users._id}`, {
       method: "PUT",
       body: JSON.stringify(this.state),
       headers: {
@@ -66,7 +67,7 @@ class UserEdit extends Component {
   // };
 
   render() {
-    console.log("edit", this.state);
+    console.log("edit", this.props.users);
     return (
       <form onSubmit={this.handleSubmit}>
         <MDBRow className="d-flex justify-content-center mt-3">

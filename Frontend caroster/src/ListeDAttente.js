@@ -67,8 +67,8 @@ class ListeDAttente extends Component {
           <PassagersEnAttente
             passagers={this.state.passagers}
             fetchPassagers={() => this.fetchPassagers()}
-            passengersCar={this.props.passengersCar}
-            seats={this.props.seats}
+            // passengersCar={this.props.passengersCar}
+            // seats={this.props.seats}
           />
         </div>
       </div>

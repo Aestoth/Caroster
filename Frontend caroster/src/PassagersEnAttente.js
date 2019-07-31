@@ -25,8 +25,8 @@ class PassagersEnAttente extends Component {
   };
 
   render() {
-    console.log("statePass", this.props.passengersCar);
-    console.log("stateSieges", this.props.seats);
+    // console.log("statePass", this.props.passengersCar);
+    // console.log("stateSieges", this.props.seats);
 
     if (!this.props.passagers) return "Liste d-attente vide";
     return (

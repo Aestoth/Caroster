@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBIcon } from "mdbreact";
 import UserEdit from "./UserEdit";
-import backendURL from "./helpers/getBackendURL";
+//import backendURL from "./helpers/getBackendURL";
 
 class UserInfos extends Component {
   constructor(props) {
@@ -12,18 +12,18 @@ class UserInfos extends Component {
     };
   }
 
-  componentDidMount() {
-    this.fetchUsers();
-  }
+  // componentDidMount() {
+  //   this.fetchUsers();
+  // }
 
-  fetchUsers = () => {
-    console.log("up", this.state.userChange.name);
-    fetch(`${backendURL()}/api/user/${this.props._id}`)
-      .then(response => response.json())
-      .then(data => this.setState({ userChange: data }));
-    console.log("uptd", this.state.userChange);
-  };
-
+  // fetchUsers = () => {
+  //   console.log("up", this.state.userChange.name);
+  //   fetch(`${backendURL()}/api/user/${this.props._id}`)
+  //     .then(response => response.json())
+  //     .then(data => this.setState({ userChange: data }));
+  //   console.log("uptd", this.state.userChange);
+  // };
+  //
   changeInfo = () => {
     const { show } = this.state;
     this.setState({ show: !show });
@@ -48,10 +48,9 @@ class UserInfos extends Component {
           </div>
           {this.state.show ? (
             <UserEdit
-              _id={this.state.userChange._id}
               changeInfo={() => this.changeInfo()}
-              user={this.state.userChange}
-              fetchUsers={() => this.fetchUsers()}
+              fetchUsers={this.props.fetchUsers}
+              users={this.props.users}
             />
           ) : (
             <MDBContainer className="mt-2 mb-2 ml-5">
@@ -60,7 +59,7 @@ class UserInfos extends Component {
                   <MDBIcon icon="user-alt" className="ml-5 mr-5" />
                 </MDBCol>
                 <MDBCol size="6" className="ml-4">
-                  {this.state.userChange.name}
+                  {this.props.users.name}
                 </MDBCol>
               </MDBRow>
 
@@ -69,7 +68,7 @@ class UserInfos extends Component {
                   <MDBIcon icon="envelope" className="ml-5 mr-5" />
                 </MDBCol>
                 <MDBCol size="6" className="ml-4">
-                  {this.state.userChange.email}
+                  {this.props.users.email}
                 </MDBCol>
               </MDBRow>
               <MDBRow className="py-2">
@@ -77,7 +76,7 @@ class UserInfos extends Component {
                   <MDBIcon icon="phone" className="ml-5 mr-5" />
                 </MDBCol>
                 <MDBCol size="6" className="ml-4">
-                  {this.state.userChange.contact}
+                  {this.props.users.contact}
                 </MDBCol>
               </MDBRow>
               <MDBRow className="py-2">

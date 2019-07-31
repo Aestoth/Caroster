@@ -48,7 +48,6 @@ const PostModelCar = mongoose.model("car", PostShemaCar, "car");
 
 const PostShemaPassengers = mongoose.Schema({
   name: { type: String, required: true }
-
 });
 
 const PostModelPassengers = mongoose.model(
@@ -61,7 +60,8 @@ const PostSchemaUser = mongoose.Schema({
   name: { type: String, required: true },
   contact: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  event: [{ type: mongoose.Schema.Types.ObjectId, ref: "event" }]
 });
 
 PostSchemaUser.pre("save", function(next) {
@@ -197,21 +197,47 @@ app.delete("/api/user/:id", (req, res) => {
 
 app.put("/api/user/password/update/:id", (req, res) => {
   const newPassword = req.body.password;
-  //let userId = req.params.id;
-  const user = PostModelUser.findById(req.params.id);
+  //const user = PostModelUser(newPassword);
 
   bcrypt.hash(newPassword, saltRounds, function(err, hashedPassword) {
     if (err) {
       next(err);
     } else {
       console.log(req.params.id);
-      user.update(
+      PostModelUser.findOneAndUpdate(
         { _id: req.params.id },
         { $set: { password: hashedPassword } }
       );
+
       res.send(hashedPassword);
     }
   });
+});
+
+app.post("/api/:id/userEvent", async (req, res) => {
+  try {
+    let { id } = req.params;
+    const newEvent = PostModelEvent(req.body);
+    console.log("newEvent", newEvent);
+    const user = await PostModelUser.findById(id);
+    await newEvent.save();
+    await user.event.push(newEvent);
+    await user.save();
+    res.status(201).json(newEvent);
+  } catch (err) {
+    res.status(err.response.status);
+    return res.send(err.message);
+  }
+});
+
+app.get("/api/user/:userId/userEvent", (req, res) => {
+  const { userId } = req.params;
+  const users = PostModelUser.findById(userId)
+    .populate("event")
+    .exec((err, users) => {
+      console.log("event", users.event);
+      res.send(users.event);
+    });
 });
 
 //Add  Event //////////////////////////////////////////
@@ -237,9 +263,7 @@ app.post("/api/event", async (req, res) => {
     to: `${req.body.email}`, // list of receivers
     subject: `Lien événement: ${req.body.title}`, // Subject line
     html: `
-        <p>Voici le lien de votre événement: ${pathname}/Evenement/${
-      event._id
-    }</p>`
+        <p>Voici le lien de votre événement: ${pathname}/Evenement/${event._id}</p>`
   });
 
   console.log("Message sent: %s", info.messageId);
@@ -335,9 +359,7 @@ app.post("/api/:id/passengersCar", async (req, res) => {
     subject: `Ajout d'un passager`, // Subject line
     html: `
         <p>Bonjour,
-        Cette personne "<strong>${
-          newPassengers.name
-        }</strong>" s'est inscrite dans votre voiture.</p>
+        Cette personne "<strong>${newPassengers.name}</strong>" s'est inscrite dans votre voiture.</p>
       ` // html body
   });
 

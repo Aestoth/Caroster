@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import "./User.css";
 import UserInfos from "./UserInfos";
+import UserEvents from "./UserEvents";
 import backendURL from "./helpers/getBackendURL";
 
 import {
@@ -22,7 +23,9 @@ class User extends Component {
     this.state = {
       userInfos: this.props.location.state,
       show: false,
-      modal: false
+      modal: false,
+      users: [],
+      eventsUser: []
     };
   }
 
@@ -34,6 +37,27 @@ class User extends Component {
     this.setState({
       modal: !this.state.modal
     });
+  };
+
+  componentDidMount() {
+    this.fetchUsers();
+    this.fetchEventsUsers();
+  }
+
+  fetchUsers = () => {
+    fetch(`${backendURL()}/api/user/${this.props.location.state.user._id}`)
+      .then(response => response.json())
+      .then(data => this.setState({ users: data }));
+    console.log("uptd", this.state.users);
+  };
+
+  fetchEventsUsers = () => {
+    fetch(
+      `${backendURL()}/api/user/${this.props.location.state.user._id}/userEvent`
+    )
+      .then(response => response.json())
+      .then(data => this.setState({ eventsUser: data }));
+    console.log("evntUser", this.state.eventsUser);
   };
 
   deleteUser = e => {
@@ -53,8 +77,27 @@ class User extends Component {
     });
   };
 
+  // handleSubmit = e => {
+  //   e.preventDefault();
+  //   fetch(`${backendURL()}/api/${this.state.userId}/userEvent`, {
+  //     method: "POST",
+  //     body: JSON.stringify(this.state),
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json"
+  //     }
+  //   }).then(response => {
+  //     response.json().then(data => {
+  //       console.log("Success", data);
+  //       this.props.history.push({
+  //         pathname: `/Event/${data._id}`
+  //       });
+  //     });
+  //   });
+  // };
+
   render() {
-    console.log("delete", this.props.location.state.user._id);
+    console.log("delete", this.state.users);
     return (
       <div>
         <Navbar />
@@ -87,14 +130,11 @@ class User extends Component {
         <MDBContainer className="mt-5 mb-5">
           <div className="row d-flex justify-content-center">
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6 mb-5">
-              <div className="card shadow">
-                <div className="card-header bg-info text-center text-white d-flex justify-content-center">
-                  Mes événements
-                </div>
-                <MDBCard color="cyan lighten-5" text="" className="text-center">
-                  <MDBCardBody>BARBECUE BOB</MDBCardBody>
-                </MDBCard>
-              </div>
+              <UserEvents
+                usersId={this.state.users._id}
+                fetchEventsUsers={() => this.fetchEventsUsers()}
+                eventsUser={this.state.eventsUser}
+              />
               <div className="card shadow mt-5">
                 <div className="card-header bg-info text-center text-white ">
                   Mes participantions
@@ -114,10 +154,8 @@ class User extends Component {
             </div>
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6  mb-5">
               <UserInfos
-                _id={this.props.location.state.user._id}
-                name={this.props.location.state.user.name}
-                contact={this.props.location.state.user.contact}
-                email={this.props.location.state.user.email}
+                fetchUsers={() => this.fetchUsers()}
+                users={this.state.users}
               />
             </div>
           </div>
