@@ -13,7 +13,7 @@ class ModifierPassager extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nom: this.props.passagerModif.nom,
+      name: this.props.passagerModif.name,
       showModifierPassager: true
     };
   }
@@ -74,8 +74,8 @@ class ModifierPassager extends Component {
               size="sm"
               className="ml-2"
               label="Nom passagers"
-              name="nom"
-              value={this.state.nom}
+              name="name"
+              value={this.state.name}
               onChange={this.handleInputChange}
             />
           </div>

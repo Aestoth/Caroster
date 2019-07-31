@@ -74,7 +74,7 @@ class EditPassengersCar extends Component {
               size="sm"
               className="ml-2"
               label="Nom passagers"
-              name="nom"
+              name="name"
               value={this.state.name}
               onChange={this.handleInputChange}
             />

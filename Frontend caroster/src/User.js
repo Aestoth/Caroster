@@ -38,17 +38,14 @@ class User extends Component {
 
   deleteUser = e => {
     e.preventDefault();
-    fetch(
-      `${backendURL()}/api/user/delete/${this.props.location.state.user._id}`,
-      {
-        method: "DELETE",
-        body: JSON.stringify(this.state),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
+    fetch(`${backendURL()}/api/user/${this.props.location.state.user._id}`, {
+      method: "DELETE",
+      body: JSON.stringify(this.state),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
       }
-    ).then(response => {
+    }).then(response => {
       response.json().then(data => {
         console.log(data.result);
         this.props.history.push("/");
@@ -57,6 +54,7 @@ class User extends Component {
   };
 
   render() {
+    console.log("delete", this.props.location.state.user._id);
     return (
       <div>
         <Navbar />
