@@ -18,9 +18,17 @@ class Passagers extends Component {
       show: true,
       cars: [],
       passengers: [],
-      passengersInCar: []
+      passengersInCar: [],
+      isButtonDisabled: false
     };
   }
+
+  // onLauchClicked = e => {
+  //   e.preventDefault();
+  //   this.setState({ isButtonDisabled: true });
+  //   setTimeout(() => this.setState({ isButtonDisabled: false }), 3000);
+  //   return this.onLauchClicked();
+  // };
 
   handleInputChange = e => {
     const target = e.target;
@@ -46,6 +54,7 @@ class Passagers extends Component {
         console.log("Success", data);
         this.props.changeDiv();
         this.props.fetchCarPassengers();
+        // this.onLauchClicked();
       });
     });
   };
@@ -68,7 +77,12 @@ class Passagers extends Component {
             />
           </div>
           <div className="col-1 mt-3">
-            <InconButton type="submit" value="Submit" id="completed-task">
+            <InconButton
+              type="submit"
+              value="Submit"
+              id="completed-task"
+              // disabled={this.state.isButtonDisabled}
+            >
               <i className="fas fa-check mt-4 ml-2" />
             </InconButton>
           </div>

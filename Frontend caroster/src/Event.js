@@ -145,7 +145,6 @@ class Event extends Component {
           <h1
             className=" d-flex justify-content-center mt-4 mb-5"
             style={{
-              fontFamily: "Righteous",
               color: "#0d47a1",
               textDecorationLine: "underline"
             }}
