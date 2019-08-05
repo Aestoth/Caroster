@@ -69,7 +69,6 @@ class NewEvent extends Component {
                 name="title"
                 value={this.state.title}
                 onChange={this.handleInputChange}
-                pattern="[a-zA-Z0-9_\.][a-zA-Z0-9_\-\.]*[a-zA-Z0-9_\-]|[a-zA-Z0-9_]"
                 required
               />
             </div>
