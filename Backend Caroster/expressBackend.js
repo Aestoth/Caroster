@@ -24,8 +24,8 @@ mongoose.connection.on("connected", err => {
 mongoose.set("useCreateIndex", true);
 
 const PostSchemaEvent = mongoose.Schema({
-  title: String,
-  email: String,
+  title: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   cars: [{ type: mongoose.Schema.Types.ObjectId, ref: "car" }],
   passengers: [{ type: mongoose.Schema.Types.ObjectId, ref: "passengers" }]
 });
@@ -243,8 +243,12 @@ app.get("/api/user/:userId/userEvent", (req, res) => {
 //Add  Event //////////////////////////////////////////
 app.post("/api/event", async (req, res) => {
   const newPost = PostModelEvent(req.body);
-  const event = await newPost.save();
-  console.log("event22", event);
+  const event = await newPost.save().catch(err => {
+    res.status(422).json({
+      status: 422,
+      message: "Invalid title/email. Make sure Fields are not empty"
+    });
+  });
   let transporter = nodemailer.createTransport({
     host: "smtp.sendgrid.net",
     port: 465,
@@ -261,9 +265,13 @@ app.post("/api/event", async (req, res) => {
   let info = await transporter.sendMail({
     from: '"Caroster" <caroster@goodguys.com>', // sender address
     to: `${req.body.email}`, // list of receivers
-    subject: `Lien événement: ${req.body.title}`, // Subject line
+    subject: `Votre lien Caroster pour votre événement : "${req.body.title}"`, // Subject line
     html: `
-        <p>Voici le lien de votre événement: ${pathname}/Evenement/${event._id}</p>`
+        <p>Voici le lien à partager avec les personnes venant à votre événement : "${pathname}/event/${
+      event._id
+    }
+    "
+    </p>`
   });
 
   console.log("Message sent: %s", info.messageId);
@@ -275,26 +283,33 @@ app.post("/api/event", async (req, res) => {
   res.status(200).json(event);
 });
 
-//Get Event //////////////////////////////////////////
-app.get("/api/event", (req, res) => {
-  PostModelEvent.find((err, result) => {
-    if (err) res.send({ success: false, msg: err });
+// Get Event //////////////////////////////////////////
+// app.get("/api/event", (req, res) => {
+//   PostModelEvent.find((err, result) => {
+//     if (err) res.send({ success: false, msg: err });
 
-    res.send({ success: true, result: result });
-  });
-});
+//     res.send({ success: true, result: result });
+//   });
+// });
 
 //Get Event by ID //////////////////////////////////////////
-app.get("/api/event/:id", (req, res) => {
+app.get("/api/event/:id", (req, res, next) => {
   let id = req.params.id;
   PostModelEvent.findById(id)
     .populate("cars")
     .then(doc => {
       if (!doc) {
-        return res.status(404).end();
+        return res
+          .status(404)
+          .json({ status: 404, message: "Event not found" });
+      } else {
+        res
+          .status(200)
+          .json({ status: 200, message: "sucessful operation", doc });
       }
-      return res.status(200).json(doc);
-    });
+      return next();
+    })
+    .catch(next);
 });
 
 //Update Event //////////////////////////////////////////
@@ -335,6 +350,9 @@ app.post("/api/:id/passengersEvent", async (req, res) => {
 app.post("/api/:id/passengersCar", async (req, res) => {
   let { id } = req.params;
   const newPassengers = PostModelPassengers(req.body);
+  if (!req.body.name) {
+    res.status(422).json({ errors: { message: "your name cannot be empty" } });
+  }
   console.log("newPassengers", newPassengers);
   const car = await PostModelCar.findById(id); // Get Car
   await newPassengers.save(); //Save the Passenger
@@ -356,10 +374,14 @@ app.post("/api/:id/passengersCar", async (req, res) => {
   let info = await transporter.sendMail({
     from: '"Caroster" <caroster@goodguys.com>', // sender address
     to: `${car.email}`, // list of receivers
-    subject: `Ajout d'un passager`, // Subject line
+    subject: `Nouveau passager `, // Subject line
     html: `
-        <p>Bonjour,
-        Cette personne "<strong>${newPassengers.name}</strong>" s'est inscrite dans votre voiture.</p>
+        <p>Bonjour,</p>
+        <br />
+        <p>Vous avez un nouveau passager dans votre voiture "${
+          car.carName
+        }" pour l'événement "".</p>
+        <p>"<strong>${newPassengers.name}</strong>"</p>
       ` // html body
   });
 
@@ -370,7 +392,9 @@ app.post("/api/:id/passengersCar", async (req, res) => {
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 
-  res.status(201).json(newPassengers);
+  res
+    .status(200)
+    .json({ status: 200, message: "sucessful operation", newPassengers });
 });
 
 //Update Passengers //////////////////////////////////////////
