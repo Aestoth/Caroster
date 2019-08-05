@@ -28,20 +28,10 @@ paths:
           schema:
             $ref: '#/definitions/Event'
       responses:
-        422:
-          description: Input can't be empty"
-    get:
-      tags:
-      - "Event"
-      summary: List of Events
-      description: ''
-      responses:
         200:
           description: successful operation
-          schema:
-            $ref: '#/definitions/Event'
-        204:
-          description: No events
+        422:
+          description: Invalid title/email. Make sure Fields are not empty
   '/event/{eventId}':
     get:
       tags:
@@ -62,8 +52,6 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/Event'
-        400:
-          description: ID not valid
         404:
           description: Event not found
     delete:
@@ -280,9 +268,16 @@ paths:
           description: Add passengers to car
           type: string
           required: true
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Passengers'
       responses:
-        405:
-          description: Input not valid pas valide
+        200:
+          description: successful operation
+        422:
+          description: 'Your name cannot be blank'
   '/{eventId}/passengersEvent':
     post:
       tags:
@@ -300,6 +295,11 @@ paths:
           type: string
           description: Add passengers to event
           required: true
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Passengers'
       responses:
         405:
           description: Input not valid
