@@ -13,7 +13,7 @@ class PassagersEnAttente extends Component {
   }
 
   ModifierPassagerShow = id => {
-    const passagers = this.props.passagers.find(item => item._id === id);
+    const passagers = this.props.passengers.find(item => item._id === id);
     const { showModifierPassager } = this.state;
 
     this.setState({
@@ -25,10 +25,10 @@ class PassagersEnAttente extends Component {
   };
 
   render() {
-    // console.log("statePass", this.props.passengersCar);
-    // console.log("stateSieges", this.props.seats);
+    console.log("statePass", this.props.passengersInCar);
+    console.log("stateSieges", this.props.cars);
 
-    if (!this.props.passagers) return "Liste d-attente vide";
+    if (!this.props.passengers) return "Liste d-attente vide";
     return (
       <MDBContainer className="mt-3">
         {this.state.showModifierPassager && (
@@ -38,7 +38,7 @@ class PassagersEnAttente extends Component {
             fetchPassagers={this.props.fetchPassagers}
           />
         )}
-        {this.props.passagers.map(({ _id, name }) => (
+        {this.props.passengers.map(({ _id, name }) => (
           <MDBRow key={_id}>
             <MDBCol size="5" className="mr-0 mt-2">
               {" "}

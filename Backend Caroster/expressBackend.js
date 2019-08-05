@@ -102,6 +102,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
+app.set("trust proxy", ["loopback", "linklocal", "uniquelocal"]);
 
 ////USER LOGIN///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -129,7 +130,7 @@ app.post("/api/authenticate", function(req, res) {
         error: "Internal error please try again"
       });
     } else if (!user) {
-      res.redirect(`${redirectURL}/Connexion`);
+      res.redirect(`${redirectURL}/NewEvent`);
     } else {
       user.isCorrectPassword(password, function(err, same) {
         if (err) {
@@ -137,7 +138,7 @@ app.post("/api/authenticate", function(req, res) {
             error: "Internal error please try again"
           });
         } else if (!same) {
-          res.redirect(`${redirectURL}/Connexion`);
+          res.redirect(`${redirectURL}/NewEvent`);
         } else {
           res.status(200).json(user);
         }

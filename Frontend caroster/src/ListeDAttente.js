@@ -11,18 +11,29 @@ class ListeDAttente extends Component {
     this.state = {
       showListeDAttente: false,
       showModifierPassager: false,
-      passagers: []
+      passengers: [],
+      passengersInCar: []
     };
   }
 
   componentDidMount() {
     this.fetchPassagers();
+    this.fetchPassagersInCar();
   }
 
   fetchPassagers = () => {
     fetch(`${backendURL()}/api/event/${this.props.eventId}/passengers`)
       .then(response => response.json())
-      .then(data => this.setState({ passagers: data }));
+      .then(data => this.setState({ passengers: data }));
+  };
+
+  fetchPassagersInCar = () => {
+    this.props.cars.map(car => {
+      fetch(`${backendURL()}/api/car/${car._id}/passengers`)
+        .then(response => response.json())
+        .then(data => this.setState({ passengersInCar: data }));
+      return true;
+    });
   };
 
   changeListeDAttente = () => {
@@ -31,7 +42,8 @@ class ListeDAttente extends Component {
   };
 
   render() {
-    console.log(this.props.seats);
+    console.log("passInCar-1", this.state.passengersInCar);
+    console.log("carState-2", this.props.cars);
     return (
       <div className="container">
         <div className="card shadow">
@@ -65,8 +77,10 @@ class ListeDAttente extends Component {
             )}
           </div>
           <PassagersEnAttente
-            passagers={this.state.passagers}
+            passengers={this.state.passengers}
+            passengersInCar={this.state.passengersInCar}
             fetchPassagers={() => this.fetchPassagers()}
+            cars={this.props.cars}
             // passengersCar={this.props.passengersCar}
             // seats={this.props.seats}
           />

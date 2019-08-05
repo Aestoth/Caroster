@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
 import backendURL from "./helpers/getBackendURL";
+import { withRouter } from "react-router";
 
 class AddUserEvent extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class AddUserEvent extends Component {
         console.log("Success", data._id);
         this.props.changeShowFormEvent();
         this.props.fetchEventsUsers();
-        // this.props.history.push(`/Event/${data._id}`);
+        this.props.history.push(`/Event/${data._id}`);
       });
     });
   };
@@ -87,4 +88,4 @@ class AddUserEvent extends Component {
   }
 }
 
-export default AddUserEvent;
+export default withRouter(AddUserEvent);

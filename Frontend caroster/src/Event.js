@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import ListeDAttente from "./ListeDAttente";
 import Cars from "./Cars";
+//import CarPlaces from "./CarPlaces"
 import styled from "styled-components";
 import backendURL from "./helpers/getBackendURL";
 
@@ -25,9 +26,7 @@ class Event extends Component {
     this.state = {
       event: false,
       modal: false,
-      carId: [],
-      passengers: [],
-      sieges: []
+      cars: []
     };
   }
 
@@ -39,11 +38,12 @@ class Event extends Component {
         }
         return response;
       })
-      //Examine text in the response
+
       .then(response => response.json())
       .then(data => {
         console.log("event in fetch", data);
         this.setState({ event: data });
+        this.fetchCarInEvent();
       })
       .catch(err => {
         console.log("error state", err);
@@ -51,19 +51,12 @@ class Event extends Component {
       });
   }
 
-  // fetchCarPassengers = () => {
-  //   if (
-  //     typeof this.props.location.state.carId !== "object" ||
-  //     typeof this.props.location.state.carId !== "undefined"
-  //   ) {
-  //     fetch(
-  //       `${backendURL()}/api/car/${this.props.location.state.carId}/passengers`
-  //     )
-  //       .then(response => response.json())
-  //       .then(data => this.setState({ passengers: data }));
-  //     console.log(this.state.passengers);
-  //   }
-  // };
+  fetchCarInEvent = () => {
+    fetch(`${backendURL()}/api/${this.props.match.params.id}/cars`)
+      .then(response => response.json())
+      .then(data => this.setState({ cars: data }));
+    console.log(this.state.cars);
+  };
 
   toggle = () => {
     this.setState({
@@ -89,8 +82,9 @@ class Event extends Component {
   };
 
   render() {
-    // console.log("locet", this.props.location.state.carId);
-    // console.log("sieges", this.props.location.state.sieges);
+    console.log("carsState", this.state.cars);
+    // console.log("cars-Id", this.state.cars);
+
     const Button = styled.button`
       background-color: transparent;
       border: none;
@@ -163,6 +157,7 @@ class Event extends Component {
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6">
               <ListeDAttente
                 eventId={this.props.match.params.id}
+                cars={this.state.cars}
                 //passengersCar={this.state.passengers}
                 //sieges={this.state.sieges}
               />

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AddUserEvent from "./AddUserEvent";
 import { MDBCard, MDBCardBody, MDBIcon } from "mdbreact";
+import { Link } from "react-router-dom";
 //import backendURL from "./helpers/getBackendURL";
 
 class UserEvents extends Component {
@@ -75,7 +76,15 @@ class UserEvents extends Component {
             text=""
             className="text-center"
           >
-            <MDBCardBody>{title}</MDBCardBody>
+            <MDBCardBody>
+              <Link
+                to={{
+                  pathname: `/Event/${_id}`
+                }}
+              >
+                {title}
+              </Link>
+            </MDBCardBody>
           </MDBCard>
         ))}
       </div>

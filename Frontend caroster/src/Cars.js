@@ -8,7 +8,6 @@ class Cars extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
       cars: [],
       EventId: this.props.id
     };

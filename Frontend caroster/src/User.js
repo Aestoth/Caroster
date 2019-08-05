@@ -97,7 +97,7 @@ class User extends Component {
   // };
 
   render() {
-    console.log("delete", this.state.users);
+    console.log("IDEvent", this.state.eventsUser);
     return (
       <div>
         <Navbar />
