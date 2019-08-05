@@ -268,7 +268,9 @@ app.post("/api/event", async (req, res) => {
     to: `${req.body.email}`, // list of receivers
     subject: `Votre lien Caroster pour votre événement : "${req.body.title}"`, // Subject line
     html: `
-        <p>Voici le lien à partager avec les personnes venant à votre événement : "${pathname}/event/${event._id}
+        <p>Voici le lien à partager avec les personnes venant à votre événement : "${pathname}/event/${
+      event._id
+    }
     "
     </p>`
   });
@@ -302,9 +304,7 @@ app.get("/api/event/:id", (req, res, next) => {
           .status(404)
           .json({ status: 404, message: "Event not found" });
       } else {
-        res
-          .status(200)
-          .json({ status: 200, message: "sucessful operation", doc });
+        res.status(200).json(doc);
       }
       return next();
     })
@@ -377,7 +377,9 @@ app.post("/api/:id/passengersCar", async (req, res) => {
     html: `
         <p>Bonjour,</p>
         <br />
-        <p>Vous avez un nouveau passager dans votre voiture "${car.carName}" pour l'événement "".</p>
+        <p>Vous avez un nouveau passager dans votre voiture "${
+          car.carName
+        }" pour l'événement "".</p>
         <p>"<strong>${newPassengers.name}</strong>"</p>
       ` // html body
   });
