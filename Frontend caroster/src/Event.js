@@ -24,7 +24,7 @@ class Event extends Component {
     super(props);
     console.log("props", props);
     this.state = {
-      event: false,
+      event: [],
       modal: false,
       cars: []
     };
@@ -82,7 +82,7 @@ class Event extends Component {
   };
 
   render() {
-    console.log("carsState", this.state.cars);
+    console.log("carsState", this.state.event.title);
     // console.log("cars-Id", this.state.cars);
 
     const Button = styled.button`

@@ -70,12 +70,7 @@ class UserEvents extends Component {
           />
         )}
         {this.props.eventsUser.map(({ _id, title }) => (
-          <MDBCard
-            key={_id}
-            color="cyan lighten-5"
-            text=""
-            className="text-center"
-          >
+          <MDBCard key={_id} className="text-center">
             <MDBCardBody>
               <Link
                 to={{

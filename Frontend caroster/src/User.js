@@ -18,6 +18,7 @@ import {
 } from "mdbreact";
 
 class User extends Component {
+  _isMounted: false;
   constructor(props) {
     super(props);
     this.state = {
@@ -40,6 +41,7 @@ class User extends Component {
   };
 
   componentDidMount() {
+    this._isMounted = true;
     this.fetchUsers();
     this.fetchEventsUsers();
   }
@@ -56,9 +58,17 @@ class User extends Component {
       `${backendURL()}/api/user/${this.props.location.state.user._id}/userEvent`
     )
       .then(response => response.json())
-      .then(data => this.setState({ eventsUser: data }));
-    console.log("evntUser", this.state.eventsUser);
+      .then(data => {
+        if (this._isMounted) {
+          this.setState({ eventsUser: data });
+        }
+        console.log("evntUser", this.state.eventsUser);
+      });
   };
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
 
   deleteUser = e => {
     e.preventDefault();
@@ -139,7 +149,7 @@ class User extends Component {
                 <div className="card-header bg-info text-center text-white ">
                   Mes participantions
                 </div>
-                <MDBCard color="cyan lighten-5" className="text-center">
+                <MDBCard className="text-center">
                   <MDBCardBody>ANNIVERSAIRE DUPONT</MDBCardBody>
                 </MDBCard>
               </div>
@@ -147,7 +157,7 @@ class User extends Component {
                 <div className="card-header bg-info text-center text-white">
                   Mes voitures
                 </div>
-                <MDBCard color="cyan lighten-5" className="text-center">
+                <MDBCard className="text-center">
                   <MDBCardBody>Golf blue</MDBCardBody>
                 </MDBCard>
               </div>
