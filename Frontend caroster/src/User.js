@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import "./User.css";
 import UserInfos from "./UserInfos";
 import UserEvents from "./UserEvents";
+import UserCars from "./UserCars";
 import backendURL from "./helpers/getBackendURL";
 
 import {
@@ -23,10 +24,10 @@ class User extends Component {
     super(props);
     this.state = {
       userInfos: this.props.location.state,
-      show: false,
       modal: false,
       users: [],
-      eventsUser: []
+      eventsUser: [],
+      carUser: []
     };
   }
 
@@ -44,6 +45,7 @@ class User extends Component {
     this._isMounted = true;
     this.fetchUsers();
     this.fetchEventsUsers();
+    this.fetchCarsUsers();
   }
 
   fetchUsers = () => {
@@ -64,6 +66,14 @@ class User extends Component {
         }
         console.log("evntUser", this.state.eventsUser);
       });
+  };
+
+  fetchCarsUsers = () => {
+    fetch(
+      `${backendURL()}/api/user/${this.props.location.state.user._id}/userCars`
+    )
+      .then(res => res.json())
+      .then(data => this.setState({ carUser: data }));
   };
 
   componentWillUnmount() {
@@ -87,27 +97,8 @@ class User extends Component {
     });
   };
 
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   fetch(`${backendURL()}/api/${this.state.userId}/userEvent`, {
-  //     method: "POST",
-  //     body: JSON.stringify(this.state),
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json"
-  //     }
-  //   }).then(response => {
-  //     response.json().then(data => {
-  //       console.log("Success", data);
-  //       this.props.history.push({
-  //         pathname: `/Event/${data._id}`
-  //       });
-  //     });
-  //   });
-  // };
-
   render() {
-    console.log("IDEvent", this.state.eventsUser);
+    console.log("ID---Event", this.state.carUser);
     return (
       <div>
         <Navbar />
@@ -153,14 +144,11 @@ class User extends Component {
                   <MDBCardBody>ANNIVERSAIRE DUPONT</MDBCardBody>
                 </MDBCard>
               </div>
-              <div className="card shadow mt-5">
-                <div className="card-header bg-info text-center text-white">
-                  Mes voitures
-                </div>
-                <MDBCard className="text-center">
-                  <MDBCardBody>Golf blue</MDBCardBody>
-                </MDBCard>
-              </div>
+              <UserCars
+                usersId={this.state.users._id}
+                fetchCarsUsers={() => this.fetchCarsUsers()}
+                carUser={this.state.carUser}
+              />
             </div>
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6  mb-5">
               <UserInfos

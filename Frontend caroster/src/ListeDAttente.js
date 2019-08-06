@@ -28,12 +28,11 @@ class ListeDAttente extends Component {
   };
 
   fetchPassagersInCar = () => {
-    this.props.cars.map(car => {
+    this.props.cars.map(car =>
       fetch(`${backendURL()}/api/car/${car._id}/passengers`)
         .then(response => response.json())
-        .then(data => this.setState({ passengersInCar: data }));
-      return true;
-    });
+        .then(data => this.setState({ passengersInCar: data }))
+    );
   };
 
   changeListeDAttente = () => {

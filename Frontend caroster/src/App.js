@@ -10,6 +10,7 @@ import UpdateCar from "./UpdateCar";
 import Login from "./Login";
 //import withAuth from "./withAuth";
 import User from "./User";
+import UpdateCarUser from "./UpdateCarUser";
 import NotFoundPage from "./NotFoundPage";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -30,6 +31,7 @@ class App extends Component {
             <Route path="/UpdateCar/:id" component={UpdateCar} />
             <Route path="/Login" component={Login} />
             <Route path="/User" component={User} />
+            <Route path="/UpdateCarUser/:id" component={UpdateCarUser} />
             <Route component={NotFoundPage} />
           </Switch>
         </div>

@@ -61,7 +61,8 @@ const PostSchemaUser = mongoose.Schema({
   contact: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  event: [{ type: mongoose.Schema.Types.ObjectId, ref: "event" }]
+  event: [{ type: mongoose.Schema.Types.ObjectId, ref: "event" }],
+  car: [{ type: mongoose.Schema.Types.ObjectId, ref: "car" }]
 });
 
 PostSchemaUser.pre("save", function(next) {
@@ -102,7 +103,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
-app.set("trust proxy", ["loopback", "linklocal", "uniquelocal"]);
+//app.set("trust proxy", ["loopback", "linklocal", "uniquelocal"]);
 
 ////USER LOGIN///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -130,7 +131,7 @@ app.post("/api/authenticate", function(req, res) {
         error: "Internal error please try again"
       });
     } else if (!user) {
-      res.redirect(`${redirectURL}/NewEvent`);
+      res.redirect(`${redirectURL + ":" + 41935}/NewEvent`);
     } else {
       user.isCorrectPassword(password, function(err, same) {
         if (err) {
@@ -138,7 +139,7 @@ app.post("/api/authenticate", function(req, res) {
             error: "Internal error please try again"
           });
         } else if (!same) {
-          res.redirect(`${redirectURL}/NewEvent`);
+          res.redirect(`${redirectURL + ":" + 41935}/NewEvent`);
         } else {
           res.status(200).json(user);
         }
@@ -200,19 +201,22 @@ app.put("/api/user/password/update/:id", (req, res) => {
   const newPassword = req.body.password;
   //const user = PostModelUser(newPassword);
 
-  bcrypt.hash(newPassword, saltRounds, function(err, hashedPassword) {
+  const changePass = bcrypt.hash(newPassword, saltRounds, function(
+    err,
+    hashedPassword
+  ) {
     if (err) {
       next(err);
     } else {
       console.log(req.params.id);
-      PostModelUser.findOneAndUpdate(
-        { _id: req.params.id },
-        { $set: { password: hashedPassword } }
-      );
 
       res.send(hashedPassword);
     }
   });
+  PostModelUser.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: { password: changePass } }
+  );
 });
 
 app.post("/api/:id/userEvent", async (req, res) => {
@@ -238,6 +242,31 @@ app.get("/api/user/:userId/userEvent", (req, res) => {
     .exec((err, users) => {
       console.log("event", users.event);
       res.send(users.event);
+    });
+});
+
+app.post("/api/:id/userCars", async (req, res) => {
+  try {
+    let { id } = req.params;
+    const newCar = PostModelCar(req.body);
+    console.log("newCar", newCar);
+    const user = await PostModelUser.findById(id);
+    await newCar.save();
+    await user.car.push(newCar);
+    await user.save();
+    res.status(201).json(newCar);
+  } catch (err) {
+    err;
+  }
+});
+
+app.get("/api/user/:userId/userCars", (req, res) => {
+  const { userId } = req.params;
+  const users = PostModelUser.findById(userId)
+    .populate("car")
+    .exec((err, users) => {
+      console.log("car", users.car);
+      res.send(users.car);
     });
 });
 
@@ -268,9 +297,7 @@ app.post("/api/event", async (req, res) => {
     to: `${req.body.email}`, // list of receivers
     subject: `Votre lien Caroster pour votre événement : "${req.body.title}"`, // Subject line
     html: `
-        <p>Voici le lien à partager avec les personnes venant à votre événement : "${pathname}/event/${
-      event._id
-    }
+        <p>Voici le lien à partager avec les personnes venant à votre événement : "${pathname}/event/${event._id}
     "
     </p>`
   });
@@ -377,9 +404,7 @@ app.post("/api/:id/passengersCar", async (req, res) => {
     html: `
         <p>Bonjour,</p>
         <br />
-        <p>Vous avez un nouveau passager dans votre voiture "${
-          car.carName
-        }" pour l'événement "".</p>
+        <p>Vous avez un nouveau passager dans votre voiture "${car.carName}" pour l'événement "".</p>
         <p>"<strong>${newPassengers.name}</strong>"</p>
       ` // html body
   });
