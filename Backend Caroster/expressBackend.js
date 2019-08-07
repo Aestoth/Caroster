@@ -25,7 +25,7 @@ mongoose.set("useCreateIndex", true);
 
 const PostSchemaEvent = mongoose.Schema({
   title: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true },
   cars: [{ type: mongoose.Schema.Types.ObjectId, ref: "car" }],
   passengers: [{ type: mongoose.Schema.Types.ObjectId, ref: "passengers" }]
 });
@@ -297,7 +297,9 @@ app.post("/api/event", async (req, res) => {
     to: `${req.body.email}`, // list of receivers
     subject: `Votre lien Caroster pour votre événement : "${req.body.title}"`, // Subject line
     html: `
-        <p>Voici le lien à partager avec les personnes venant à votre événement : "${pathname}/event/${event._id}
+        <p>Voici le lien à partager avec les personnes venant à votre événement : "${pathname}/event/${
+      event._id
+    }
     "
     </p>`
   });
@@ -383,6 +385,11 @@ app.post("/api/:id/passengersCar", async (req, res) => {
   const car = await PostModelCar.findById(id); // Get Car
   await newPassengers.save(); //Save the Passenger
   await car.passengers.push(newPassengers); // Add Passenger to the Event array 'cars'
+  const myevent = await PostModelEvent.findOne(
+    { cars: { $eq: car } },
+    { title: "string" },
+    { "title.$": 1 }
+  );
   await car.save(); //Save the Car
   console.log("passengers", newPassengers);
   let transporter = nodemailer.createTransport({
@@ -400,11 +407,12 @@ app.post("/api/:id/passengersCar", async (req, res) => {
   let info = await transporter.sendMail({
     from: '"Caroster" <caroster@goodguys.com>', // sender address
     to: `${car.email}`, // list of receivers
-    subject: `Nouveau passager `, // Subject line
+    subject: `Nouveau passager - ${myevent.title}`, // Subject line
     html: `
         <p>Bonjour,</p>
-        <br />
-        <p>Vous avez un nouveau passager dans votre voiture "${car.carName}" pour l'événement "".</p>
+        <p>Vous avez un nouveau passager dans votre voiture "${
+          car.carName
+        }" pour l'événement "${myevent.title}".</p>
         <p>"<strong>${newPassengers.name}</strong>"</p>
       ` // html body
   });
