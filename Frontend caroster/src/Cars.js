@@ -14,12 +14,17 @@ class Cars extends Component {
   }
 
   componentDidMount() {
+    this.fetchCarsEvent();
+  }
+
+  fetchCarsEvent = () => {
     fetch(`${backendURL()}/api/${this.props.id}/cars`)
       .then(res => res.json())
       .then(data => this.setState({ cars: data }));
-  }
+  };
 
   render() {
+    console.log("CarsEvtId", this.props.id);
     return (
       <div>
         {this.state.cars.map(
@@ -34,8 +39,9 @@ class Cars extends Component {
               date={date}
               time={time}
               seats={seats}
-              EventId={this.props.id}
-              carId={this.state.cars}
+              eventId={this.props.id}
+              cars={this.state.cars}
+              fetchCarsEvent={() => this.fetchCarsEvent()}
               // passengers={this.props.passengers}
               // fetchCarPassengers={this.props.fetchCarPassengers}
             />

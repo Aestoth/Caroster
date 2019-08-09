@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import ButtonAddPassagers from "./ButtonAddPassagers";
 import PassagerDansVoiture from "./PassagerDansVoiture";
+import FormUpdate from "./FormModifier";
 
 import backendURL from "./helpers/getBackendURL";
 
@@ -22,14 +23,11 @@ class Car extends Component {
     this.state = {
       show: false,
       passengers: [],
-      carPlaces: []
+      carPlaces: [],
+      showFormCar: false,
+      carEdit: false
     };
   }
-
-  changeDiv = () => {
-    const { show } = this.state;
-    this.setState({ show: !show });
-  };
 
   componentDidMount() {
     this.fetchCarPassengers();
@@ -42,11 +40,22 @@ class Car extends Component {
     console.log(this.state.passengers);
   };
 
+  changeDiv = () => {
+    const { show } = this.state;
+    this.setState({ show: !show });
+  };
+
+  changeShowFormCar = id => {
+    const cars = this.props.cars.find(item => item._id === id);
+    const { showFormCar } = this.state;
+    this.setState({ showFormCar: !showFormCar, carEdit: cars });
+  };
+
   render() {
-    console.log("passeg", this.state.passengers);
+    console.log("carS", this.props.cars);
+    console.log("carS", this.props._id);
     const passengers = this.state.passengers;
     const nombPassengerCar = passengers.length;
-    // const place = this.props.sieges;
 
     return (
       <div className="container">
@@ -58,71 +67,77 @@ class Car extends Component {
               {this.props.carName}
             </div>
             <div>
-              <Link
-                to={{
-                  pathname: `/UpdateCar/${this.props._id}`,
-                  state: { params: { id: this.props.EventId } }
-                }}
-              >
-                <i className="fas fa-pencil-alt " />
-              </Link>
+              <MDBIcon
+                icon="pencil-alt"
+                className=" mr-4"
+                onClick={() => this.changeShowFormCar(this.props._id)}
+              />
             </div>
           </div>
+          {this.state.showFormCar ? (
+            <FormUpdate
+              changeShowFormCar={() => this.changeShowFormCar()}
+              _id={this.props.eventId}
+              carEdit={this.state.carEdit}
+              cars={this.props.cars}
+              carID={this.props._id}
+              fetchCarsEvent={this.props.fetchCarsEvent}
+            />
+          ) : (
+            <MDBContainer
+              className="border rounded mt-4"
+              style={{ width: "22rem" }}
+            >
+              <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+                <MDBCol size="2">
+                  <MDBIcon icon="phone" size="2x" />
+                </MDBCol>
+                <MDBCol
+                  className="d-flex align-items-center d-flex justify-content-center"
+                  size="8"
+                >
+                  <MDBPopover placement="right" popover clickable id="popper2">
+                    <MDBBtn size="sm"> Contact</MDBBtn>
 
-          <MDBContainer
-            className="border rounded mt-4"
-            style={{ width: "22rem" }}
-          >
-            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
-              <MDBCol size="2">
-                <MDBIcon icon="phone" size="2x" />
-              </MDBCol>
-              <MDBCol
-                className="d-flex align-items-center d-flex justify-content-center"
-                size="8"
-              >
-                <MDBPopover placement="right" popover clickable id="popper2">
-                  <MDBBtn size="sm"> Contact</MDBBtn>
-
-                  <MDBPopoverHeader>{this.props.contact}</MDBPopoverHeader>
-                </MDBPopover>
-              </MDBCol>
-            </MDBRow>
-            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
-              <MDBCol size="2">
-                <MDBIcon icon="calendar-alt" size="2x" className="" />
-              </MDBCol>
-              <MDBCol
-                className="d-flex align-items-center d-flex justify-content-center"
-                size="8"
-              >
-                {this.props.date} à {this.props.time}
-              </MDBCol>
-            </MDBRow>
-            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
-              <MDBCol size="2">
-                <MDBIcon icon="map-marker-alt" size="2x" className=" " />
-              </MDBCol>
-              <MDBCol
-                className="d-flex align-items-center d-flex justify-content-center text-center"
-                size="8"
-              >
-                <a href="#">{this.props.address}</a>
-              </MDBCol>
-            </MDBRow>
-            <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
-              <MDBCol size="2">
-                <MDBIcon icon="comment-alt" size="2x" />
-              </MDBCol>
-              <MDBCol
-                className="d-flex align-items-center d-flex justify-content-center text-center"
-                size="8"
-              >
-                {this.props.message}
-              </MDBCol>
-            </MDBRow>
-          </MDBContainer>
-
+                    <MDBPopoverHeader>{this.props.contact}</MDBPopoverHeader>
+                  </MDBPopover>
+                </MDBCol>
+              </MDBRow>
+              <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+                <MDBCol size="2">
+                  <MDBIcon icon="calendar-alt" size="2x" className="" />
+                </MDBCol>
+                <MDBCol
+                  className="d-flex align-items-center d-flex justify-content-center"
+                  size="8"
+                >
+                  {this.props.date} à {this.props.time}
+                </MDBCol>
+              </MDBRow>
+              <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+                <MDBCol size="2">
+                  <MDBIcon icon="map-marker-alt" size="2x" className=" " />
+                </MDBCol>
+                <MDBCol
+                  className="d-flex align-items-center d-flex justify-content-center text-center"
+                  size="8"
+                >
+                  <a href="#">{this.props.address}</a>
+                </MDBCol>
+              </MDBRow>
+              <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
+                <MDBCol size="2">
+                  <MDBIcon icon="comment-alt" size="2x" />
+                </MDBCol>
+                <MDBCol
+                  className="d-flex align-items-center d-flex justify-content-center text-center"
+                  size="8"
+                >
+                  {this.props.message}
+                </MDBCol>
+              </MDBRow>
+            </MDBContainer>
+          )}
           <ul className="list-group list-group-flush mt-4">
             <PassagerDansVoiture
               carId={this.props._id}

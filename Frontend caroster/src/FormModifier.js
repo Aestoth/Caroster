@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { MDBBtn, MDBInput } from "mdbreact";
 import "bootstrap/dist/css/bootstrap.css";
-import { withRouter } from "react-router-dom";
+// import { withRouter } from "react-router-dom";
 import backendURL from "./helpers/getBackendURL";
 
 class FormUpdate extends Component {
@@ -9,14 +9,15 @@ class FormUpdate extends Component {
     super(props);
     console.log("props modifier", props);
     this.state = {
-      carName: this.props.carName,
-      seats: this.props.seats,
-      message: this.props.message,
-      contact: this.props.contact,
-      email: this.props.email,
-      address: this.props.address,
-      date: this.props.date,
-      time: this.props.time
+      carName: this.props.carEdit.carName,
+      seats: this.props.carEdit.seats,
+      message: this.props.carEdit.message,
+      contact: this.props.carEdit.contact,
+      email: this.props.carEdit.email,
+      address: this.props.carEdit.address,
+      date: this.props.carEdit.date,
+      time: this.props.carEdit.time,
+      carID: []
     };
   }
 
@@ -28,42 +29,47 @@ class FormUpdate extends Component {
   };
 
   handleSubmit = e => {
-    console.log(this.props.match.params.id);
-    console.log("test", this.state);
     e.preventDefault();
-    fetch(`${backendURL()}/api/car/${this.props.match.params.id}`, {
+    console.log(this.props.carEdit._id);
+    fetch(`${backendURL()}/api/car/${this.props.carEdit._id}`, {
       method: "PUT",
       body: JSON.stringify(this.state),
-      headers: { "Content-Type": "application/json" }
-    })
-      .then(res => {
-        res.json().then(data => {
-          console.log("da5", data);
-        });
-        return res;
-      })
-      .catch(err => err);
-
-    this.props.history.push(`/Event/${this.props.location.state.params.id}`);
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      response.json().then(data => {
+        console.log(data.result);
+        this.props.fetchCarsEvent();
+        this.props.changeShowFormCar(this.props.carEdit._id);
+      });
+    });
   };
 
   handleDelete = e => {
-    console.log("test", this.state);
     e.preventDefault();
-    fetch(`${backendURL()}/api/car/${this.props.match.params.id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.state)
-    })
-      .then(res => res.json())
-      .then(res => console.log(res));
 
-    this.props.history.push(`/Event/${this.props.location.state.params.id}`);
+    fetch(`${backendURL()}/api/car/${this.props.carEdit._id}`, {
+      method: "DELETE",
+      body: JSON.stringify(this.state),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      response.json().then(data => {
+        console.log(data.result);
+        this.props.fetchCarsEvent();
+        this.props.changeShowFormCar(this.props.carEdit._id);
+      });
+    });
   };
 
   render() {
     if (typeof this.props.id === undefined) return "loading";
-    console.log("state form", this.state);
+    console.log("state form", this.props.carEdit._id);
+    console.log("state form22", this.props._id);
     return (
       <div className="container-fluid cover-container d-flex">
         <div className="row col-12 align-items-center justify-content-center flex-fill mx-auto ">
@@ -197,4 +203,4 @@ class FormUpdate extends Component {
   }
 }
 
-export default withRouter(FormUpdate);
+export default FormUpdate;

@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import "./User.css";
 import UserInfos from "./UserInfos";
 import UserEvents from "./UserEvents";
-import UserCars from "./UserCars";
+
 import backendURL from "./helpers/getBackendURL";
 
 import {
@@ -27,7 +27,7 @@ class User extends Component {
       modal: false,
       users: [],
       eventsUser: [],
-      carUser: []
+      carUser: false
     };
   }
 
@@ -42,10 +42,10 @@ class User extends Component {
   };
 
   componentDidMount() {
+    this.forceUpdate();
     this._isMounted = true;
     this.fetchUsers();
     this.fetchEventsUsers();
-    this.fetchCarsUsers();
   }
 
   fetchUsers = () => {
@@ -66,14 +66,6 @@ class User extends Component {
         }
         console.log("evntUser", this.state.eventsUser);
       });
-  };
-
-  fetchCarsUsers = () => {
-    fetch(
-      `${backendURL()}/api/user/${this.props.location.state.user._id}/userCars`
-    )
-      .then(res => res.json())
-      .then(data => this.setState({ carUser: data }));
   };
 
   componentWillUnmount() {
@@ -144,11 +136,6 @@ class User extends Component {
                   <MDBCardBody>ANNIVERSAIRE DUPONT</MDBCardBody>
                 </MDBCard>
               </div>
-              <UserCars
-                usersId={this.state.users._id}
-                fetchCarsUsers={() => this.fetchCarsUsers()}
-                carUser={this.state.carUser}
-              />
             </div>
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6  mb-5">
               <UserInfos

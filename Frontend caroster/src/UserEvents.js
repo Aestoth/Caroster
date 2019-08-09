@@ -18,34 +18,6 @@ class UserEvents extends Component {
     this.setState({ showFormEvent: !showFormEvent });
   };
 
-  // componentDidMount() {
-  //   this.fetchEventsUsers();
-  // }
-  //
-  // fetchEventsUsers = () => {
-  //   fetch(`${backendURL()}/api/user/${this.props.usersId}/userEvent`)
-  //     .then(response => response.json())
-  //     .then(data => this.setState({ eventsUser: data }));
-  //   console.log("evntUser", this.state.eventsUser);
-  // };
-
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   fetch(`${backendURL()}/api/${this.props.usersId}/userEvent`, {
-  //     method: "POST",
-  //     body: JSON.stringify(this.state),
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json"
-  //     }
-  //   }).then(response => {
-  //     response.json().then(data => {
-  //       console.log("Success", data._id);
-  //       // this.props.history.push(`/Event/${data._id}`);
-  //     });
-  //   });
-  // };
-
   render() {
     console.log("user-Id", this.props.eventsUser);
     return (

@@ -18,8 +18,7 @@ class Passagers extends Component {
       show: true,
       cars: [],
       passengers: [],
-      passengersInCar: [],
-      isButtonDisabled: false
+      passengersInCar: []
     };
   }
 
@@ -52,8 +51,7 @@ class Passagers extends Component {
       response.json().then(data => {
         this.setState({ passengersInCar: data });
         console.log("Success", data);
-        this.setState({ isButtonDisabled: true });
-        // this.onLauchClicked();
+
         this.props.changeDiv();
         this.props.fetchCarPassengers();
       });
@@ -78,12 +76,7 @@ class Passagers extends Component {
             />
           </div>
           <div className="col-1 mt-3">
-            <InconButton
-              type="submit"
-              value="Submit"
-              id="completed-task"
-              disabled={this.state.isButtonDisabled}
-            >
+            <InconButton type="submit" value="Submit" id="completed-task">
               <i className="fas fa-check mt-4 ml-2" />
             </InconButton>
           </div>

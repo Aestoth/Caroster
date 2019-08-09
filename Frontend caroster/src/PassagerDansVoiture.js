@@ -24,7 +24,7 @@ class PassagerDansVoiture extends Component {
   };
 
   render() {
-    console.log(this.props.passengersCar);
+    console.log("InCAr", this.props.passengersCar);
     return (
       <MDBContainer>
         {this.state.showEdit && (

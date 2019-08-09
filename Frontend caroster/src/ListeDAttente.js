@@ -18,7 +18,6 @@ class ListeDAttente extends Component {
 
   componentDidMount() {
     this.fetchPassagers();
-    this.fetchPassagersInCar();
   }
 
   fetchPassagers = () => {
@@ -27,13 +26,13 @@ class ListeDAttente extends Component {
       .then(data => this.setState({ passengers: data }));
   };
 
-  fetchPassagersInCar = () => {
-    this.props.cars.map(car =>
-      fetch(`${backendURL()}/api/car/${car._id}/passengers`)
-        .then(response => response.json())
-        .then(data => this.setState({ passengersInCar: data }))
-    );
-  };
+  // fetchPassagersInCar = () => {
+  //   this.props.cars.map(car =>
+  //     fetch(`${backendURL()}/api/car/${car._id}/passengers`)
+  //       .then(response => response.json())
+  //       .then(data => this.setState({ passengersInCar: data }))
+  //   );
+  // };
 
   changeListeDAttente = () => {
     const { showListeDAttente } = this.state;
@@ -41,7 +40,7 @@ class ListeDAttente extends Component {
   };
 
   render() {
-    console.log("passInCar-1", this.state.passengersInCar);
+    // console.log("passInCar-1", this.state.passengersInCar);
     console.log("carState-2", this.props.cars);
     return (
       <div className="container">
@@ -77,7 +76,7 @@ class ListeDAttente extends Component {
           </div>
           <PassagersEnAttente
             passengers={this.state.passengers}
-            passengersInCar={this.state.passengersInCar}
+            // passengersInCar={this.state.passengersInCar}
             fetchPassagers={() => this.fetchPassagers()}
             cars={this.props.cars}
             // passengersCar={this.props.passengersCar}

@@ -273,12 +273,13 @@ app.get("/api/user/:userId/userCars", (req, res) => {
 //Add  Event //////////////////////////////////////////
 app.post("/api/event", async (req, res) => {
   const newPost = PostModelEvent(req.body);
-  const event = await newPost.save().catch(err => {
-    res.status(422).json({
-      status: 422,
-      message: "Invalid title/email. Make sure Fields are not empty"
-    });
-  });
+  const event = await newPost.save();
+  // .catch(err => {
+  //   res.status(422).json({
+  //     status: 422,
+  //     message: "Invalid title/email. Make sure Fields are not empty"
+  //   });
+  // });
   let transporter = nodemailer.createTransport({
     host: "smtp.sendgrid.net",
     port: 465,
@@ -297,9 +298,7 @@ app.post("/api/event", async (req, res) => {
     to: `${req.body.email}`, // list of receivers
     subject: `Votre lien Caroster pour votre événement : "${req.body.title}"`, // Subject line
     html: `
-        <p>Voici le lien à partager avec les personnes venant à votre événement : "${pathname}/event/${
-      event._id
-    }
+        <p>Voici le lien à partager avec les personnes venant à votre événement : "${pathname}/event/${event._id}
     "
     </p>`
   });
@@ -410,9 +409,7 @@ app.post("/api/:id/passengersCar", async (req, res) => {
     subject: `Nouveau passager - ${myevent.title}`, // Subject line
     html: `
         <p>Bonjour,</p>
-        <p>Vous avez un nouveau passager dans votre voiture "${
-          car.carName
-        }" pour l'événement "${myevent.title}".</p>
+        <p>Vous avez un nouveau passager dans votre voiture "${car.carName}" pour l'événement "${myevent.title}".</p>
         <p>"<strong>${newPassengers.name}</strong>"</p>
       ` // html body
   });
@@ -467,7 +464,6 @@ app.get("/api/event/:eventId/passengers", (req, res) => {
   const events = PostModelEvent.findById(eventId)
     .populate("passengers")
     .exec((err, events) => {
-      console.log("passengers", events.passengers);
       res.send(events.passengers);
     });
 });

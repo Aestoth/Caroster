@@ -6,11 +6,11 @@ import NewEvent from "./NewEvent";
 import Home from "./Home";
 import Registration from "./Registration";
 import AddCar from "./AddCar";
-import UpdateCar from "./UpdateCar";
+// import UpdateCar from "./UpdateCar";
 import Login from "./Login";
 //import withAuth from "./withAuth";
 import User from "./User";
-import UpdateCarUser from "./UpdateCarUser";
+
 import NotFoundPage from "./NotFoundPage";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -28,10 +28,8 @@ class App extends Component {
             <Route path="/Registration" component={Registration} />
             <Route path="/Event/:id" component={Event} />
             <Route path="/AddCar" component={AddCar} />
-            <Route path="/UpdateCar/:id" component={UpdateCar} />
             <Route path="/Login" component={Login} />
             <Route path="/User" component={User} />
-            <Route path="/UpdateCarUser/:id" component={UpdateCarUser} />
             <Route component={NotFoundPage} />
           </Switch>
         </div>

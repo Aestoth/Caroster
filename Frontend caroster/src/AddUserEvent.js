@@ -45,7 +45,12 @@ class AddUserEvent extends Component {
     console.log("addEvent", this.props.usersId);
     return (
       <div>
-        <h4 className="d-flex justify-content-center mt-2">Créer événement</h4>
+        <h4
+          className="d-flex justify-content-center mt-3"
+          style={{ color: "#708090" }}
+        >
+          Créer événement
+        </h4>
         <form onSubmit={this.handleSubmit}>
           <MDBRow className="d-flex justify-content-center mt-3">
             <MDBCol size="10">

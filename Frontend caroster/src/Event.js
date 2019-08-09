@@ -16,7 +16,8 @@ import {
   MDBModalHeader,
   MDBModal,
   MDBModalBody,
-  MDBModalFooter
+  MDBModalFooter,
+  MDBJumbotron
 } from "mdbreact";
 
 class Event extends Component {
@@ -26,7 +27,7 @@ class Event extends Component {
     this.state = {
       event: [],
       modal: false,
-      cars: []
+      cars: false
     };
   }
 
@@ -82,8 +83,8 @@ class Event extends Component {
   };
 
   render() {
-    console.log("carsState", this.state.event.title);
-    // console.log("cars-Id", this.state.cars);
+    console.log("carState22", this.state.cars.length);
+    const existCar = this.state.cars.length;
 
     const Button = styled.button`
       background-color: transparent;
@@ -95,6 +96,7 @@ class Event extends Component {
     } else {
       if (!this.state.event) return "loading";
     }
+
     return (
       <div>
         <Navbar />
@@ -151,6 +153,31 @@ class Event extends Component {
           >
             {this.state.event.title}
           </h1>
+          <div style={{ display: existCar > 0 && "none" }}>
+            <MDBJumbotron fluid>
+              <MDBContainer>
+                <h2 className="display-5 text-center">Bienvenue à Caroster</h2>
+                <p className="lead text-center">
+                  Pour commencer{" "}
+                  <Link
+                    to={{
+                      pathname: "/AddCar",
+                      state: {
+                        params: {
+                          id: this.props.match.params.id
+                        }
+                      }
+                    }}
+                  >
+                    {" "}
+                    cliquez ici{" "}
+                  </Link>{" "}
+                  ou cliquez sur le boutton supérieur droit pour ajouter une
+                  voiture à votre événement
+                </p>
+              </MDBContainer>
+            </MDBJumbotron>
+          </div>
 
           <div className="row d-flex justify-content-center mt-4">
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6">
@@ -158,7 +185,6 @@ class Event extends Component {
                 eventId={this.props.match.params.id}
                 cars={this.state.cars}
                 //passengersCar={this.state.passengers}
-                //sieges={this.state.sieges}
               />
             </div>
             <div className="col-md-6 marginTable col-sm-6 col-lg-6 col-xl-6">

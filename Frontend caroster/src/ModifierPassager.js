@@ -66,6 +66,7 @@ class ModifierPassager extends Component {
   };
 
   render() {
+    console.log("Modif", this.props.passagerModif._id);
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="row">
