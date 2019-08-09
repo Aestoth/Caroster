@@ -26,8 +26,7 @@ class User extends Component {
       userInfos: this.props.location.state,
       modal: false,
       users: [],
-      eventsUser: [],
-      carUser: false
+      eventsUser: []
     };
   }
 
@@ -90,7 +89,6 @@ class User extends Component {
   };
 
   render() {
-    console.log("ID---Event", this.state.carUser);
     return (
       <div>
         <Navbar />
@@ -128,7 +126,7 @@ class User extends Component {
                 fetchEventsUsers={() => this.fetchEventsUsers()}
                 eventsUser={this.state.eventsUser}
               />
-              <div className="card shadow mt-5">
+              <div className="card shadow mt-5 mb-5">
                 <div className="card-header bg-info text-center text-white ">
                   Mes participantions
                 </div>

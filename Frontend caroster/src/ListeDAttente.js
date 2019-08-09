@@ -13,15 +13,13 @@ class ListeDAttente extends Component {
       showListeDAttente: false,
       showModifierPassager: false,
       passengers: [],
-      passengersInCar: [],
       car: []
     };
   }
 
   componentDidMount() {
     this.fetchPassagers();
-    // this.fetchPassagersInCar();
-    // this.seats();
+    this.seats();
   }
 
   fetchPassagers = () => {
@@ -30,20 +28,11 @@ class ListeDAttente extends Component {
       .then(data => this.setState({ passengers: data }));
   };
 
-  // fetchPassagersInCar = () => {
-  //   this.props.cars.map(car =>
-  //     fetch(`${backendURL()}/api/car/${car._id}/passengers`)
-  //       .then(response => response.json())
-  //       .then(data => this.setState({ passengersInCar: data }))
-  //   );
-  // };
-
-  // seats = () => {
-  //   this.props.cars.forEach(car => {
-  //     fetch(`${backendURL()}/api/${this.props.eventId}/cars`);
-  //     if (car.passengers.length !== car.seats) this.setState({ car: [car] });
-  //   });
-  // };
+  seats = () => {
+    this.props.cars.forEach(car => {
+      if (car.passengers.length !== car.seats) this.setState({ car: [car] });
+    });
+  };
 
   changeListeDAttente = () => {
     const { showListeDAttente } = this.state;
@@ -90,11 +79,9 @@ class ListeDAttente extends Component {
           </div>
           <PassagersEnAttente
             passengers={this.state.passengers}
-            // passengersInCar={this.state.passengersInCar}
             fetchPassagers={() => this.fetchPassagers()}
             placeInCar={this.state.car}
-            // passengersCar={this.props.passengersCar}
-            // seats={this.props.seats}
+            fetchCarsEvent={this.props.fetchCarsEvent}
           />
         </div>
       </div>

@@ -4,7 +4,6 @@ import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import ListeDAttente from "./ListeDAttente";
 import Cars from "./Cars";
-//import CarPlaces from "./CarPlaces"
 import styled from "styled-components";
 import backendURL from "./helpers/getBackendURL";
 
@@ -44,7 +43,7 @@ class Event extends Component {
       .then(data => {
         console.log("event in fetch", data);
         this.setState({ event: data });
-        this.fetchCarInEvent();
+        this.fetchCarsEvent();
       })
       .catch(err => {
         console.log("error state", err);
@@ -52,11 +51,10 @@ class Event extends Component {
       });
   }
 
-  fetchCarInEvent = () => {
+  fetchCarsEvent = () => {
     fetch(`${backendURL()}/api/${this.props.match.params.id}/cars`)
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => this.setState({ cars: data }));
-    console.log(this.state.cars);
   };
 
   toggle = () => {
@@ -85,7 +83,7 @@ class Event extends Component {
   render() {
     console.log("carState22", this.state.cars.length);
     const existCar = this.state.cars.length;
-
+    if (!this.state.cars) return "Loading...";
     const Button = styled.button`
       background-color: transparent;
       border: none;
@@ -184,12 +182,14 @@ class Event extends Component {
               <ListeDAttente
                 eventId={this.props.match.params.id}
                 cars={this.state.cars}
-                //passengersCar={this.state.passengers}
+                fetchCarsEvent={() => this.fetchCarsEvent()}
               />
             </div>
             <div className="col-md-6 marginTable col-sm-6 col-lg-6 col-xl-6">
               <Cars
                 id={this.props.match.params.id}
+                cars={this.state.cars}
+                fetchCarsEvent={() => this.fetchCarsEvent()}
                 // fetchCarPassengers={() => this.fetchCarPassengers()}
                 // passengers={this.state.passengers}
               />

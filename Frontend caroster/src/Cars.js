@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./Voiture.css";
 import Car from "./Car";
 
-import backendURL from "./helpers/getBackendURL";
+//import backendURL from "./helpers/getBackendURL";
 
 class Cars extends Component {
   constructor(props) {
@@ -13,21 +13,11 @@ class Cars extends Component {
     };
   }
 
-  componentDidMount() {
-    this.fetchCarsEvent();
-  }
-
-  fetchCarsEvent = () => {
-    fetch(`${backendURL()}/api/${this.props.id}/cars`)
-      .then(res => res.json())
-      .then(data => this.setState({ cars: data }));
-  };
-
   render() {
     console.log("CarsEvtId", this.props.id);
     return (
       <div>
-        {this.state.cars.map(
+        {this.props.cars.map(
           ({ _id, carName, message, contact, address, date, time, seats }) => (
             <Car
               key={_id}
@@ -40,10 +30,8 @@ class Cars extends Component {
               time={time}
               seats={seats}
               eventId={this.props.id}
-              cars={this.state.cars}
-              fetchCarsEvent={() => this.fetchCarsEvent()}
-              // passengers={this.props.passengers}
-              // fetchCarPassengers={this.props.fetchCarPassengers}
+              cars={this.props.cars}
+              fetchCarsEvent={this.props.fetchCarsEvent}
             />
           )
         )}
