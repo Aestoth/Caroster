@@ -8,17 +8,20 @@ import backendURL from "./helpers/getBackendURL";
 class ListeDAttente extends Component {
   constructor(props) {
     super(props);
+    console.log("liste", props);
     this.state = {
       showListeDAttente: false,
       showModifierPassager: false,
       passengers: [],
-      passengersInCar: []
+      passengersInCar: [],
+      car: []
     };
   }
 
   componentDidMount() {
     this.fetchPassagers();
     this.fetchPassagersInCar();
+    this.seats();
   }
 
   fetchPassagers = () => {
@@ -35,6 +38,13 @@ class ListeDAttente extends Component {
     );
   };
 
+  seats = () => {
+    this.props.cars.forEach(car => {
+      fetch(`${backendURL()}/api/${this.props.eventId}/cars`);
+      if (car.passengers.length !== car.seats) this.setState({ car: [car] });
+    });
+  };
+
   changeListeDAttente = () => {
     const { showListeDAttente } = this.state;
     this.setState({ showListeDAttente: !showListeDAttente });
@@ -43,9 +53,12 @@ class ListeDAttente extends Component {
   render() {
     console.log("passInCar-1", this.state.passengersInCar);
     console.log("carState-2", this.props.cars);
+    console.log("passengers", this.state.passengers);
+    console.log("state", this.state.car);
+
     return (
       <div className="container">
-        <div className="card shadow">
+        <div className="crd shadow">
           <div className="card-header bg-info text-center text-white d-flex justify-content-between">
             <div />
             <div className="">
@@ -79,7 +92,7 @@ class ListeDAttente extends Component {
             passengers={this.state.passengers}
             passengersInCar={this.state.passengersInCar}
             fetchPassagers={() => this.fetchPassagers()}
-            cars={this.props.cars}
+            placeInCar={this.state.car}
             // passengersCar={this.props.passengersCar}
             // seats={this.props.seats}
           />
