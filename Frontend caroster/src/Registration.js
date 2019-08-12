@@ -26,6 +26,7 @@ class Registration extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
     fetch(`${backendURL()}/api/register`, {
       method: "POST",
       body: JSON.stringify(this.state),
@@ -57,6 +58,7 @@ class Registration extends Component {
             <div className="card-header bg-info text-white text-center">
               INSCRIPTION
             </div>
+
             <form onSubmit={this.handleSubmit}>
               <MDBRow className="d-flex justify-content-center mt-3">
                 <MDBCol size="10">

@@ -8,7 +8,7 @@ class AddUserEvent extends Component {
     super(props);
     this.state = {
       title: "",
-      email: "",
+      email: this.props.usersEmail,
       showFormEvent: true
     };
   }
@@ -55,7 +55,7 @@ class AddUserEvent extends Component {
           <MDBRow className="d-flex justify-content-center mt-3">
             <MDBCol size="10">
               <MDBInput
-                label="Prénom"
+                label="Titre"
                 type="text"
                 name="title"
                 value={this.state.title}

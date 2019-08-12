@@ -51,9 +51,9 @@ class Passagers extends Component {
       response.json().then(data => {
         this.setState({ passengersInCar: data });
         console.log("Success", data);
-
         this.props.changeDiv();
         this.props.fetchCarPassengers();
+        this.props.fetchCarsEvent();
       });
     });
   };

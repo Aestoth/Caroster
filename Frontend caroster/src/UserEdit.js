@@ -1,5 +1,16 @@
 import React, { Component } from "react";
-import { MDBInput, MDBRow, MDBCol, MDBBtn } from "mdbreact";
+import {
+  MDBInput,
+  MDBRow,
+  MDBCol,
+  MDBBtn,
+  MDBModalHeader,
+  MDBModal,
+  MDBModalBody,
+  MDBModalFooter
+} from "mdbreact";
+import { withRouter } from "react-router-dom";
+
 import backendURL from "./helpers/getBackendURL";
 
 class UserEdit extends Component {
@@ -12,10 +23,17 @@ class UserEdit extends Component {
       password: this.props.users.password,
       showChangeInfo: true,
       value: "",
-      show: true
+      show: true,
+      modal: false
     };
     this.textInput = React.createRef();
   }
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
 
   handleInputChange = e => {
     const target = e.target;
@@ -48,23 +66,6 @@ class UserEdit extends Component {
       return response;
     });
   };
-
-  // deleteUser = e => {
-  //   e.preventDefault();
-  //   fetch(`${backendURL()}/api/user/delete/${this.props._id}`, {
-  //     method: "DELETE",
-  //     body: JSON.stringify(this.state),
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json"
-  //     }
-  //   }).then(response => {
-  //     response.json().then(data => {
-  //       console.log(data.result);
-  //       this.props.history.push("/");
-  //     });
-  //   });
-  // };
 
   render() {
     console.log("edit", this.props.users);
@@ -102,7 +103,25 @@ class UserEdit extends Component {
           <MDBCol size="10">
             <MDBInput label="Password" type="password" />
           </MDBCol>
-          <MDBCol size="6" className="d-flex justify-content-center mb-4 mt-4">
+          <MDBCol size="12" className="d-flex justify-content-center mb-4 mt-4">
+            <MDBBtn onClick={this.toggle} className="btn-sm" color="danger">
+              Supprimer
+            </MDBBtn>
+            <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
+              <MDBModalHeader toggle={this.toggle}>ATTENTION!</MDBModalHeader>
+              <MDBModalBody>
+                {" "}
+                Le Profil d'utilisateur será supprimé{" "}
+              </MDBModalBody>
+              <MDBModalFooter>
+                <MDBBtn color="secondary" onClick={this.toggle}>
+                  Annuler
+                </MDBBtn>
+                <MDBBtn onClick={this.props.deleteUser} color="primary">
+                  Continuer
+                </MDBBtn>
+              </MDBModalFooter>
+            </MDBModal>
             <MDBBtn
               className="btn-sm"
               type="submit"
@@ -118,4 +137,4 @@ class UserEdit extends Component {
   }
 }
 
-export default UserEdit;
+export default withRouter(UserEdit);

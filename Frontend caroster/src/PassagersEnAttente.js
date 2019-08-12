@@ -25,12 +25,12 @@ class PassagersEnAttente extends Component {
   };
 
   render() {
-    console.log("statePass", this.props.passengersInCar);
+    console.log("statePass", this.props.carList);
     console.log("stateSieges", this.props.placeInCar);
     console.log("passengers", this.props.passengers);
 
     if (!this.props.passengers) return "Liste d-attente vide";
-    if (!this.props.placeInCar) return "Liste d-attente vide";
+    // if (!this.props.placeInCar) return "Liste d-attente vide";
     return (
       <MDBContainer className="mt-3">
         {this.state.showModifierPassager && (
@@ -53,7 +53,7 @@ class PassagersEnAttente extends Component {
                 id="exampleFormControlSelect1"
               >
                 <option>Aller avec...</option>
-                {this.props.placeInCar.map(({ _id, carName }) => (
+                {this.props.carList.map(({ _id, carName }) => (
                   <option key={_id}>{carName}</option>
                 ))}
               </select>

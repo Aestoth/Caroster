@@ -149,6 +149,8 @@ class Car extends Component {
                 carId={this.props._id}
                 fetchCarPassengers={() => this.fetchCarPassengers()}
                 changeDiv={() => this.changeDiv()}
+                fetchCarsEvent={this.props.fetchCarsEvent}
+                seat={this.props.seat}
               />
             )}
             <ButtonAddPassagers

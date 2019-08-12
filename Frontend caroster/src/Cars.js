@@ -32,6 +32,7 @@ class Cars extends Component {
               eventId={this.props.id}
               cars={this.props.cars}
               fetchCarsEvent={this.props.fetchCarsEvent}
+              seat={this.props.seats}
             />
           )
         )}

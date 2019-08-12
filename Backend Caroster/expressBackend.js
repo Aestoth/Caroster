@@ -131,7 +131,7 @@ app.post("/api/authenticate", function(req, res) {
         error: "Internal error please try again"
       });
     } else if (!user) {
-      res.redirect(`${redirectURL + ":" + 41935}/NewEvent`);
+      res.redirect(`${redirectURL}/NewEvent`);
     } else {
       user.isCorrectPassword(password, function(err, same) {
         if (err) {
@@ -139,7 +139,7 @@ app.post("/api/authenticate", function(req, res) {
             error: "Internal error please try again"
           });
         } else if (!same) {
-          res.redirect(`${redirectURL + ":" + 41935}/NewEvent`);
+          res.redirect(`${redirectURL}/NewEvent`);
         } else {
           res.status(200).json(user);
         }
@@ -199,24 +199,19 @@ app.delete("/api/user/:id", (req, res) => {
 
 app.put("/api/user/password/update/:id", (req, res) => {
   const newPassword = req.body.password;
-  //const user = PostModelUser(newPassword);
 
-  const changePass = bcrypt.hash(newPassword, saltRounds, function(
-    err,
-    hashedPassword
-  ) {
+  // if (this.isNew || this.isModified("password")) {
+  bcrypt.hash(newPassword, saltRounds, function(err, hashedPassword) {
     if (err) {
       next(err);
     } else {
-      console.log(req.params.id);
-
-      res.send(hashedPassword);
+      return res.send(hashedPassword);
+      PostModelUser.update(
+        { _id: req.params.id },
+        { $set: { password: hashedPassword } }
+      );
     }
   });
-  PostModelUser.findOneAndUpdate(
-    { _id: req.params.id },
-    { $set: { password: changePass } }
-  );
 });
 
 app.post("/api/:id/userEvent", async (req, res) => {
@@ -242,31 +237,6 @@ app.get("/api/user/:userId/userEvent", (req, res) => {
     .exec((err, users) => {
       console.log("event", users.event);
       res.send(users.event);
-    });
-});
-
-app.post("/api/:id/userCars", async (req, res) => {
-  try {
-    let { id } = req.params;
-    const newCar = PostModelCar(req.body);
-    console.log("newCar", newCar);
-    const user = await PostModelUser.findById(id);
-    await newCar.save();
-    await user.car.push(newCar);
-    await user.save();
-    res.status(201).json(newCar);
-  } catch (err) {
-    err;
-  }
-});
-
-app.get("/api/user/:userId/userCars", (req, res) => {
-  const { userId } = req.params;
-  const users = PostModelUser.findById(userId)
-    .populate("car")
-    .exec((err, users) => {
-      console.log("car", users.car);
-      res.send(users.car);
     });
 });
 

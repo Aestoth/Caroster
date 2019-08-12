@@ -19,7 +19,7 @@ class UserEvents extends Component {
   };
 
   render() {
-    console.log("user-Id", this.props.eventsUser);
+    console.log("user-Id", this.props.usersEmail);
     return (
       <div className="card shadow">
         <div className="card-header bg-info text-center text-white d-flex justify-content-between">
@@ -39,6 +39,7 @@ class UserEvents extends Component {
             usersId={this.props.usersId}
             changeShowFormEvent={() => this.changeShowFormEvent()}
             fetchEventsUsers={this.props.fetchEventsUsers}
+            usersEmail={this.props.usersEmail}
           />
         )}
         {this.props.eventsUser.map(({ _id, title }) => (

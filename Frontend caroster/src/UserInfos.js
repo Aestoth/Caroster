@@ -12,18 +12,23 @@ class UserInfos extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.fetchUsers();
-  // }
-
-  // fetchUsers = () => {
-  //   console.log("up", this.state.userChange.name);
-  //   fetch(`${backendURL()}/api/user/${this.props._id}`)
-  //     .then(response => response.json())
-  //     .then(data => this.setState({ userChange: data }));
-  //   console.log("uptd", this.state.userChange);
+  // deleteUser = e => {
+  //   e.preventDefault();
+  //   fetch(`${backendURL()}/api/passengers/${this.props.users._id}`, {
+  //     method: "DELETE",
+  //     body: JSON.stringify(this.state),
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json"
+  //     }
+  //   }).then(response => {
+  //     response.json().then(data => {
+  //       console.log(data.result);
+  //       this.props.history.push("/");
+  //     });
+  //   });
   // };
-  //
+
   changeInfo = () => {
     const { show } = this.state;
     this.setState({ show: !show });
@@ -51,6 +56,7 @@ class UserInfos extends Component {
               changeInfo={() => this.changeInfo()}
               fetchUsers={this.props.fetchUsers}
               users={this.props.users}
+              deleteUser={this.props.deleteUser}
             />
           ) : (
             <MDBContainer className="mt-2 mb-2 ml-5">

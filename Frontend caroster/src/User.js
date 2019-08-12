@@ -11,11 +11,7 @@ import {
   MDBCard,
   MDBCardBody,
   MDBBtn,
-  MDBFooter,
-  MDBModal,
-  MDBModalBody,
-  MDBModalFooter,
-  MDBModalHeader
+  MDBFooter
 } from "mdbreact";
 
 class User extends Component {
@@ -24,7 +20,6 @@ class User extends Component {
     super(props);
     this.state = {
       userInfos: this.props.location.state,
-      modal: false,
       users: [],
       eventsUser: []
     };
@@ -32,12 +27,6 @@ class User extends Component {
 
   logoutHandler = e => {
     this.props.history.replace("/");
-  };
-
-  toggle = () => {
-    this.setState({
-      modal: !this.state.modal
-    });
   };
 
   componentDidMount() {
@@ -71,8 +60,8 @@ class User extends Component {
     this._isMounted = false;
   }
 
-  deleteUser = e => {
-    e.preventDefault();
+  deleteUser = event => {
+    event.preventDefault();
     fetch(`${backendURL()}/api/user/${this.props.location.state.user._id}`, {
       method: "DELETE",
       body: JSON.stringify(this.state),
@@ -89,30 +78,13 @@ class User extends Component {
   };
 
   render() {
+    console.log("uptd", this.state.users.email);
     return (
       <div>
         <Navbar />
         <nav className="navbar navbar-dark primary-color d-flex justify-content-between">
           <div className="text-white ml-5">PROFIL</div>
           <div>
-            <MDBBtn onClick={this.toggle} className="btn-sm" color="danger">
-              Supprimer
-            </MDBBtn>
-            <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
-              <MDBModalHeader toggle={this.toggle}>ATTENTION!</MDBModalHeader>
-              <MDBModalBody>
-                {" "}
-                Le Profil d'utilisateur será supprimé{" "}
-              </MDBModalBody>
-              <MDBModalFooter>
-                <MDBBtn color="secondary" onClick={this.toggle}>
-                  Annuler
-                </MDBBtn>
-                <MDBBtn onClick={this.deleteUser} color="primary">
-                  Continuer
-                </MDBBtn>
-              </MDBModalFooter>
-            </MDBModal>
             <MDBBtn onClick={this.logoutHandler} color="indigo btn-sm">
               Déconnexion
             </MDBBtn>
@@ -125,6 +97,7 @@ class User extends Component {
                 usersId={this.state.users._id}
                 fetchEventsUsers={() => this.fetchEventsUsers()}
                 eventsUser={this.state.eventsUser}
+                usersEmail={this.state.users.email}
               />
               <div className="card shadow mt-5 mb-5">
                 <div className="card-header bg-info text-center text-white ">
@@ -139,6 +112,7 @@ class User extends Component {
               <UserInfos
                 fetchUsers={() => this.fetchUsers()}
                 users={this.state.users}
+                deleteUser={() => this.deleteUser(event)}
               />
             </div>
           </div>

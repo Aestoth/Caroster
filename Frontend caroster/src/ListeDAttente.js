@@ -13,13 +13,15 @@ class ListeDAttente extends Component {
       showListeDAttente: false,
       showModifierPassager: false,
       passengers: [],
-      car: []
+      car: [],
+      carList: []
     };
   }
 
   componentDidMount() {
     this.fetchPassagers();
-    this.seats();
+    // this.props.fetchCarsEvent();
+    this.props.seats();
   }
 
   fetchPassagers = () => {
@@ -28,11 +30,14 @@ class ListeDAttente extends Component {
       .then(data => this.setState({ passengers: data }));
   };
 
-  seats = () => {
-    this.props.cars.forEach(car => {
-      if (car.passengers.length !== car.seats) this.setState({ car: [car] });
-    });
-  };
+  // seats = () => {
+  //   const carList = this.state.carList;
+  //   this.props.cars.forEach(car => {
+  //     if (car.passengers.length !== car.seats) this.setState({ car: [car] });
+  //     console.log("===>", car.seats);
+  //     carList.push(car);
+  //   });
+  // };
 
   changeListeDAttente = () => {
     const { showListeDAttente } = this.state;
@@ -40,10 +45,8 @@ class ListeDAttente extends Component {
   };
 
   render() {
-    // console.log("passInCar-1", this.state.passengersInCar);
-    console.log("carState-2", this.props.cars);
-    console.log("passengers", this.state.passengers);
-    console.log("state", this.state.car);
+    // console.log("carList", this.state.carList);
+    console.log("state", this.props.carList);
 
     return (
       <div className="container">
@@ -80,8 +83,9 @@ class ListeDAttente extends Component {
           <PassagersEnAttente
             passengers={this.state.passengers}
             fetchPassagers={() => this.fetchPassagers()}
-            placeInCar={this.state.car}
             fetchCarsEvent={this.props.fetchCarsEvent}
+            seats={this.props.seats}
+            carList={this.props.carList}
           />
         </div>
       </div>

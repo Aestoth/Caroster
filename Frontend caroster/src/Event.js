@@ -26,7 +26,9 @@ class Event extends Component {
     this.state = {
       event: [],
       modal: false,
-      cars: false
+      cars: false,
+      car: [],
+      carList: []
     };
   }
 
@@ -57,6 +59,15 @@ class Event extends Component {
       .then(data => this.setState({ cars: data }));
   };
 
+  seats = () => {
+    const carList = this.state.carList;
+    this.state.cars.forEach(car => {
+      if (car.passengers.length !== car.seats) this.setState({ car: [car] });
+      console.log("===>", this.state.car);
+      carList.push(car);
+    });
+  };
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal
@@ -81,8 +92,9 @@ class Event extends Component {
   };
 
   render() {
-    console.log("carState22", this.state.cars.length);
+    console.log("=car=", this.state.car);
     const existCar = this.state.cars.length;
+
     if (!this.state.cars) return "Loading...";
     const Button = styled.button`
       background-color: transparent;
@@ -181,8 +193,9 @@ class Event extends Component {
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6">
               <ListeDAttente
                 eventId={this.props.match.params.id}
-                cars={this.state.cars}
+                carList={this.state.car}
                 fetchCarsEvent={() => this.fetchCarsEvent()}
+                seats={() => this.seats()}
               />
             </div>
             <div className="col-md-6 marginTable col-sm-6 col-lg-6 col-xl-6">
@@ -190,8 +203,6 @@ class Event extends Component {
                 id={this.props.match.params.id}
                 cars={this.state.cars}
                 fetchCarsEvent={() => this.fetchCarsEvent()}
-                // fetchCarPassengers={() => this.fetchCarPassengers()}
-                // passengers={this.state.passengers}
               />
             </div>
           </div>
