@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBIcon } from "mdbreact";
 import UserEdit from "./UserEdit";
-//import backendURL from "./helpers/getBackendURL";
 
 class UserInfos extends Component {
   constructor(props) {
@@ -11,23 +10,6 @@ class UserInfos extends Component {
       userChange: []
     };
   }
-
-  // deleteUser = e => {
-  //   e.preventDefault();
-  //   fetch(`${backendURL()}/api/passengers/${this.props.users._id}`, {
-  //     method: "DELETE",
-  //     body: JSON.stringify(this.state),
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json"
-  //     }
-  //   }).then(response => {
-  //     response.json().then(data => {
-  //       console.log(data.result);
-  //       this.props.history.push("/");
-  //     });
-  //   });
-  // };
 
   changeInfo = () => {
     const { show } = this.state;
@@ -39,13 +21,13 @@ class UserInfos extends Component {
       <div>
         <div className="card shadow">
           <div className=" card-header bg-info text-center text-white d-flex justify-content-between">
-            <div className="col-md-2 col-sm-2"></div>
-            <div className="col-md-5 col-sm-5">Mes infos</div>
-            <div className="col-md-2 col-sm-2">
+            <div></div>
+            <div className="ml-5">Mes infos</div>
+            <div>
               <MDBCol size="2">
                 <MDBIcon
                   icon="pencil-alt"
-                  className="ml-3 mr-4"
+                  className="mr-2"
                   onClick={this.changeInfo}
                 />
               </MDBCol>
@@ -59,7 +41,7 @@ class UserInfos extends Component {
               deleteUser={this.props.deleteUser}
             />
           ) : (
-            <MDBContainer className="mt-2 mb-2 ml-5">
+            <MDBContainer className="mt-2 mb-2 ml-3">
               <MDBRow className=" py-2">
                 <MDBCol size="2">
                   <MDBIcon icon="user-alt" className="ml-5 mr-5" />

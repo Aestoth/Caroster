@@ -54,6 +54,7 @@ class Passagers extends Component {
         this.props.changeDiv();
         this.props.fetchCarPassengers();
         this.props.fetchCarsEvent();
+        //this.props.seat();
       });
     });
   };

@@ -205,10 +205,10 @@ app.put("/api/user/password/update/:id", (req, res) => {
     if (err) {
       next(err);
     } else {
-      return res.send(hashedPassword);
+      return send(hashedPassword);
       PostModelUser.update(
         { _id: req.params.id },
-        { $set: { password: hashedPassword } }
+        { $set: { password: newPassword } }
       );
     }
   });

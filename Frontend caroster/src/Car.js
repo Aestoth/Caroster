@@ -84,10 +84,7 @@ class Car extends Component {
               fetchCarsEvent={this.props.fetchCarsEvent}
             />
           ) : (
-            <MDBContainer
-              className="border rounded mt-4"
-              style={{ width: "22rem" }}
-            >
+            <MDBContainer className="border rounded mt-4">
               <MDBRow className="mdb-color lighten-5 py-2 border-bottom border-light">
                 <MDBCol size="2">
                   <MDBIcon icon="phone" size="2x" />

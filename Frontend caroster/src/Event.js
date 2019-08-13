@@ -120,7 +120,8 @@ class Event extends Component {
 
           <div>
             <MDBBtn className="btn-sm" color="danger" onClick={this.toggle}>
-              Supprimer événement
+              <MDBIcon icon="trash-alt" className="mr-2" />
+              événement
             </MDBBtn>
             <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
               <MDBModalHeader toggle={this.toggle}>
@@ -147,7 +148,7 @@ class Event extends Component {
               }}
             >
               <MDBBtn color="indigo btn-sm">
-                <MDBIcon icon="plus" size="2x" className="mr-2 " />
+                <MDBIcon icon="plus" size="2x" className="mr-1" />
                 <MDBIcon icon="car" size="2x" />
               </MDBBtn>
             </Link>
@@ -193,7 +194,7 @@ class Event extends Component {
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-6">
               <ListeDAttente
                 eventId={this.props.match.params.id}
-                carList={this.state.car}
+                carList={this.state.carList}
                 fetchCarsEvent={() => this.fetchCarsEvent()}
                 seats={() => this.seats()}
               />
@@ -203,6 +204,7 @@ class Event extends Component {
                 id={this.props.match.params.id}
                 cars={this.state.cars}
                 fetchCarsEvent={() => this.fetchCarsEvent()}
+                seats={() => this.seats()}
               />
             </div>
           </div>

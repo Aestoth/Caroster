@@ -99,7 +99,7 @@ class User extends Component {
                 eventsUser={this.state.eventsUser}
                 usersEmail={this.state.users.email}
               />
-              <div className="card shadow mt-5 mb-5">
+              <div className="card shadow mt-5 mb-2">
                 <div className="card-header bg-info text-center text-white ">
                   Mes participantions
                 </div>
