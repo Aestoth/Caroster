@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { MDBIcon, MDBCol, MDBRow, MDBContainer } from "mdbreact";
 import ModifierPassager from "./ModifierPassager";
-//import backendURL from "./helpers/getBackendURL";
+import backendURL from "./helpers/getBackendURL";
 
 class PassagersEnAttente extends Component {
   constructor(props) {
     super(props);
-    console.log("loseille", props);
     this.state = {
       showModifierPassager: false,
       passagerModif: []
@@ -24,9 +23,14 @@ class PassagersEnAttente extends Component {
     console.log(passagers);
   };
 
+  AddToCar = id => {
+    const passengers = this.props.passengers.map(passenger => passenger._id);
+    const oneCar = this.props.carList.find(car => car._id === id);
+    oneCar.passengers.push(...passengers);
+    const 
+  };
   render() {
     console.log("statePass", this.props.carList);
-    console.log("stateSieges", this.props.placeInCar);
     console.log("passengers", this.props.passengers);
 
     if (!this.props.passengers) return "Liste d-attente vide";
@@ -54,7 +58,9 @@ class PassagersEnAttente extends Component {
               >
                 <option>Aller avec...</option>
                 {this.props.carList.map(({ _id, carName }) => (
-                  <option key={_id}>{carName}</option>
+                  <option key={_id} onClick={() => this.AddToCar(_id, name)}>
+                    {carName}
+                  </option>
                 ))}
               </select>
             </MDBCol>
