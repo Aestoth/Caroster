@@ -251,14 +251,10 @@ app.post("/api/event", async (req, res) => {
   //   });
   // });
   let transporter = nodemailer.createTransport({
-    host: "smtp.sendgrid.net",
-    port: 465,
-    secure: true, // true for 465, false for other ports,
-    auth: {
-      user: "apikey",
-      pass:
-        "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"
-    }
+    host: "",
+    port: ,
+
+    
   });
 
   // send mail with defined transport object
@@ -362,14 +358,8 @@ app.post("/api/:id/passengersCar", async (req, res) => {
   await car.save(); //Save the Car
   console.log("passengers", newPassengers);
   let transporter = nodemailer.createTransport({
-    host: "smtp.sendgrid.net",
-    port: 465,
-    secure: true, // true for 465, false for other ports,
-    auth: {
-      user: "apikey",
-      pass:
-        "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"
-    }
+    
+    
   });
 
   // send mail with defined transport object
